@@ -1,0 +1,219 @@
+
+body {
+    background-color: #021425d9;
+    color: #F0E6D2;
+    font-family: sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.lol-shop-window {
+    display: grid;
+    grid-template-columns: 1fr 4fr 2fr; 
+    width: 95%; 
+    max-width: 1400px;
+    height: 90vh; 
+    background-color: #010a13d9;
+    border: 4px solid #785A28;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+
+
+/* --- _________________________________________________________ZONE GAUCHE (SIDEBAR)_________________________________________________________ --- */
+.shop-sidebar-left {
+    border-right: 2px solid #785A28;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 20px;
+}
+/* --- BLOCS DE LA SIDEBAR --- */
+.sidebar-block-consumables {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
+    border: 2px solid #785A28;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.3);
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.sidebar-block-boots {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
+    border: 2px solid #785A28;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.3);
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+
+/* --- _________________________________________________________ZONE CENTRALE (MAIN)_________________________________________________________ --- */
+.shop-main-content {
+    padding: 15px;
+    display: grid;
+    grid-template-rows: 1fr 2fr 8fr;
+    overflow: hidden; /* Pour que le scroll se fasse DANS la grille, pas la page */
+}
+
+.shop-tabs {
+    border-bottom: 2px solid #785A28; 
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+}
+
+.shop-tabs a {
+    color: #C8AA6E;
+    margin-right: 20px;
+    margin-left: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* BARRE DE RECHERCHE ET FILTRE HORIZONTALE */
+.search-filters {
+    border-bottom: 2px solid #785A28;
+    padding-bottom: 10px;
+}
+
+.search-filters input{
+    background-color: #111;
+    border: 1px solid #785A28;
+    color: #785A28;
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+}
+
+.horizontal-filter-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 4fr;
+    margin-top: 10px;
+}
+
+.filter-square-horizontal {
+    width: 40px;
+    height: 40px;
+    background-color: #111;
+    border: 1px solid #785A28;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filter-square-horizontal:hover {
+    border-color: #ffee56;
+    box-shadow: 0 0 10px #ffee56;
+}
+
+/* FILTRE VERTICAL ET GRILLE D'OBJETS */
+.filter-objects-container {
+    display: grid;
+    grid-template-columns: 0.8fr 9.2fr;
+    gap: 20px;
+}
+
+
+/* FILTRE VERTICAL */
+.vertical-filter-section {
+    display: grid;
+    grid-template-rows: repeat(5, auto);
+    gap: 5px;
+    border-right: 2px solid #785A28;
+    padding-top: 10px;
+    align-items: center;
+    
+}
+
+.filter-square-vertical {
+    width: 25px;
+    height: 25px;
+    background-color: #111;
+    border: 1px solid #785A28;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filter-square-vertical:hover {
+    border-color: #ffee56;
+    box-shadow: 0 0 10px #ffee56;
+}
+
+/* LA GRILLE D'OBJETS INTERNE */
+.items-grid {
+    padding-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    gap: 8px;
+    
+    overflow-y: auto; /* Scrollbar si trop d'objets */
+    padding-right: 5px;
+}
+
+.item-square {
+    width: 45px;
+    height: 45px;
+    background-color: #111;
+    border: 1px solid #785A28;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.item-square:hover {
+    border-color: #0ACBE6; /* Bordure bleue au survol */
+    box-shadow: 0 0 10px #0ACBE6;
+}
+
+
+/* --- __________________________________________________________ZONE DROITE (DETAILS)__________________________________________________________ --- */
+.shop-details-panel {
+    border-left: 2px solid #785A28;
+    padding: 20px;
+    display: grid;
+    grid-template-rows: 1.5fr 4fr 3.5fr 1fr;
+    background: linear-gradient(to bottom, rgba(1,10,19,0) 0%, rgba(0,0,0,0.6) 100%);
+}
+
+.builds-into {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.builds-into-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.item-square-big-item {
+    width: 100%;
+    height: 100%;
+    background-color: #111;
+    border: 2px solid #785A28;
+    margin: 15px;
+}
+
+
+.btn-purchase {
+    background-color: #1E2328;
+    border: 2px solid #785A28;
+    color: #F0E6D2;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.2s;
+}
+
+.btn-purchase:hover {
+    border-color: #0ACBE6;
+    background-color: #232a31;
+    box-shadow: 0 0 15px rgba(10, 203, 230, 0.3);
+}
