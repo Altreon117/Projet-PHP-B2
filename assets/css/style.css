@@ -61,8 +61,8 @@ body {
     padding: 15px;
     display: grid;
     grid-template-rows: auto auto 1fr; 
-    overflow: hidden; /* IMPORTANT : Empêche le milieu de déborder sur le parent */
-    min-height: 0;    /* IMPORTANT : Permet au grid de rétrécir */
+    overflow: hidden;
+    min-height: 0;   
 }
 
 .shop-tabs {
@@ -79,6 +79,14 @@ body {
     margin-left: 20px;
     font-weight: bold;
     text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+}
+
+#active {
+    color: #ffffff;
+    box-shadow: 0 0 15px #0ACBE6,
+        inset 0 0 15px #0ACBE6;
 }
 
 /* BARRE DE RECHERCHE ET FILTRE HORIZONTALE */
@@ -90,7 +98,7 @@ body {
 .search-filters input{
     background-color: #111;
     border: 1px solid #785A28;
-    color: #785A28;
+    color: #C8AA6E;
     width: 100%;
     height: 30px;
     padding: 5px;
@@ -113,7 +121,7 @@ body {
 
 .filter-square-horizontal:hover {
     border-color: #ffee56;
-    box-shadow: 0 0 10px #ffee56;
+    box-shadow: 0 10px 10px #ffee56;
 }
 
 /* FILTRE VERTICAL ET GRILLE D'OBJETS */
@@ -121,7 +129,7 @@ body {
     display: grid;
     grid-template-columns: 0.8fr 9.2fr;
     gap: 20px;
-    height: 100%; /* Prend toute la hauteur du '1fr' défini au dessus */
+    height: 100%; 
     overflow: hidden; /* Coupe ce qui dépasse */
     min-height: 0;
 }
@@ -150,7 +158,7 @@ body {
 
 .filter-square-vertical:hover {
     border-color: #ffee56;
-    box-shadow: 0 0 10px #ffee56;
+    box-shadow: 25px 0 10px #ffee56;
 }
 
 /* LA GRILLE D'OBJETS INTERNE */
@@ -186,14 +194,22 @@ body {
     display: grid;
     grid-template-rows: 1.5fr 4fr 3.5fr 1fr;
     background: linear-gradient(to bottom, rgba(1,10,19,0) 0%, rgba(0,0,0,0.6) 100%);
-    height: 100%;       /* Remplis la case de la grille principale */
-    min-height: 0;      /* AUTORISE le panneau à être plus petit que son contenu */
+    height: 100%;      
+    min-height: 0;      
     overflow: hidden;   /* Coupe tout ce qui dépasse */
 }
 
 .builds-into {
     display: grid;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 0.5fr 1fr;
+}
+
+.builds-into h4 {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 .builds-into-grid {
@@ -211,8 +227,10 @@ body {
 }
 
 .item-square-big-item {
-    width: 30%;
-    height: 30%;
+    width: 100%;
+    max-width: 200px;
+    height: 100%;
+    max-height: 200px;
     background-color: #111;
     border: 2px solid #785A28;
     margin: 15px;
@@ -220,15 +238,64 @@ body {
 
 .selected-item-info {
     overflow: hidden; /* Coupe le texte s'il est trop long */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: 2fr 6fr 2fr;
 }
 
-.big-item-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
+.item-info-header {
+    display: grid;
+    grid-template-columns: 1fr 3fr 2fr;
+    border-top: 1px solid #785A28;
+    border-bottom: 1px solid #785A28;
+    padding: 10px 0;
+}
+
+.item-square-little-item {
+    width: 50px;
+    height: 50px;
+    background-color: #111;
+    border: 1px solid #785A28;
+}
+
+.item-header-text {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.item-header-text h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.price {
+    display: grid;
+    grid-template-columns: 1fr 2fr 3fr;
+    align-items: center;
+    height: 20px;
+}
+
+.poro-gold-icon {
+    width: 20px;
+    height: 20px;
+    background-color: #111;
+    border: 1px solid #c09a59;
+}
+
+.gold-cost {
+    margin: 0;
+    padding: 0;
+    color: #C8AA6E;
+    font-weight: bold;
+}
+
+
+.description {
+    color: #cacaca;
+    font-size: 14px;
+    margin-top: 10px;
+    overflow: auto; /* Scrollbar si la description est trop longue */
 }
 
 
@@ -247,5 +314,7 @@ body {
 .btn-purchase:hover {
     border-color: #0ACBE6;
     background-color: #232a31;
-    box-shadow: 0 0 15px rgba(10, 203, 230, 0.3);
+    box-shadow: 0 0 15px rgba(10, 203, 230, 0.3),
+        inset 0 0 35px rgba(10, 203, 230, 0.3);
+    color: #0ACBE6;
 }

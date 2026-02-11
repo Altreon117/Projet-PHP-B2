@@ -97,8 +97,8 @@
         <main class="shop-main-content">
             <!-- NAVIGATION -->
             <div class="shop-tabs">
-                <a href="index.php" class="active">CONSEILLÉS</a>
-                <a href="all-items.php" class="active">TOUS LES OBJETS</a>
+                <a href="index.php" id="active">CONSEILLÉS</a>
+                <a href="all-items.php" >TOUS LES OBJETS</a>
                 <a href="item-sets.php">SET D'OBJETS</a>
             </div>
             <!-- BARRE DE RECHERCHE ET FILTRE HORIZONTALE -->
@@ -174,12 +174,23 @@
             </div>
 
             <div class="selected-item-info">
-                <img src="https://via.placeholder.com/64" class="big-item-img">
-                <h2>Coiffe de Rabadon</h2>
-                <p class="gold-cost">3600</p>
-                <div class="stats">
-                    <p>+ 120 Ability Power</p>
-                    <p class="passive">Passive: Increases AP by 35%</p>
+                <div class="item-info-header">
+                    <div class="item-square-little-item"></div>
+                    <div class ="item-header-text">
+                        <h2>Coiffe de Rabadon</h2>
+                        <div class="price">
+                            <div class="poro-gold-icon"></div>
+                            <p class="gold-cost">3600</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="description">
+                    <p class="stats">+ 120 Ability Power</p>
+                    <p class="passive">Passive: Increases AP by 35%    
+                        fezfezzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+                        eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                    </p>
                 </div>
             </div>
 
