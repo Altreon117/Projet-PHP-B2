@@ -146,7 +146,7 @@
                 <div class="items-grid">
                     <?php 
                     // Petite boucle PHP pour simuler plein d'objets et voir la grille
-                    for($i=0; $i<90; $i++) {
+                    for($i=0; $i<220; $i++) {
                         echo '<div class="item-square"></div>';
                     }
                     ?>
