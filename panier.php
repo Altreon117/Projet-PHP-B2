@@ -107,33 +107,17 @@
         <main class="shop-main-content">
             <!-- NAVIGATION -->
             <div class="shop-tabs">
-                <a href="index.php" id="active">ACCUEIL</a>
+                <a href="index.php" >ACCUEIL</a>
                 <a href="all-items.php" >TOUS LES OBJETS</a>
-                <a href="panier.php">Panier</a>
+                <a href="panier.php" id="active">PANIER</a>
             </div>
             <!-- BARRE DE RECHERCHE ET FILTRE HORIZONTALE -->
             <div class="search-filters">
                 <input type="text" placeholder="Recherchez des objets, des stats ou des mots-clés...">
+                
             </div>
 
-            <!-- Page d'accueil -->
-            <div class="main-content-page">
-                <h1>BIENVENUE DANS L'ANTRE DU PORO</h1>
-                <p>Découvrez les objets les plus populaires et les meilleures offres pour votre champion préféré !</p>
-                <h2> OBJETS LES PLUS ACHETÉS</h2>
-                <div class="recommended-items-section">
-                    <!--<h2>OBJETS LES PLUS ACHETÉS</h2>-->
-                    <div class="recommended-item">
-                        <div class="item-square-big-item"></div>
-                    </div>
-                    <div class="recommended-item">
-                        <div class="item-square-big-item"></div>
-                    </div>
-                    <div class="recommended-item">
-                        <div class="item-square-big-item"></div>
-                    </div>
-                </div>
-            </div>
+            
         </main>
 
         <!-- SECTION DE DROITE AVEC LES DÉTAILS DE L'OBJET -->
@@ -182,3 +166,4 @@
     </div>
 
 </body>
+</html>

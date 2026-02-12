@@ -107,31 +107,66 @@
         <main class="shop-main-content">
             <!-- NAVIGATION -->
             <div class="shop-tabs">
-                <a href="index.php" id="active">ACCUEIL</a>
-                <a href="all-items.php" >TOUS LES OBJETS</a>
-                <a href="panier.php">Panier</a>
+                <a href="index.php" >ACCUEIL</a>
+                <a href="all-items.php" id="active">TOUS LES OBJETS</a>
+                <a href="panier.php">PANIER</a>
             </div>
             <!-- BARRE DE RECHERCHE ET FILTRE HORIZONTALE -->
             <div class="search-filters">
                 <input type="text" placeholder="Recherchez des objets, des stats ou des mots-clés...">
+                <div class="horizontal-filter-section">
+                    <div class="filter-square-horizontal" id="filter-all-logo">
+                        <!-- 9carré pour formler un logo cube -->
+                        <?php 
+                            for($i=0; $i<9; $i++) {
+                            echo '<div class="filter-square-horizontal-all-logo"></div>';
+                        }
+                        ?>
+                    </div>
+                    <img class="filter-square-horizontal" src="assets/img/logos/favorite.png" alt="Favorite">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Fighter_Item_item.png" alt="Fighter">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Marksman_Item_item.png" alt="Marksman">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Assassin_Item_item.png" alt="Assassin">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Mage_Item_item.png" alt="Mage">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Support_Item_item.png" alt="Support">
+                </div>
             </div>
 
-            <!-- Page d'accueil -->
-            <div class="main-content-page">
-                <h1>BIENVENUE DANS L'ANTRE DU PORO</h1>
-                <p>Découvrez les objets les plus populaires et les meilleures offres pour votre champion préféré !</p>
-                <h2> OBJETS LES PLUS ACHETÉS</h2>
-                <div class="recommended-items-section">
-                    <!--<h2>OBJETS LES PLUS ACHETÉS</h2>-->
-                    <div class="recommended-item">
-                        <div class="item-square-big-item"></div>
+            <!-- FILTRE VERTICAL ET GRILLE D'OBJETS -->
+            <div class="filter-objects-container">
+                <div class="vertical-filter-section">
+                    <img class="filter-square-vertical" id="filter-clear" src="assets/img/logos/cancel.png" alt="Clear Filter">
+                    <div class="AD">
+                        <img class="filter-square-vertical" src="assets/img/logos/Attack_damage_icon.png" alt="Attack Damage">
+                        <img class="filter-square-vertical" src="assets/img/logos/Critical_strike_chance_icon.png" alt="Critical Strike Chance">
+                        <img class="filter-square-vertical" src="assets/img/logos/Attack_speed_icon.png" alt="Attack Speed">
+                        <img class="filter-square-vertical" src="assets/img/logos/Life_steal_icon.png" alt="Life Steal">
+                        <img class="filter-square-vertical" src="assets/img/logos/Armor_penetration_icon.png" alt="Armor Penetration">
                     </div>
-                    <div class="recommended-item">
-                        <div class="item-square-big-item"></div>
+                    <div class="AP">
+                        <img class="filter-square-vertical" src="assets/img/logos/Ability_power_icon.png" alt="Ability Power">
+                        <img class="filter-square-vertical" src="assets/img/logos/Mana_icon.png" alt="Mana">
+                        <img class="filter-square-vertical" src="assets/img/logos/Magic_penetration_icon.png" alt="Magic Penetration">
                     </div>
-                    <div class="recommended-item">
-                        <div class="item-square-big-item"></div>
+                    <div class="Resistances">
+                        <img class="filter-square-vertical" src="assets/img/logos/Health_icon.png" alt="Health">
+                        <img class="filter-square-vertical" src="assets/img/logos/Armor_icon.png" alt="Armor">
+                        <img class="filter-square-vertical" src="assets/img/logos/Magic_resistance_icon.png" alt="Magic Resistance">
                     </div>
+                    <div class="Effects">
+                        <img class="filter-square-vertical" src="assets/img/logos/Cooldown_reduction_icon.png" alt="Cooldown Reduction">
+                        <img class="filter-square-vertical" src="assets/img/logos/Movement_speed_icon.png" alt="Movement Speed">
+                        <img class="filter-square-vertical" src="assets/img/logos/Omnivamp_icon.png" alt="Omnivamp">
+                    </div>
+                </div>
+                <div class="items-grid">
+                    <?php 
+                    // Petite boucle PHP pour simuler plein d'objets et voir la grille
+                    for($i=0; $i<220; $i++) {
+                        echo '<div class="item-square"></div>';
+                    }
+                    ?>
                 </div>
             </div>
         </main>
@@ -182,3 +217,4 @@
     </div>
 
 </body>
+</html>
