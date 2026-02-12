@@ -124,15 +124,36 @@
                 <div class="recommended-items-section">
                     <!--<h2>OBJETS LES PLUS ACHETÉS</h2>-->
                     <div class="recommended-item">
-                        <div class="item-square-big-item"></div>
+                        <div class="rank">
+                            <img class="ranked-item-icon" src="assets/img/logos/kexalted.svg" alt="Exalted rank">
+                            <p>N°2</p>
+                        </div>
+                        <div class="item-square-middle-item"></div>
+                        <h1 class="item-name">Name</h1>
+                        <h1 class="sold-number">Vendu N fois</h1>
                     </div>
                     <div class="recommended-item">
-                        <div class="item-square-big-item"></div>
+                        <div class="rank">
+                            <img class="ranked-item-icon" src="assets/img/logos/ktranscendent.svg" alt="Transcendant rank">
+                            <p>N°1</p>
+                        </div>
+                        <div class="item-square-middle-item"></div>
+                        <h1 class="item-name">Name</h1>
+                        <h1 class="sold-number">Vendu N fois</h1>
                     </div>
                     <div class="recommended-item">
-                        <div class="item-square-big-item"></div>
+                        <div class="rank">
+                            <img class="ranked-item-icon" src="assets/img/logos/kultimate.svg" alt="Ultimate rank">
+                            <p>N°3</p>
+                        </div>
+                        <div class="item-square-middle-item"></div>
+                        <h1 class="item-name">Name</h1>
+                        <h1 class="sold-number">Vendu N fois</h1>
                     </div>
                 </div>
+                <footer>
+                    <p href="nous.php">Qui sommes-nous ?</p>
+                </footer>
             </div>
         </main>
 
@@ -180,5 +201,8 @@
         </div>
 
     </div>
+    <footer>
+        <p>© 2026 Antre du Poro. Tous droits réservés.</p> 
+    </footer>
 
 </body>
