@@ -122,11 +122,23 @@ body {
     box-shadow: 0 10px 10px #ffee56;
 }
 
+#filter-all-logo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.filter-square-horizontal-all-logo {
+    width: 8px;
+    height: 8px;
+    margin: auto;
+    background-color: #ffffff;
+}
+
 /* FILTRE VERTICAL ET GRILLE D'OBJETS */
 .filter-objects-container {
     display: grid;
     grid-template-columns: 0.8fr 9.2fr;
-    gap: 20px;
     height: 100%; 
     overflow: hidden; /* Coupe ce qui dépasse */
     min-height: 0;
@@ -142,6 +154,7 @@ body {
     padding-top: 10px;
     align-items: center;
     overflow-y: auto; /* Scrollbar si trop d'objets */
+    margin-right: 15px;
     
 }
 
@@ -152,11 +165,43 @@ body {
     border: 1px solid #785A28;
     cursor: pointer;
     transition: 0.2s;
+    padding: 4px;
 }
 
 .filter-square-vertical:hover {
     border-color: #ffee56;
     box-shadow: 25px 0 10px #ffee56;
+}
+
+#filter-clear {
+    width: 30px;
+    height: 30px;
+    background-color: #111;
+    border: 2px solid #785A28;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: 0.2s;
+    padding: 4px;
+}
+
+.AD {
+    display: flex;
+    flex-direction: column;
+}
+
+.AP {
+    display: flex;
+    flex-direction: column;
+}
+
+.Resistances {
+    display: flex;
+    flex-direction: column;
+}
+
+.Effects {
+    display: flex;
+    flex-direction: column;
 }
 
 /* LA GRILLE D'OBJETS INTERNE */

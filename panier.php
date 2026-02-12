@@ -114,54 +114,10 @@
             <!-- BARRE DE RECHERCHE ET FILTRE HORIZONTALE -->
             <div class="search-filters">
                 <input type="text" placeholder="Recherchez des objets, des stats ou des mots-clés...">
-                <div class="horizontal-filter-section">
-                    <div class="filter-square-horizontal"></div>
-                    <div class="filter-square-horizontal"></div>
-                    <div class="filter-square-horizontal"></div>
-                    <div class="filter-square-horizontal"></div>
-                    <div class="filter-square-horizontal"></div>
-                    <div class="filter-square-horizontal"></div>
-                    <div class="filter-square-horizontal"></div>
-                    <div class="filter-square-horizontal"></div>
-                </div>
+                
             </div>
 
-            <!-- FILTRE VERTICAL ET GRILLE D'OBJETS -->
-            <div class="filter-objects-container">
-                <div class="vertical-filter-section">
-                    <div class="filter-square-vertical"></div>
-                    <div class="AD">
-                        <div class="filter-square-vertical"></div>
-                        <div class="filter-square-vertical"></div>
-                        <div class="filter-square-vertical"></div>
-                        <div class="filter-square-vertical"></div>
-                        <div class="filter-square-vertical"></div>
-                    </div>
-                    <div class="AP">
-                        <div class="filter-square-vertical"></div>
-                        <div class="filter-square-vertical"></div>
-                        <div class="filter-square-vertical"></div>
-                    </div>
-                    <div class="Resistance">
-                        <div class="filter-square-vertical"></div>
-                        <div class="filter-square-vertical"></div>
-                        <div class="filter-square-vertical"></div>
-                    </div>
-                    <div class="Effects">
-                        <div class="filter-square-vertical"></div>
-                        <div class="filter-square-vertical"></div>
-                        <div class="filter-square-vertical"></div>
-                    </div>
-                </div>
-                <div class="items-grid">
-                    <?php 
-                    // Petite boucle PHP pour simuler plein d'objets et voir la grille
-                    for($i=0; $i<220; $i++) {
-                        echo '<div class="item-square"></div>';
-                    }
-                    ?>
-                </div>
-            </div>
+            
         </main>
 
         <!-- SECTION DE DROITE AVEC LES DÉTAILS DE L'OBJET -->
