@@ -13,7 +13,7 @@
         <div class="background-image">
             <div class="form-container">
                 <h1>Connexion</h1>
-                <form action="connexion.php" method="post">
+                <form action="index.php" method="post">
                     <input type="text" name="username" placeholder="Nom d'utilisateur" required>
                     <input type="password" name="password" placeholder="Mot de passe" required>
                     <div class="button-con-insc" onclick="this.closest('form').requestSubmit()">
