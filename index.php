@@ -116,8 +116,23 @@
                 <input type="text" placeholder="Recherchez des objets, des stats ou des mots-clés...">
             </div>
 
-            <!-- FILTRE VERTICAL ET GRILLE D'OBJETS -->
-            <div class="filter-objects-container">
+            <!-- Page d'accueil -->
+            <div class="main-content-page">
+                <h1>BIENVENUE DANS L'ANTRE DU PORO</h1>
+                <p>Découvrez les objets les plus populaires et les meilleures offres pour votre champion préféré !</p>
+                <h2> OBJETS LES PLUS ACHETÉS</h2>
+                <div class="recommended-items-section">
+                    <!--<h2>OBJETS LES PLUS ACHETÉS</h2>-->
+                    <div class="recommended-item">
+                        <div class="item-square-big-item"></div>
+                    </div>
+                    <div class="recommended-item">
+                        <div class="item-square-big-item"></div>
+                    </div>
+                    <div class="recommended-item">
+                        <div class="item-square-big-item"></div>
+                    </div>
+                </div>
             </div>
         </main>
 

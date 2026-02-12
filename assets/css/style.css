@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    scrollbar-color: ;
 }
 
 body {
@@ -102,6 +103,46 @@ body {
     padding: 5px;
 }
 
+/* --- __________________________________________________ZONE CENTRALE (MAIN) - PAGE D'ACCUEIL_________________________________________________ --- */
+.main-content-page{
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    overflow-y: auto;
+    overflow: hidden;;
+}
+
+.recommended-items-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.recommended-item {
+    width: auto;
+    height: 500px;
+    cursor: pointer;
+    transition: 0.2s;
+    margin: 10px;
+    border-radius: inner 20px;
+    display: flex;
+    flex-direction: column;
+    background-image: url('../img/logos/po-offer-card-back.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.recommended-item:hover { 
+    border-color: #0ACBE6; 
+    box-shadow: 0 0 10px #0ACBE6,
+        inset 0 0 15px #0ACBE6;
+}
+
+
+/* _____________________________Page All Items _____________________________ */
 .horizontal-filter-section {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 4fr;
