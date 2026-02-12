@@ -12,6 +12,12 @@
     <div class="lol-shop-window">
         <!-- SECTION DE GAUCHE AVEC LES CONSOMMABLES ET LES BOTTES -->
         <div class="shop-sidebar-left">
+            <!-- PROFIL-->
+            <div class="profile-section">
+                <a href="connexion.php" class="profile-icon">
+                    <img src="assets/img/logos/lol_icon.png" alt="Profil Icon">
+                </a>
+            </div>
             <!-- CONSOMMABLES -->
             <div class="sidebar-block-consumables">
 

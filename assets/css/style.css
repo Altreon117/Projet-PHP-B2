@@ -40,7 +40,7 @@ body > footer {
     color: #F0E6D2; 
     text-align: center;
     z-index: 100;
-    height: 30px;
+    height: 40px;
     font-size: 18px;
 }
 
@@ -64,6 +64,40 @@ body > footer {
     padding: 10px;
     gap: 20px;
 }
+
+/* --- PROFIL --- */
+.profile-section {
+    border: 2px solid #785A28;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.3);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-icon {
+    background-image: url('../img/logos/meter_frame.png'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    background-color: #092b42;
+    border-radius: 100%;
+    text-decoration: none;
+}
+
+.profile-icon img {
+    width: 140px;
+    height: auto;
+    margin: auto;
+    padding-top: 8px;
+}
+
+
 /* --- BLOCS DE LA SIDEBAR --- */
 .sidebar-block-consumables {
     display: grid;
@@ -447,4 +481,120 @@ body > footer {
     box-shadow: 0 0 15px rgba(10, 203, 230, 0.3),
         inset 0 0 35px rgba(10, 203, 230, 0.3);
     color: #0ACBE6;
+}
+
+
+
+/* --- _______________________________________________________PAGE CONNEXION ET INSCRIPTION_____________________________________________________ --- */
+.lol-con-insc-window {
+    width: 95%; 
+    max-width: 1400px;
+    height: 90vh; 
+    background-color: #010a13d9;
+    border: 4px solid #785A28;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+
+
+.background-image {
+    background-image: url('../img/logos/loading-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0; /* Assure que l'image de fond est derrière le formulaire */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container {
+    background-color: #111;
+    border: 3px solid #785A28;
+    padding: 30px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    z-index: 1; /* Assure que le formulaire est au-dessus de l'image de fond */
+    border-radius: 20px;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.form-container input {
+    background-color: #111;
+    border: 1px solid #785A28;
+    color: #C8AA6E;
+    width: 100%;
+    height: 30px;
+    margin-bottom: 20px;
+}
+
+.button-con-insc {
+    position: relative;
+    width: 250px;
+    height: auto;
+    margin: 20px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+
+.button-con-insc img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: auto;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.button-con-insc a {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    font-size: 20px;
+    color: #8fe8f8;
+    font-weight: bold;
+}
+
+.button-con-insc img:hover {
+    color: #0ACBE6;
+    text-shadow: 0 0 10px #0ACBE6;
+}
+
+.button-con-insc :hover {
+    color: #0ACBE6;
+    text-shadow: 0 0 10px #0ACBE6;
+}
+
+.texte-to-insc {
+    color: #F0E6D2;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 30px;
 }
