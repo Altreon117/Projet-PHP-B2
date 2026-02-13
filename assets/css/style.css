@@ -176,11 +176,26 @@ body > footer {
     overflow-y: auto;
 }
 
+.main-content-page header {
+    font-size: 32px;
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 10px;
+    background-image: url('../img/logos/npe-ft-league-button-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+}
+
 .recommended-items-section {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr ;
     margin-top: 15px;
     width: 100%;
+    margin-bottom: 100px;
 }
 
 .recommended-item {
@@ -287,6 +302,7 @@ body > footer {
     cursor: pointer;
     transition: 0.2s;
     padding: 4px;
+    margin: 2px;
 }
 
 .filter-square-vertical:hover {

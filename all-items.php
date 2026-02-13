@@ -12,6 +12,12 @@
     <div class="lol-shop-window">
         <!-- SECTION DE GAUCHE AVEC LES CONSOMMABLES ET LES BOTTES -->
         <div class="shop-sidebar-left">
+            <!-- PROFIL-->
+            <div class="profile-section">
+                <a href="connexion.php" class="profile-icon">
+                    <img src="assets/img/logos/lol_icon.png" alt="Profil Icon">
+                </a>
+            </div>
             <!-- CONSOMMABLES -->
             <div class="sidebar-block-consumables">
 
@@ -151,8 +157,10 @@
                     </div>
                     <div class="Resistances">
                         <img class="filter-square-vertical" src="assets/img/logos/Health_icon.png" alt="Health">
+                        <img class="filter-square-vertical" src="assets/img/logos/Health_regeneration_icon.png" alt="Health Regeneration">
                         <img class="filter-square-vertical" src="assets/img/logos/Armor_icon.png" alt="Armor">
                         <img class="filter-square-vertical" src="assets/img/logos/Magic_resistance_icon.png" alt="Magic Resistance">
+                        <img class="filter-square-vertical" src="assets/img/logos/Tenacity_icon.png" alt="Tenacity">
                     </div>
                     <div class="Effects">
                         <img class="filter-square-vertical" src="assets/img/logos/Cooldown_reduction_icon.png" alt="Cooldown Reduction">

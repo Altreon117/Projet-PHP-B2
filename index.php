@@ -124,7 +124,8 @@
 
             <!-- Page d'accueil -->
             <div class="main-content-page">
-                <h1>BIENVENUE DANS L'ANTRE DU PORO</h1>
+                <header>ANTRE DU PORO</header>
+                <h1>Bienvenue Dans L'Antre Du Poro</h1>
                 <p>Découvrez les objets les plus populaires et les meilleures offres pour votre champion préféré !</p>
                 <h2> OBJETS LES PLUS ACHETÉS</h2>
                 <div class="recommended-items-section">
