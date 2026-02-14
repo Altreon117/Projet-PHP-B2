@@ -151,7 +151,7 @@
                     <div class ="item-header-text">
                         <h2>Coiffe de Rabadon</h2>
                         <div class="price">
-                            <div class="poro-gold-icon"></div>
+                            <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Poro Gold Icon">
                             <p class="gold-cost">3600</p>
                         </div>
                     </div>
@@ -170,6 +170,9 @@
         </div>
 
     </div>
+    <footer>
+        <p>© 2026 Antre du Poro. Tous droits réservés.</p> 
+    </footer>
 
 </body>
 </html>

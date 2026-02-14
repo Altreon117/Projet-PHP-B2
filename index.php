@@ -126,14 +126,16 @@
             <div class="main-content-page">
                 <header>ANTRE DU PORO</header>
                 <h1>Bienvenue Dans L'Antre Du Poro</h1>
-                <p>Découvrez les objets les plus populaires et les meilleures offres pour votre champion préféré !</p>
+                <p class="intro">Découvrez les objets les plus populaires et les meilleures offres pour votre champion préféré !
+                Avec l'Antre du Poro, découvrez tous les détails des objets, comparez les builds et préparez-vous à dominer la Faille de l'Invocateur !</p>
+                </p>
                 <h2> OBJETS LES PLUS ACHETÉS</h2>
                 <div class="recommended-items-section">
                     <!--<h2>OBJETS LES PLUS ACHETÉS</h2>-->
                     <div class="recommended-item">
                         <div class="rank">
                             <img class="ranked-item-icon" src="assets/img/logos/kexalted.svg" alt="Exalted rank">
-                            <p>N°2</p>
+                            <p class="rank-number">N°2</p>
                         </div>
                         <div class="item-square-middle-item"></div>
                         <h1 class="item-name">Name</h1>
@@ -142,7 +144,7 @@
                     <div class="recommended-item">
                         <div class="rank">
                             <img class="ranked-item-icon" src="assets/img/logos/ktranscendent.svg" alt="Transcendant rank">
-                            <p>N°1</p>
+                            <p class="rank-number">N°1</p>
                         </div>
                         <div class="item-square-middle-item"></div>
                         <h1 class="item-name">Name</h1>
@@ -151,15 +153,71 @@
                     <div class="recommended-item">
                         <div class="rank">
                             <img class="ranked-item-icon" src="assets/img/logos/kultimate.svg" alt="Ultimate rank">
-                            <p>N°3</p>
+                            <p class="rank-number">N°3</p>
                         </div>
                         <div class="item-square-middle-item"></div>
                         <h1 class="item-name">Name</h1>
                         <h1 class="sold-number">Vendu N fois</h1>
                     </div>
                 </div>
+                <div class="news-section">
+                    <h2 class="news-title">DERNIÈRES ANNONCES</h2>
+                    <div class="news-articles">
+                        <article class="news-article">
+                            <div class="article-video-container">
+                                <iframe 
+                                    width="560" 
+                                    height="315" 
+                                    src="https://www.youtube.com/embed/-pvUbeV119Y" 
+                                    title="YouTube video player" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="article-content">
+                                <h3 class="article-title">Le renouveau du printemps : L'amitié fleurit sur la Faille au Patch 26.03</h3>
+                                <p class="article-description">Dévoilé le 04 février 2026, cette annonce marque le retour du Festival Lunaire avec une esthétique poétique. Le trailer souligne que « l'amitié renaît au premier souffle du printemps », introduisant une première vague de festivités dès le patch 26.03. La grosse annonce concerne la suite : au patch 26.04, une collection complète de skins « Pétales de Printemps » sera disponible pour Yasuo, Katarina, Jayce, Camille et Lillia. C'est également à cette occasion que les cartes de « Votre Boutique » ont été mises à jour avec un design floral et printanier.</p>
+                            </div>
+                        </article>
+                        <article class="news-article">
+                            <div class="article-video-container">
+                                <iframe 
+                                    width="560" 
+                                    height="315" 
+                                    src="https://www.youtube.com/embed/e3D7Fj1PsWk" 
+                                    title="YouTube video player" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="article-content">
+                                <h3 class="article-title">Salvation : L'espoir de Demacia face à l'obscurité (Cinématique Saison 1)</h3>
+                                <p class="article-description">Sortie le 07 janvier 2026, cette cinématique épique portée par le titre « Salvation » (en featuring avec Forts) a lancé officiellement le premier Split de l'année. Elle met en scène une Demacia au bord du gouffre, illustrant le sacrifice héroïque de Xin Zhao et l'intervention de Quinn, Sona et Shyvana pour protéger le royaume contre une invasion imminente. Plus qu'une simple vidéo, ce trailer pose les bases narratives de l'année 2026, confirmant le thème de la « Justice » et de la « Lumière » qui imprègne actuellement la Faille de l'Invocateur.</p>
+                            </div>
+                        </article>
+                        <article class="news-article">
+                            <div class="article-video-container">
+                                <iframe 
+                                    width="560" 
+                                    height="315" 
+                                    src="https://www.youtube.com/embed/xqlxrOuVxxE" 
+                                    title="YouTube video player" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="article-content">
+                                <h3 class="article-title">La Révolution du Gameplay : Les Quêtes de Rôle</h3>
+                                <p class="article-description">Publiée le 01 décembre 2025 pour préparer le terrain, cette mise à jour des développeurs a révélé les changements structurels les plus profonds de l'histoire du jeu. Riot y a présenté les « Quêtes de Rôle », un système permettant notamment aux ADC de débloquer un 7ème emplacement d'inventaire dédié aux bottes après avoir accompli leurs objectifs. L'annonce a également détaillé le passage au niveau 20 pour les Toplaners et l'arrivée des bottes de palier 3 pour les Midlaners, définissant ainsi la nouvelle ère stratégique dans laquelle les joueurs évoluent depuis le mois de janvier.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
                 <footer>
-                    <p href="nous.php">Qui sommes-nous ?</p>
+                    <a href="credit.php" class="nous-link">Qui sommes-nous ?</a>
                 </footer>
             </div>
         </main>
@@ -189,7 +247,7 @@
                     <div class ="item-header-text">
                         <h2>Coiffe de Rabadon</h2>
                         <div class="price">
-                            <div class="poro-gold-icon"></div>
+                            <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Poro Gold Icon">
                             <p class="gold-cost">3600</p>
                         </div>
                     </div>

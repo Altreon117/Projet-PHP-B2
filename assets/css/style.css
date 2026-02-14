@@ -151,6 +151,10 @@ body > footer {
         inset 0 0 15px #0ACBE6;
 }
 
+.intro {
+    text-align: center;
+}
+
 /* BARRE DE RECHERCHE ET FILTRE HORIZONTALE */
 .search-filters {
     border-bottom: 2px solid #785A28;
@@ -205,7 +209,7 @@ body > footer {
     transition: 0.2s;
     margin: 10px;
     display: grid;
-    grid-template-rows: 1fr 3fr 1fr 1fr;
+    grid-template-rows: 1fr 3fr 1fr 1fr 1fr;
     justify-items: center; 
     align-items: center;
     text-align: center;
@@ -226,6 +230,25 @@ body > footer {
     height: auto; 
 }
 
+.rank {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rank-number {
+    font-size: 24px;
+    color: #C8AA6E;
+    font-weight: bold;
+    border: 1px solid #785A28;
+    padding: 4px;
+    border-radius: 40%; 
+    background-color: #111; 
+    width: 50%;
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
 .item-square-middle-item {
     width: 100%;
     max-width: 160px;
@@ -236,6 +259,116 @@ body > footer {
     margin: 15px;
 }
 
+.item-name {
+    margin-top: 0;
+}
+
+.sold-number {
+    font-size: 18px;
+}
+
+/* --- NEWS/ARTICLES SECTION --- */
+.news-section {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 100px;
+}
+
+.news-title {
+    color: #C8AA6E;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 2px solid #785A28;
+    padding-bottom: 15px;
+}
+
+.news-articles {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* --- ARTICLE CARD --- */
+.news-article {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid #785A28;
+    padding: 20px;
+    transition: all 0.3s ease;
+    align-items: start;
+}
+
+.news-article:hover {
+    border-color: #0ACBE6;
+    box-shadow: 0 0 15px rgba(10, 203, 230, 0.3),
+                inset 0 0 15px rgba(10, 203, 230, 0.1);
+    background-color: rgba(10, 203, 230, 0.05);
+}
+
+/* --- VIDEO CONTAINER --- */
+.article-video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    border: 2px solid #785A28;
+    background-color: #111;
+}
+
+.article-video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* --- ARTICLE CONTENT --- */
+.article-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.article-title {
+    color: #F0E6D2;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin: 0;
+    color: #C8AA6E;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+.article-description {
+    color: #D0CACE;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+    text-align: justify;
+    flex-grow: 1;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 1200px) {
+    .news-article {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
+
+.nous-link {
+    text-decoration: none;
+    color: #C8AA6E;
+}
 
 /* _____________________________Page All Items _____________________________ */
 .horizontal-filter-section {
@@ -459,8 +592,6 @@ body > footer {
 .poro-gold-icon {
     width: 20px;
     height: 20px;
-    background-color: #111;
-    border: 1px solid #c09a59;
 }
 
 .gold-cost {
