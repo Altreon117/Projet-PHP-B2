@@ -114,41 +114,73 @@
             <!-- NAVIGATION -->
             <div class="shop-tabs">
                 <a href="index.php" >ACCUEIL</a>
-                <a href="all-items.php" >TOUS LES OBJETS</a>
-                <a href="panier.php" id="active">PANIER</a>
+                <a href="all-items.php" id="active">TOUS LES OBJETS</a>
+                <a href="panier.php">PANIER</a>
             </div>
             <!-- BARRE DE RECHERCHE ET FILTRE HORIZONTALE -->
             <div class="search-filters">
                 <input type="text" placeholder="Recherchez des objets, des stats ou des mots-clés...">
-            </div>
-            <!-- PANNIER -->
-            <div class="panier-section">
-                <div class="item-spot-section">
-                    <div class="item6-spot">
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
+                <div class="horizontal-filter-section">
+                    <div class="filter-square-horizontal" id="filter-all-logo">
+                        <!-- 9carré pour formler un logo cube -->
+                        <?php 
+                            for($i=0; $i<9; $i++) {
+                            echo '<div class="filter-square-horizontal-all-logo"></div>';
+                        }
+                        ?>
                     </div>
-                    <div class="item7-adc-spot-section">
-                        <div class="item-spot"></div>
+                    <img class="filter-square-horizontal" src="assets/img/logos/favorite.png" alt="Favorite">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Fighter_Item_item.png" alt="Fighter">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Marksman_Item_item.png" alt="Marksman">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Assassin_Item_item.png" alt="Assassin">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Mage_Item_item.png" alt="Mage">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Support_Item_item.png" alt="Support">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
+                    <img class="filter-square-horizontal" src="assets/img/logos/rp-top-up-nav-resting.svg" alt="New Item" style="background: hidden; border: none;" href="all-items_admin_modif.php">
+                </div>
+            </div>
+
+            <!-- FILTRE VERTICAL ET GRILLE D'OBJETS -->
+            <div class="filter-objects-container">
+                <div class="vertical-filter-section">
+                    <img class="filter-square-vertical" id="filter-clear" src="assets/img/logos/cancel.png" alt="Clear Filter">
+                    <div class="AD">
+                        <img class="filter-square-vertical" src="assets/img/logos/Attack_damage_icon.png" alt="Attack Damage">
+                        <img class="filter-square-vertical" src="assets/img/logos/Critical_strike_chance_icon.png" alt="Critical Strike Chance">
+                        <img class="filter-square-vertical" src="assets/img/logos/Attack_speed_icon.png" alt="Attack Speed">
+                        <img class="filter-square-vertical" src="assets/img/logos/Life_steal_icon.png" alt="Life Steal">
+                        <img class="filter-square-vertical" src="assets/img/logos/Armor_penetration_icon.png" alt="Armor Penetration">
+                    </div>
+                    <div class="AP">
+                        <img class="filter-square-vertical" src="assets/img/logos/Ability_power_icon.png" alt="Ability Power">
+                        <img class="filter-square-vertical" src="assets/img/logos/Mana_icon.png" alt="Mana">
+                        <img class="filter-square-vertical" src="assets/img/logos/Magic_penetration_icon.png" alt="Magic Penetration">
+                    </div>
+                    <div class="Resistances">
+                        <img class="filter-square-vertical" src="assets/img/logos/Health_icon.png" alt="Health">
+                        <img class="filter-square-vertical" src="assets/img/logos/Health_regeneration_icon.png" alt="Health Regeneration">
+                        <img class="filter-square-vertical" src="assets/img/logos/Armor_icon.png" alt="Armor">
+                        <img class="filter-square-vertical" src="assets/img/logos/Magic_resistance_icon.png" alt="Magic Resistance">
+                        <img class="filter-square-vertical" src="assets/img/logos/Tenacity_icon.png" alt="Tenacity">
+                    </div>
+                    <div class="Effects">
+                        <img class="filter-square-vertical" src="assets/img/logos/Cooldown_reduction_icon.png" alt="Cooldown Reduction">
+                        <img class="filter-square-vertical" src="assets/img/logos/Movement_speed_icon.png" alt="Movement Speed">
+                        <img class="filter-square-vertical" src="assets/img/logos/Omnivamp_icon.png" alt="Omnivamp">
                     </div>
                 </div>
-                <div class="others-items-spot">
+                <div class="items-grid">
                     <?php 
-                    // Petite boucle PHP pour simuler plein d'objets et voir le scroll
-                    for($i=0; $i<20; $i++) {
+                    // Petite boucle PHP pour simuler plein d'objets et voir la grille
+                    for($i=0; $i<220; $i++) {
                         echo '<div class="item-square"></div>';
                     }
                     ?>
                 </div>
-                <div class="button-con-insc">
-                    <img type="submit" src="/Projet-PHP-B2/assets/img/logos/find_match_default.png" alt="Acheter" >
-                    <a class="texte-con-insc" >Acheter</a>
-                </div>
-            </div>            
+            </div>
         </main>
 
         <!-- SECTION DE DROITE AVEC LES DÉTAILS DE L'OBJET -->
