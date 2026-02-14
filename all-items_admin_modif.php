@@ -139,7 +139,9 @@
                     <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
                     <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
                     <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
-                    <img class="filter-square-horizontal" src="assets/img/logos/rp-top-up-nav-resting.svg" alt="New Item" style="background: hidden; border: none;" href="all-items_admin_modif.php">
+                    <a href="all-items_admin_modif.php" class="filter-square-no-hover">
+                        <img src="assets/img/logos/rp-top-up-nav-resting.svg" alt="New Item">
+                    </a>
                 </div>
             </div>
 
@@ -184,9 +186,10 @@
         </main>
 
         <!-- SECTION DE DROITE AVEC LES DÉTAILS DE L'OBJET -->
-        <div class="shop-details-panel">
+        <form class="shop-details-panel" action="all-items_admin.php" method="POST">
+
             <div class="builds-into">
-                <h4>DÉBLOQUE</h4>
+                <h4>NOUVEL OBJET</h4>
                 <div class="builds-into-grid">
                     <div class="item-square"></div>
                     <div class="item-square"></div>
@@ -199,32 +202,35 @@
             </div>
 
             <div class="big-item-display">
-                <div class="item-square-big-item"></div>
+                <input type="text" name="image_path" class="hextech-input-image" placeholder="Chemin (ex: assets/img/boots.png)" required>
             </div>
 
             <div class="selected-item-info">
                 <div class="item-info-header">
                     <div class="item-square-little-item"></div>
-                    <div class ="item-header-text">
-                        <h2>Coiffe de Rabadon</h2>
+            
+                    <div class="item-header-text">
+                        <input type="text" name="nom" class="hextech-input-title" placeholder="Nom de l'objet" required>
+                
                         <div class="price">
-                            <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Poro Gold Icon">
-                            <p class="gold-cost">3600</p>
+                            <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Gold">
+                            <input type="number" name="prix" class="hextech-input-gold" placeholder="Prix" required>
                         </div>
                     </div>
                 </div>
-                <div class="description">
-                    <p class="stats">+ 120 Ability Power</p>
-                    <p class="passive">Passive: Increases AP by 35%    
-                        fezfezzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-                        eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                        eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                    </p>
+                <div class="big-description">
+                    <div class="description">
+                        <textarea name="stats" class="hextech-textarea" placeholder="Stats..." required></textarea>
+                    </div>
+                    <div class="description">
+                        <textarea name="description" class="hextech-textarea" placeholder="Description et passif..." required></textarea>
+                    </div>
                 </div>
             </div>
 
-            <button class="btn-purchase">ACHETER</button>
-        </div>
+            <button type="submit" class="btn-purchase btn-create">CRÉER L'OBJET</button>
+
+        </form>
 
     </div>
     <footer>

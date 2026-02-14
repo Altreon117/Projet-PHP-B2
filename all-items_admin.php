@@ -139,7 +139,9 @@
                     <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
                     <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
                     <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
-                    <img class="filter-square-horizontal" src="assets/img/logos/rp-top-up-nav-resting.svg" alt="New Item" style="background: hidden; border: none;">
+                    <a href="all-items_admin_modif.php" class="filter-square-no-hover">
+                        <img src="assets/img/logos/rp-top-up-nav-resting.svg" alt="New Item">
+                    </a>
                 </div>
             </div>
 
