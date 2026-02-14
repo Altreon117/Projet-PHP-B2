@@ -8,21 +8,25 @@
 </head>
 
 <body>
-
     <div class="lol-con-insc-window">
-        <div class="background-image">
-            <div class="form-container">
-                <h1>Connexion</h1>
-                <form action="index.php" method="post">
-                    <input type="text" name="username" placeholder="Nom d'utilisateur" required>
-                    <input type="password" name="password" placeholder="Mot de passe" required>
-                    <div class="button-con-insc" onclick="this.closest('form').requestSubmit()">
-                        <img type="submit" src="/Projet-PHP-B2/assets/img/logos/find_match_default.png" alt="Se connecter" >
-                        <a class="texte-con-insc" >Connexion</a>
-                    </div>
-                    <a class="texte-to-insc" href="inscription.php">Pas encore de compte ? Inscrivez-vous </a>
-                </form>
+        <div class="background-image"></div>
+        <div class="credits-box">
+            <h1>CRÉDITS</h1>
+            <div class="pp-container">
+                <div class="credit-member">
+                    <img src="/Projet-PHP-B2/assets/img/pp/raph.png" alt="Poro Raph" class="pp-image">
+                    <p class="member-name">Raphaël P.</p>
+                </div>
+                <div class="credit-member">
+                    <img src="/Projet-PHP-B2/assets/img/pp/matteo.png" alt="Poro Matteo" class="pp-image">
+                    <p class="member-name">Matteo P.</p>
+                </div>
+                <div class="credit-member">
+                    <img src="/Projet-PHP-B2/assets/img/pp/lucie.png" alt="Poro Lucie" class="pp-image">
+                    <p class="member-name">Lucie B.</p>
+                </div>
             </div>
+            <p class="credits-text">Ce projet a été réalisé dans le cadre du projet de PHP de B2.</p>
         </div>
     </div>
     <footer>

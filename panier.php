@@ -133,7 +133,7 @@
                         <div class="item-spot"></div>
                     </div>
                     <div class="item7-adc-spot-section">
-                        <div class="item-spot"></div>
+                        <div class="item-spot" ></div>
                     </div>
                 </div>
                 <div class="others-items-spot">
