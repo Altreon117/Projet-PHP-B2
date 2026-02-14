@@ -226,6 +226,10 @@
                         <textarea name="description" class="hextech-textarea" placeholder="Description et passif..." required></textarea>
                     </div>
                 </div>
+                <div class="quantity-container">
+                    <label for="quantite">Quantité disponible</label>
+                    <input type="number" name="quantite" class="hextech-input-quantity" placeholder="Quantité" min="1" required>
+                </div>
             </div>
 
             <button type="submit" class="btn-purchase btn-create">CRÉER L'OBJET</button>

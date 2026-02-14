@@ -144,9 +144,22 @@
                     }
                     ?>
                 </div>
+                <div class="panier-summary">
+                    <div class="summary-row">
+                        <span class="summary-label">Articles</span>
+                        <span class="summary-value">0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Total</span>
+                        <span class="summary-value">
+                            <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Poro Gold Icon">
+                            0
+                        </span>
+                    </div>
+                </div>
                 <div class="button-con-insc">
                     <img type="submit" src="/Projet-PHP-B2/assets/img/logos/find_match_default.png" alt="Acheter" >
-                    <a class="texte-con-insc" >Acheter</a>
+                    <a class="texte-con-insc" >Commander</a>
                 </div>
             </div>            
         </main>

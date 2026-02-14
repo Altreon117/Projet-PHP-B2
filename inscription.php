@@ -15,7 +15,9 @@
                 <h1>Inscription</h1>
                 <form action="index.php" method="post">
                     <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+                    <input type="email" name="email" placeholder="Adresse email" required>
                     <input type="password" name="password" placeholder="Mot de passe" required>
+                    <input type="password" name="password_confirm" placeholder="Confirmez le mot de passe" required>
                     <div class="button-con-insc" onclick="this.closest('form').requestSubmit()">
                         <img type="submit" src="/Projet-PHP-B2/assets/img/logos/find_match_default.png" alt="S'inscrire" >
                         <a class="texte-con-insc" >Inscription</a>
