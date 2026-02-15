@@ -123,11 +123,11 @@
                 <div class="horizontal-filter-section">
                     <div class="filter-square-horizontal" id="filter-all-logo" data-filter-value="all">
                         <!-- 9carré pour formler un logo cube -->
-                        <?php 
-                            for($i=0; $i<9; $i++) {
-                            echo '<div class="filter-square-horizontal-all-logo"></div>';
-                        }
-                        ?>
+                        <?php
+for ($i = 0; $i < 9; $i++) {
+    echo '<div class="filter-square-horizontal-all-logo"></div>';
+}
+?>
                     </div>
                     <img class="filter-square-horizontal" data-filter-value="favorite" src="assets/img/logos/favorite.png" alt="Favorite">
                     <img class="filter-square-horizontal" data-filter-value="fighter" src="assets/img/logos/Legendary_Fighter_Item_item.png" alt="Fighter">
@@ -169,28 +169,41 @@
                     </div>
                 </div>
                 <div class="items-grid">
-                    <?php 
-                    // Items avec roles et stats pour le filtrage
-                    $items = [
-                        ['role' => 'fighter', 'stats' => 'ad health armor'],
-                        ['role' => 'marksman', 'stats' => 'ad crit attackspeed'],
-                        ['role' => 'assassin', 'stats' => 'ad movespeed arpenpen'],
-                        ['role' => 'mage', 'stats' => 'ap mana magpen cdr'],
-                        ['role' => 'tank', 'stats' => 'health armor magres tenacity'],
-                        ['role' => 'support', 'stats' => 'health cdr mana'],
-                    ];
-                    
-                    // Remplissage pour atteindre 220 items
-                    while(count($items) < 220) {
-                        $items[] = $items[count($items) % 6];
-                    }
-                    
-                    foreach($items as $item) {
-                        $role = strtolower($item['role']);
-                        $stats = strtolower($item['stats']);
-                        echo '<div class="item-square" data-role="' . $role . '" data-stats="' . $stats . '"></div>';
-                    }
-                    ?>
+                    <?php
+// Items avec roles et stats pour le filtrage
+$items = [
+    ['role' => 'fighter', 'stats' => 'ad health armor'],
+    ['role' => 'marksman', 'stats' => 'ad crit attackspeed'],
+    ['role' => 'assassin', 'stats' => 'ad movespeed arpenpen'],
+    ['role' => 'mage', 'stats' => 'ap mana magpen cdr'],
+    ['role' => 'tank', 'stats' => 'health armor magres tenacity'],
+    ['role' => 'support', 'stats' => 'health cdr mana'],
+];
+
+// Remplissage pour atteindre 220 items
+while (count($items) < 220) {
+    $items[] = $items[count($items) % 6];
+}
+
+$i = 0;
+foreach ($items as $item) {
+    $i++;
+    $role = strtolower($item['role']);
+    $stats = strtolower($item['stats']);
+    // Génération de données fictives pour la démo JS
+    $id = 'item_' . $i;
+    $price = rand(300, 3600);
+    $name = "Objet " . ucfirst($role) . " " . $i;
+
+    echo '<div class="item-square" 
+                                data-role="' . $role . '" 
+                                data-stats="' . $stats . '"
+                                data-id="' . $id . '"
+                                data-name="' . $name . '"
+                                data-price="' . $price . '"
+                              ></div>';
+}
+?>
                 </div>
             </div>
         </main>
@@ -218,20 +231,16 @@
                 <div class="item-info-header">
                     <div class="item-square-little-item"></div>
                     <div class ="item-header-text">
-                        <h2>Coiffe de Rabadon</h2>
+                        <h2 id="details-name">Sélectionnez un objet</h2>
                         <div class="price">
                             <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Poro Gold Icon">
-                            <p class="gold-cost">3600</p>
+                            <p class="gold-cost" id="details-price">-</p>
                         </div>
                     </div>
                 </div>
                 <div class="description">
-                    <p class="stats">+ 120 Ability Power</p>
-                    <p class="passive">Passive: Increases AP by 35%    
-                        fezfezzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-                        eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                        eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                    </p>
+                    <p class="stats" id="details-stats">Stats...</p>
+                    <p class="passive">Passive: ...</p>
                 </div>
             </div>
 
@@ -243,8 +252,10 @@
         <p>© 2026 Antre du Poro. Tous droits réservés.</p> 
     </footer>
 
+<script src="/Projet-PHP-B2/assets/js/cart.js" defer></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
 
     // 1. GESTION DES FILTRES HORIZONTAUX (Rôles) - Type "Radio"
     const roleFilters = document.querySelectorAll('.filter-square-horizontal[data-filter-value]');

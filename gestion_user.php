@@ -32,7 +32,7 @@
                             <td class="user-password">********</td>
                             <td class="user-role">admin</td>
                             <td class="user-action">
-                                <button type="button" class="user-action-btn" aria-label="Supprimer">
+                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
                                     <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
                                 </button>
                             </td>
@@ -44,7 +44,7 @@
                             <td class="user-password">********</td>
                             <td class="user-role">user</td>
                             <td class="user-action">
-                                <button type="button" class="user-action-btn" aria-label="Supprimer">
+                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
                                     <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
                                 </button>
                             </td>
@@ -56,7 +56,7 @@
                             <td class="user-password">********</td>
                             <td class="user-role">user</td>
                             <td class="user-action">
-                                <button type="button" class="user-action-btn" aria-label="Supprimer">
+                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
                                     <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
                                 </button>
                             </td>
@@ -68,7 +68,7 @@
                             <td class="user-password">********</td>
                             <td class="user-role">user</td>
                             <td class="user-action">
-                                <button type="button" class="user-action-btn" aria-label="Supprimer">
+                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
                                     <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
                                 </button>
                             </td>
@@ -80,7 +80,7 @@
                             <td class="user-password">********</td>
                             <td class="user-role">user</td>
                             <td class="user-action">
-                                <button type="button" class="user-action-btn" aria-label="Supprimer">
+                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
                                     <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
                                 </button>
                             </td>
@@ -92,7 +92,7 @@
                             <td class="user-password">********</td>
                             <td class="user-role">moderator</td>
                             <td class="user-action">
-                                <button type="button" class="user-action-btn" aria-label="Supprimer">
+                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
                                     <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
                                 </button>
                             </td>
@@ -104,7 +104,7 @@
                             <td class="user-password">********</td>
                             <td class="user-role">user</td>
                             <td class="user-action">
-                                <button type="button" class="user-action-btn" aria-label="Supprimer">
+                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
                                     <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
                                 </button>
                             </td>
@@ -116,7 +116,7 @@
                             <td class="user-password">********</td>
                             <td class="user-role">admin</td>
                             <td class="user-action">
-                                <button type="button" class="user-action-btn" aria-label="Supprimer">
+                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
                                     <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
                                 </button>
                             </td>
@@ -128,7 +128,7 @@
                             <td class="user-password">********</td>
                             <td class="user-role">user</td>
                             <td class="user-action">
-                                <button type="button" class="user-action-btn" aria-label="Supprimer">
+                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
                                     <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
                                 </button>
                             </td>
@@ -140,7 +140,7 @@
                             <td class="user-password">********</td>
                             <td class="user-role">user</td>
                             <td class="user-action">
-                                <button type="button" class="user-action-btn" aria-label="Supprimer">
+                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
                                     <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
                                 </button>
                             </td>
@@ -154,5 +154,6 @@
         <p>© 2026 Antre du Poro. Tous droits reserves.</p>
     </footer>
 
+    <script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>
 </body>
 </html>

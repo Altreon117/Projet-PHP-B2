@@ -137,23 +137,46 @@
                     </div>
                 </div>
                 <div class="others-items-spot">
-                    <?php 
-                    // Petite boucle PHP pour simuler plein d'objets et voir le scroll
-                    for($i=0; $i<20; $i++) {
-                        echo '<div class="item-square"></div>';
-                    }
-                    ?>
+                    <?php
+$cartItems = [
+    ['name' => 'Potion de soin', 'price' => 50, 'img' => 'assets/img/consumables/Health_Potion_item.png', 'qty' => 3],
+    ['name' => 'Bottes de vitesse', 'price' => 300, 'img' => 'assets/img/boots/Boots_item.png', 'qty' => 1],
+    ['name' => 'Coiffe de Rabadon', 'price' => 3600, 'img' => 'assets/img/logos/Legendary_Mage_Item_item.png', 'qty' => 1],
+];
+
+foreach ($cartItems as $index => $item) {
+    $id = 'cart_item_' . $index;
+    echo '<div class="cart-item-row" data-id="' . $id . '" data-price="' . $item['price'] . '">
+                                <div class="cart-item-info">
+                                    <div class="cart-item-img-container">
+                                        <img src="' . $item['img'] . '" alt="' . $item['name'] . '" class="cart-item-img">
+                                    </div>
+                                    <div class="cart-item-details">
+                                        <span class="cart-item-name">' . $item['name'] . '</span>
+                                        <span class="cart-item-unit-price">' . $item['price'] . ' PO</span>
+                                    </div>
+                                </div>
+                                <div class="cart-item-actions">
+                                    <button class="qty-btn minus" data-action="decrease">-</button>
+                                    <input type="number" class="qty-input" value="' . $item['qty'] . '" min="1" readonly>
+                                    <button class="qty-btn plus" data-action="increase">+</button>
+                                    <span class="cart-item-total-price">' . ($item['price'] * $item['qty']) . ' PO</span>
+                                    <button class="remove-btn" title="Retirer">X</button>
+                                </div>
+                            </div>';
+}
+?>
                 </div>
                 <div class="panier-summary">
                     <div class="summary-row">
                         <span class="summary-label">Articles</span>
-                        <span class="summary-value">0</span>
+                        <span class="summary-value" id="cart-total-count">0</span>
                     </div>
                     <div class="summary-row">
                         <span class="summary-label">Total</span>
                         <span class="summary-value">
                             <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Poro Gold Icon">
-                            0
+                            <span id="cart-total-price">0</span>
                         </span>
                     </div>
                     <button type="button" class="clear-cart-btn">Vider le panier</button>
@@ -213,5 +236,6 @@
         <p>© 2026 Antre du Poro. Tous droits réservés.</p> 
     </footer>
 
+    <script src="/Projet-PHP-B2/assets/js/cart-interactions.js" defer></script>
 </body>
 </html>

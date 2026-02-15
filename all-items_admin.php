@@ -126,11 +126,11 @@
                 <div class="horizontal-filter-section">
                     <div class="filter-square-horizontal" id="filter-all-logo" data-filter-value="all">
                         <!-- 9carré pour formler un logo cube -->
-                        <?php 
-                            for($i=0; $i<9; $i++) {
-                            echo '<div class="filter-square-horizontal-all-logo"></div>';
-                        }
-                        ?>
+                        <?php
+for ($i = 0; $i < 9; $i++) {
+    echo '<div class="filter-square-horizontal-all-logo"></div>';
+}
+?>
                     </div>
                     <img class="filter-square-horizontal" data-filter-value="favorite" src="assets/img/logos/favorite.png" alt="Favorite">
                     <img class="filter-square-horizontal" data-filter-value="fighter" src="assets/img/logos/Legendary_Fighter_Item_item.png" alt="Fighter">
@@ -178,28 +178,28 @@
                     </div>
                 </div>
                 <div class="items-grid">
-                    <?php 
-                    // Items avec roles et stats pour le filtrage
-                    $items = [
-                        ['role' => 'fighter', 'stats' => 'ad health armor'],
-                        ['role' => 'marksman', 'stats' => 'ad crit attackspeed'],
-                        ['role' => 'assassin', 'stats' => 'ad movespeed arpenpen'],
-                        ['role' => 'mage', 'stats' => 'ap mana magpen cdr'],
-                        ['role' => 'tank', 'stats' => 'health armor magres tenacity'],
-                        ['role' => 'support', 'stats' => 'health cdr mana'],
-                    ];
-                    
-                    // Remplissage pour atteindre 220 items
-                    while(count($items) < 220) {
-                        $items[] = $items[count($items) % 6];
-                    }
-                    
-                    foreach($items as $item) {
-                        $role = strtolower($item['role']);
-                        $stats = strtolower($item['stats']);
-                        echo '<div class="item-square" data-role="' . $role . '" data-stats="' . $stats . '"></div>';
-                    }
-                    ?>
+                    <?php
+// Items avec roles et stats pour le filtrage
+$items = [
+    ['role' => 'fighter', 'stats' => 'ad health armor'],
+    ['role' => 'marksman', 'stats' => 'ad crit attackspeed'],
+    ['role' => 'assassin', 'stats' => 'ad movespeed arpenpen'],
+    ['role' => 'mage', 'stats' => 'ap mana magpen cdr'],
+    ['role' => 'tank', 'stats' => 'health armor magres tenacity'],
+    ['role' => 'support', 'stats' => 'health cdr mana'],
+];
+
+// Remplissage pour atteindre 220 items
+while (count($items) < 220) {
+    $items[] = $items[count($items) % 6];
+}
+
+foreach ($items as $item) {
+    $role = strtolower($item['role']);
+    $stats = strtolower($item['stats']);
+    echo '<div class="item-square" data-role="' . $role . '" data-stats="' . $stats . '"></div>';
+}
+?>
                 </div>
             </div>
         </main>
@@ -213,7 +213,7 @@
                     <a href="all-items_admin_modif.php" class="edit-link">
                         <img src="assets/img/logos/pen.png" alt="Edit-Icon" >
                     </a>
-                    <img src="assets/img/logos/trash.svg" alt="Trash-Icon" class="trash-icon">
+                    <img src="assets/img/logos/trash.svg" alt="Trash-Icon" class="trash-icon btn-delete-confirm" style="cursor: pointer;">
                 </div>
                 <div class="builds-into-grid">
                     <div class="item-square"></div>
@@ -350,6 +350,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-
+<script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>
 </body>
 </html>

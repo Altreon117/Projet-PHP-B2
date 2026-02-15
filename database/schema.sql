@@ -1,5 +1,5 @@
 -- Table USERS (Utilisateurs et Admins)
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -8,7 +8,7 @@ CREATE TABLE users (
 ) ENGINE=InnoDB;
 
 -- Table ITEMS (Produits)
-CREATE TABLE items (
+CREATE TABLE IF NOT EXISTS items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
     description TEXT,
@@ -16,12 +16,12 @@ CREATE TABLE items (
     stock INT DEFAULT 0,
     nombre_achete INT DEFAULT 0,
     date_publication DATETIME DEFAULT CURRENT_TIMESTAMP,
-    image VARCHAR(255)
+    image VARCHAR(255),
     categorie VARCHAR(50) NOT NULL
 ) ENGINE=InnoDB;
 
 -- Table STOCK (Gestion des quantités)
-CREATE TABLE stock (
+CREATE TABLE IF NOT EXISTS stock (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_item INT NOT NULL,
     quantite INT NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE stock (
 ) ENGINE=InnoDB;
 
 --  Table INVOICE (Factures)
-CREATE TABLE invoice (
+CREATE TABLE IF NOT EXISTS invoice (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_user INT NOT NULL,
     date_transaction DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -41,7 +41,7 @@ CREATE TABLE invoice (
 ) ENGINE=InnoDB;
 
 -- Table ORDERS (Détails des commandes)
-CREATE TABLE orders (
+CREATE TABLE IF NOT EXISTS orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_invoice INT NOT NULL,
     id_user INT NOT NULL,

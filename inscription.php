@@ -31,4 +31,5 @@
         <p>© 2026 Antre du Poro. Tous droits réservés.</p> 
     </footer>
 
+    <script src="/Projet-PHP-B2/assets/js/validation.js" defer></script>
 </body>
