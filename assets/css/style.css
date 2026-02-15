@@ -411,6 +411,25 @@ body > footer {
     box-shadow: 0 10px 10px #ffee56;
 }
 
+/* Style quand un filtre est ACTIF */
+.filter-square-horizontal.selected-filter, 
+.filter-square-vertical.selected-filter {
+    border-color: #ffee56;
+    box-shadow: 0 0 10px #ffee56;
+    opacity: 1;
+}
+
+/* Réduire l'opacité des filtres non sélectionnés pour faire ressortir les actifs */
+.filter-square-horizontal, 
+.filter-square-vertical {
+    opacity: 0.7;
+}
+
+.filter-square-horizontal:hover, 
+.filter-square-vertical:hover {
+    opacity: 1;
+}
+
 /* Bouton nouveau item sans hover */
 .filter-square-no-hover {
     width: 40px;
@@ -1213,4 +1232,22 @@ body > footer {
 .user-action-btn:hover img {
     opacity: 1;
     filter: none;
+}
+
+
+
+/* Style quand un filtre est ACTIF */
+.filter-square-horizontal.selected-filter, 
+.filter-square-vertical.selected-filter {
+    border-color: #ffee56;
+    box-shadow: 0 0 10px #ffee56; /* J'ai harmonisé l'ombre */
+    opacity: 1;
+}
+
+/* Optionnel : réduire un peu l'opacité des filtres non sélectionnés pour faire ressortir les actifs */
+.filter-square-horizontal, .filter-square-vertical {
+    opacity: 0.7; 
+}
+.filter-square-horizontal:hover, .filter-square-vertical:hover {
+    opacity: 1;
 }
