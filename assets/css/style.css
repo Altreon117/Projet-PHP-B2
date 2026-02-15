@@ -117,6 +117,26 @@ body > footer {
     text-align: center;
 }
 
+.sidebar-block-admin {
+    margin-top: auto;
+    border: 2px solid #785A28;
+    padding: 12px 10px;
+    background-color: rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.sidebar-block-admin a {
+    color: #C8AA6E;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.sidebar-block-admin a:hover {
+    color: #0ACBE6;
+}
+
 
 /* --- _________________________________________________________ZONE CENTRALE (MAIN)_________________________________________________________ --- */
 .shop-main-content {
@@ -690,6 +710,23 @@ body > footer {
     font-weight: bold;
 }
 
+.clear-cart-btn {
+    justify-self: center;
+    background-color: rgba(10, 203, 230, 0.15);
+    border: 2px solid #0ACBE6;
+    color: #0ACBE6;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.clear-cart-btn:hover {
+    background-color: rgba(10, 203, 230, 0.3);
+    box-shadow: 0 0 12px rgba(10, 203, 230, 0.4);
+}
+
 .item-spot-section {
     display: grid;
     grid-template-columns: 6fr 1fr;
@@ -1111,4 +1148,69 @@ body > footer {
     line-height: 1.6;
     margin: 0;
     max-width: 500px;
+}
+
+/* --- _____________________________________________________________GESTION UTILISATEURS_______________________________________________________ --- */
+.user-table-wrap {
+    width: 100%;
+    max-width: 700px;
+    max-height: 320px;
+    overflow-y: auto;
+    border: 2px solid #785A28;
+    background-color: #0f1419;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #F0E6D2;
+    font-size: 14px;
+}
+
+.user-table thead {
+    background-color: #1E2328;
+}
+
+.user-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #1E2328;
+}
+
+.user-table th,
+.user-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #785A28;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.user-table tbody tr:hover {
+    background-color: rgba(10, 203, 230, 0.08);
+}
+
+.user-action {
+    text-align: center;
+    width: 44px;
+}
+
+.user-action-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.user-action-btn img {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+    transition: 0.2s;
+}
+
+.user-action-btn:hover img {
+    opacity: 1;
+    filter: none;
 }
