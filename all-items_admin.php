@@ -179,7 +179,7 @@ for ($i = 0; $i < 9; $i++) {
                 </div>
                 <div class="items-grid">
                     <?php
-// Items avec roles et stats pour le filtrage
+
 $items = [
     ['role' => 'fighter', 'stats' => 'ad health armor'],
     ['role' => 'marksman', 'stats' => 'ad crit attackspeed'],
@@ -189,7 +189,6 @@ $items = [
     ['role' => 'support', 'stats' => 'health cdr mana'],
 ];
 
-// Remplissage pour atteindre 220 items
 while (count($items) < 220) {
     $items[] = $items[count($items) % 6];
 }
@@ -262,7 +261,6 @@ foreach ($items as $item) {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    // 1. GESTION DES FILTRES HORIZONTAUX (Rôles) - Type "Radio"
     const roleFilters = document.querySelectorAll('.filter-square-horizontal[data-filter-value]');
     
     roleFilters.forEach(filter => {
@@ -271,7 +269,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const allFilter = document.querySelector('.filter-square-horizontal[data-filter-value="all"]');
             
             if (filterValue === 'all') {
-                // Click on "all" - toggle it
                 if (this.classList.contains('selected-filter')) {
                     this.classList.remove('selected-filter');
                 } else {
@@ -279,15 +276,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     this.classList.add('selected-filter');
                 }
             } else {
-                // Click on a specific role
                 const currentSelected = document.querySelector('.filter-square-horizontal.selected-filter[data-filter-value]');
                 
                 if (currentSelected && currentSelected.getAttribute('data-filter-value') === filterValue) {
-                    // Same role clicked - switch to "all"
                     roleFilters.forEach(f => f.classList.remove('selected-filter'));
                     allFilter.classList.add('selected-filter');
                 } else {
-                    // Different role - select it, deselect "all"
                     roleFilters.forEach(f => f.classList.remove('selected-filter'));
                     this.classList.add('selected-filter');
                 }
@@ -296,58 +290,83 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 2. GESTION DES FILTRES VERTICAUX (Stats) - Type "Checkbox"
     const statFilters = document.querySelectorAll('.filter-square-vertical');
     
     statFilters.forEach(filter => {
         filter.addEventListener('click', function() {
-            // Cas spécial pour le bouton "Croix" (Clear all)
             if (this.id === 'filter-clear') {
                 statFilters.forEach(f => f.classList.remove('selected-filter'));
                 roleFilters.forEach(f => f.classList.remove('selected-filter'));
                 document.querySelector('.filter-square-horizontal[data-filter-value="all"]').classList.add('selected-filter');
             } else {
-                // Comportement normal : on active/désactive simplement (pas d'exclusion mutuelle)
                 this.classList.toggle('selected-filter');
             }
-            updateGrid(); // On lance le tri
+            updateGrid();
         });
     });
 
-    // Initialize with "all" selected
     document.querySelector('.filter-square-horizontal[data-filter-value="all"]').classList.add('selected-filter');
 
-    // 3. LA FONCTION DE TRI (Le Cerveau)
     function updateGrid() {
-        // A. Récupérer le rôle actif (s'il y en a un)
         const activeRoleBtn = document.querySelector('.filter-square-horizontal.selected-filter[data-filter-value]');
         const activeRole = activeRoleBtn ? activeRoleBtn.getAttribute('data-filter-value') : null;
 
-        // B. Récupérer toutes les stats actives
         const activeStatBtns = document.querySelectorAll('.filter-square-vertical.selected-filter[data-filter-value]');
         const activeStats = Array.from(activeStatBtns).map(btn => btn.getAttribute('data-filter-value'));
 
-        // C. Parcourir tous les items
         const items = document.querySelectorAll('.items-grid .item-square[data-role]');
         
         items.forEach(item => {
             const itemRole = item.getAttribute('data-role');
-            const itemStats = item.getAttribute('data-stats'); // ex: "ap mana magpen cdr"
+            const itemStats = item.getAttribute('data-stats');
 
-            // Condition 1 : Est-ce que le rôle correspond ? (ou aucun rôle sélectionné)
             const roleMatch = !activeRole || activeRole === 'all' || itemRole === activeRole;
 
-            // Condition 2 : Est-ce que l'item possède TOUTES les stats cochées ?
             const statsMatch = activeStats.every(stat => itemStats.includes(stat));
 
-            // Résultat
             if (roleMatch && statsMatch) {
-                item.style.display = 'block'; // Affiche
+                item.style.display = 'block';
             } else {
-                item.style.display = 'none';  // Cache
+                item.style.display = 'none';
             }
         });
     }
+
+    window.selectItemAdmin = function(element) {
+        const id = element.getAttribute('data-id');
+        const name = element.getAttribute('data-name');
+        const price = element.getAttribute('data-price');
+        const img = element.querySelector('img') ? element.querySelector('img').src : '';
+        const desc = element.getAttribute('data-stats');
+
+        document.querySelector('.selected-item-info h2').textContent = name;
+        document.querySelector('.gold-cost').textContent = price;
+        document.querySelector('.description .stats').textContent = desc;
+        
+        const bigDisplay = document.querySelector('.big-item-display .item-square-big-item');
+        bigDisplay.innerHTML = img ? `<img src="${img}" style="width:100%;height:100%;object-fit:contain;">` : '';
+
+        const editLink = document.querySelector('.edit-link');
+        if(editLink) editLink.href = 'all-items_admin_modif.php?id=' + id;
+
+        const deleteBtn = document.querySelector('.btn-delete-confirm');
+        if(deleteBtn) {
+            deleteBtn.onclick = function() {
+                if(confirm('Supprimer cet objet ?')) {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = 'all-items_admin.php';
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'delete_id';
+                    input.value = id;
+                    form.appendChild(input);
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            };
+        }
+    };
 });
 </script>
 <script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>

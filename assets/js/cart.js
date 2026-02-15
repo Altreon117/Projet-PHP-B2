@@ -37,14 +37,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const itemData = {
+                action: 'add',
                 id: selectedItem.dataset.id,
-                name: selectedItem.dataset.name,
-                price: parseInt(selectedItem.dataset.price),
                 quantity: 1
             };
             
-            console.log("Envoi au panier:", itemData);
-            alert(`[SIMULATION] Article ajouté au panier :\nNom: ${itemData.name}\nPrix: ${itemData.price} PO`);
+            fetch('/Projet-PHP-B2/core/cart_actions.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(itemData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Article ajouté au panier !");
+                } else {
+                    alert("Erreur : " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert("Une erreur est survenue.");
+            });
         });
     }
 });

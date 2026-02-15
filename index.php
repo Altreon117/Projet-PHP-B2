@@ -131,34 +131,28 @@
                 </p>
                 <h2> OBJETS LES PLUS ACHETÉS</h2>
                 <div class="recommended-items-section">
-                    <!--<h2>OBJETS LES PLUS ACHETÉS</h2>-->
-                    <div class="recommended-item">
-                        <div class="rank">
-                            <img class="ranked-item-icon" src="assets/img/logos/kexalted.svg" alt="Exalted rank">
-                            <p class="rank-number">N°2</p>
-                        </div>
-                        <div class="item-square-middle-item"></div>
-                        <h1 class="item-name">Name</h1>
-                        <h1 class="sold-number">Vendu N fois</h1>
-                    </div>
-                    <div class="recommended-item">
-                        <div class="rank">
-                            <img class="ranked-item-icon" src="assets/img/logos/ktranscendent.svg" alt="Transcendant rank">
-                            <p class="rank-number">N°1</p>
-                        </div>
-                        <div class="item-square-middle-item"></div>
-                        <h1 class="item-name">Name</h1>
-                        <h1 class="sold-number">Vendu N fois</h1>
-                    </div>
-                    <div class="recommended-item">
-                        <div class="rank">
-                            <img class="ranked-item-icon" src="assets/img/logos/kultimate.svg" alt="Ultimate rank">
-                            <p class="rank-number">N°3</p>
-                        </div>
-                        <div class="item-square-middle-item"></div>
-                        <h1 class="item-name">Name</h1>
-                        <h1 class="sold-number">Vendu N fois</h1>
-                    </div>
+                    <?php
+require_once 'core/db.php';
+// Récupérer 3 items aléatoires pour l'exemple, ou les top ventes si on avait des stats réelles
+$stmt = $pdo->query("SELECT * FROM items ORDER BY RAND() LIMIT 3");
+$topItems = $stmt->fetchAll();
+$ranks = [['icon' => 'ktranscendent.svg', 'label' => 'N°1'], ['icon' => 'kexalted.svg', 'label' => 'N°2'], ['icon' => 'kultimate.svg', 'label' => 'N°3']];
+
+foreach ($topItems as $index => $item) {
+    $rank = $ranks[$index] ?? ['icon' => 'ktranscendent.svg', 'label' => 'N°' . ($index + 1)];
+    echo '<div class="recommended-item">
+                            <div class="rank">
+                                <img class="ranked-item-icon" src="assets/img/logos/' . $rank['icon'] . '" alt="Rank">
+                                <p class="rank-number">' . $rank['label'] . '</p>
+                            </div>
+                            <div class="item-square-middle-item">
+                                ' . ($item['image'] ? '<img src="' . htmlspecialchars($item['image']) . '" style="width:100%;height:100%;object-fit:contain;">' : '') . '
+                            </div>
+                            <h1 class="item-name">' . htmlspecialchars($item['nom']) . '</h1>
+                            <h1 class="sold-number">Vendu ' . rand(100, 5000) . ' fois</h1>
+                        </div>';
+}
+?>
                 </div>
                 <div class="news-section">
                     <h2 class="news-title">DERNIÈRES ANNONCES</h2>

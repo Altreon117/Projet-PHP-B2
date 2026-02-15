@@ -1,3 +1,4 @@
+<?php require_once 'core/db.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -170,38 +171,18 @@ for ($i = 0; $i < 9; $i++) {
                 </div>
                 <div class="items-grid">
                     <?php
-// Items avec roles et stats pour le filtrage
-$items = [
-    ['role' => 'fighter', 'stats' => 'ad health armor'],
-    ['role' => 'marksman', 'stats' => 'ad crit attackspeed'],
-    ['role' => 'assassin', 'stats' => 'ad movespeed arpenpen'],
-    ['role' => 'mage', 'stats' => 'ap mana magpen cdr'],
-    ['role' => 'tank', 'stats' => 'health armor magres tenacity'],
-    ['role' => 'support', 'stats' => 'health cdr mana'],
-];
-
-// Remplissage pour atteindre 220 items
-while (count($items) < 220) {
-    $items[] = $items[count($items) % 6];
-}
-
-$i = 0;
-foreach ($items as $item) {
-    $i++;
-    $role = strtolower($item['role']);
-    $stats = strtolower($item['stats']);
-    // Génération de données fictives pour la démo JS
-    $id = 'item_' . $i;
-    $price = rand(300, 3600);
-    $name = "Objet " . ucfirst($role) . " " . $i;
+$stmt = $pdo->query("SELECT * FROM items");
+while ($item = $stmt->fetch()) {
+    $role = strtolower($item['categorie']);
+    $stats = strtolower($item['description']);
 
     echo '<div class="item-square" 
-                                data-role="' . $role . '" 
-                                data-stats="' . $stats . '"
-                                data-id="' . $id . '"
-                                data-name="' . $name . '"
-                                data-price="' . $price . '"
-                              ></div>';
+            data-role="' . htmlspecialchars($role) . '" 
+            data-stats="' . htmlspecialchars($stats) . '"
+            data-id="' . htmlspecialchars($item['id']) . '"
+            data-name="' . htmlspecialchars($item['nom']) . '"
+            data-price="' . htmlspecialchars($item['prix']) . '"
+          >' . ($item['image'] ? '<img src="' . htmlspecialchars($item['image']) . '" style="width:100%;height:100%;object-fit:contain;">' : '') . '</div>';
 }
 ?>
                 </div>

@@ -25,126 +25,36 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="user-row">
-                            <td class="user-id">1</td>
-                            <td class="user-name">Admin</td>
-                            <td class="user-email">admin@example.com</td>
-                            <td class="user-password">********</td>
-                            <td class="user-role">admin</td>
-                            <td class="user-action">
-                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
-                                    <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="user-row">
-                            <td class="user-id">2</td>
-                            <td class="user-name">User</td>
-                            <td class="user-email">user@example.com</td>
-                            <td class="user-password">********</td>
-                            <td class="user-role">user</td>
-                            <td class="user-action">
-                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
-                                    <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="user-row">
-                            <td class="user-id">3</td>
-                            <td class="user-name">Test</td>
-                            <td class="user-email">test@example.com</td>
-                            <td class="user-password">********</td>
-                            <td class="user-role">user</td>
-                            <td class="user-action">
-                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
-                                    <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="user-row">
-                            <td class="user-id">4</td>
-                            <td class="user-name">Marie</td>
-                            <td class="user-email">marie@example.com</td>
-                            <td class="user-password">********</td>
-                            <td class="user-role">user</td>
-                            <td class="user-action">
-                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
-                                    <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="user-row">
-                            <td class="user-id">5</td>
-                            <td class="user-name">Lucas</td>
-                            <td class="user-email">lucas@example.com</td>
-                            <td class="user-password">********</td>
-                            <td class="user-role">user</td>
-                            <td class="user-action">
-                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
-                                    <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="user-row">
-                            <td class="user-id">6</td>
-                            <td class="user-name">Nina</td>
-                            <td class="user-email">nina@example.com</td>
-                            <td class="user-password">********</td>
-                            <td class="user-role">moderator</td>
-                            <td class="user-action">
-                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
-                                    <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="user-row">
-                            <td class="user-id">7</td>
-                            <td class="user-name">Alex</td>
-                            <td class="user-email">alex@example.com</td>
-                            <td class="user-password">********</td>
-                            <td class="user-role">user</td>
-                            <td class="user-action">
-                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
-                                    <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="user-row">
-                            <td class="user-id">8</td>
-                            <td class="user-name">Emma</td>
-                            <td class="user-email">emma@example.com</td>
-                            <td class="user-password">********</td>
-                            <td class="user-role">admin</td>
-                            <td class="user-action">
-                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
-                                    <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="user-row">
-                            <td class="user-id">9</td>
-                            <td class="user-name">Hugo</td>
-                            <td class="user-email">hugo@example.com</td>
-                            <td class="user-password">********</td>
-                            <td class="user-role">user</td>
-                            <td class="user-action">
-                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
-                                    <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="user-row">
-                            <td class="user-id">10</td>
-                            <td class="user-name">Lea</td>
-                            <td class="user-email">lea@example.com</td>
-                            <td class="user-password">********</td>
-                            <td class="user-role">user</td>
-                            <td class="user-action">
-                                <button type="button" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
-                                    <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
-                                </button>
-                            </td>
-                        </tr>
+                        <?php
+require_once 'core/db.php';
+require_once 'core/admin_auth.php';
+
+if (isset($_POST['delete_user_id'])) {
+    if ($_POST['delete_user_id'] != $_SESSION['user_id']) {
+        $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+        $stmt->execute([$_POST['delete_user_id']]);
+    }
+}
+
+$stmt = $pdo->query("SELECT * FROM users");
+while ($user = $stmt->fetch()) {
+    echo '<tr class="user-row">
+                                <td class="user-id">' . htmlspecialchars($user['id']) . '</td>
+                                <td class="user-name">' . htmlspecialchars($user['nom']) . '</td>
+                                <td class="user-email">' . htmlspecialchars($user['email']) . '</td>
+                                <td class="user-password">********</td>
+                                <td class="user-role">' . htmlspecialchars($user['role']) . '</td>
+                                <td class="user-action">
+                                    <form method="POST" style="display:inline;" onsubmit="return confirm(\'Supprimer cet utilisateur ?\');">
+                                        <input type="hidden" name="delete_user_id" value="' . $user['id'] . '">
+                                        <button type="submit" class="user-action-btn btn-delete-confirm" aria-label="Supprimer">
+                                            <img src="/Projet-PHP-B2/assets/img/logos/trash.svg" alt="Supprimer">
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>';
+}
+?>
                     </tbody>
                 </table>
             </div>

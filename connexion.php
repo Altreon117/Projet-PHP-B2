@@ -1,3 +1,40 @@
+<?php
+require_once 'core/db.php';
+
+$error = '';
+$username = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    if (empty($username) || empty($password)) {
+        $error = "Veuillez remplir tous les champs.";
+    }
+    else {
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE nom = ?");
+        $stmt->execute([$username]);
+        $user = $stmt->fetch();
+
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['nom'];
+            $_SESSION['role'] = $user['role'];
+
+            if ($user['role'] === 'admin') {
+                header("Location: index_admin.php");
+            }
+            else {
+                header("Location: index.php");
+            }
+            exit;
+        }
+        else {
+            $error = "Nom d'utilisateur ou mot de passe incorrect.";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -13,8 +50,12 @@
         <div class="background-image">
             <div class="form-container">
                 <h1>Connexion</h1>
-                <form action="index.php" method="post">
-                    <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+                <?php if ($error): ?>
+                    <p style="color: red;background: rgba(0,0,0,0.7);padding: 10px;border-radius: 5px;"><?php echo htmlspecialchars($error); ?></p>
+                <?php
+endif; ?>
+                <form action="connexion.php" method="post">
+                    <input type="text" name="username" placeholder="Nom d'utilisateur" required value="<?php echo htmlspecialchars($username); ?>">
                     <input type="password" name="password" placeholder="Mot de passe" required>
                     <div class="button-con-insc" onclick="this.closest('form').requestSubmit()">
                         <img type="submit" src="/Projet-PHP-B2/assets/img/logos/find_match_default.png" alt="Se connecter" >
@@ -31,3 +72,4 @@
 
     <script src="/Projet-PHP-B2/assets/js/validation.js" defer></script>
 </body>
+</html>
