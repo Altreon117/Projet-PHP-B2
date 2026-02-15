@@ -107,15 +107,18 @@
                     <a>900</a>
                 </div>
             </div>
+            <div class="sidebar-block-admin">
+                <a href="gestion_user.php">Gestion utilisateur</a>
+            </div>
         </div>
 
         <!-- SECTION PRINCIPALE AVEC LES OBJETS -->
         <main class="shop-main-content">
             <!-- NAVIGATION -->
             <div class="shop-tabs">
-                <a href="index.php" >ACCUEIL</a>
-                <a href="all-items.php" id="active">TOUS LES OBJETS</a>
-                <a href="panier.php">PANIER</a>
+                <a href="index_admin.php" >ACCUEIL</a>
+                <a href="all-items_admin.php" id="active">TOUS LES OBJETS</a>
+                <a href="panier_admin.php">PANIER</a>
             </div>
             <!-- BARRE DE RECHERCHE ET FILTRE HORIZONTALE -->
             <div class="search-filters">
@@ -136,6 +139,12 @@
                     <img class="filter-square-horizontal" data-filter-value="mage" src="assets/img/logos/Legendary_Mage_Item_item.png" alt="Mage">
                     <img class="filter-square-horizontal" data-filter-value="tank" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank">
                     <img class="filter-square-horizontal" data-filter-value="support" src="assets/img/logos/Legendary_Support_Item_item.png" alt="Support">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
+                    <a href="all-items_admin_new.php" class="filter-square-no-hover">
+                        <img src="assets/img/logos/rp-top-up-nav-resting.svg" alt="New Item">
+                    </a>
                 </div>
             </div>
 
@@ -170,7 +179,6 @@
                 </div>
                 <div class="items-grid">
                     <?php 
-                    // Items avec roles et stats pour le filtrage
                     $items = [
                         ['role' => 'fighter', 'stats' => 'ad health armor'],
                         ['role' => 'marksman', 'stats' => 'ad crit attackspeed'],
@@ -179,12 +187,9 @@
                         ['role' => 'tank', 'stats' => 'health armor magres tenacity'],
                         ['role' => 'support', 'stats' => 'health cdr mana'],
                     ];
-                    
-                    // Remplissage pour atteindre 220 items
                     while(count($items) < 220) {
                         $items[] = $items[count($items) % 6];
                     }
-                    
                     foreach($items as $item) {
                         $role = strtolower($item['role']);
                         $stats = strtolower($item['stats']);
@@ -196,9 +201,10 @@
         </main>
 
         <!-- SECTION DE DROITE AVEC LES DÉTAILS DE L'OBJET -->
-        <div class="shop-details-panel">
+        <form class="shop-details-panel" action="all-items_admin.php" method="POST">
+
             <div class="builds-into">
-                <h4>DÉBLOQUE</h4>
+                <h4>NOUVEL OBJET</h4>
                 <div class="builds-into-grid">
                     <div class="item-square"></div>
                     <div class="item-square"></div>
@@ -211,32 +217,39 @@
             </div>
 
             <div class="big-item-display">
-                <div class="item-square-big-item"></div>
+                <input type="text" name="image_path" class="hextech-input-image" placeholder="Chemin (ex: assets/img/boots.png)" required>
             </div>
 
             <div class="selected-item-info">
                 <div class="item-info-header">
                     <div class="item-square-little-item"></div>
-                    <div class ="item-header-text">
-                        <h2>Coiffe de Rabadon</h2>
+            
+                    <div class="item-header-text">
+                        <input type="text" name="nom" class="hextech-input-title" placeholder="Nom de l'objet" required>
+                
                         <div class="price">
-                            <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Poro Gold Icon">
-                            <p class="gold-cost">3600</p>
+                            <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Gold">
+                            <input type="number" name="prix" class="hextech-input-gold" placeholder="Prix" required>
                         </div>
                     </div>
                 </div>
-                <div class="description">
-                    <p class="stats">+ 120 Ability Power</p>
-                    <p class="passive">Passive: Increases AP by 35%    
-                        fezfezzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-                        eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                        eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                    </p>
+                <div class="big-description">
+                    <div class="description">
+                        <textarea name="stats" class="hextech-textarea" placeholder="Stats..." required></textarea>
+                    </div>
+                    <div class="description">
+                        <textarea name="description" class="hextech-textarea" placeholder="Description et passif..." required></textarea>
+                    </div>
+                </div>
+                <div class="quantity-container">
+                    <label for="quantite">Quantité disponible</label>
+                    <input type="number" name="quantite" class="hextech-input-quantity" placeholder="Quantité" min="1" required>
                 </div>
             </div>
 
-            <button class="btn-purchase">ACHETER</button>
-        </div>
+            <button type="submit" class="btn-purchase btn-create">CRÉER L'OBJET</button>
+
+        </form>
 
     </div>
     <footer>
@@ -245,10 +258,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-
-    // 1. GESTION DES FILTRES HORIZONTAUX (Rôles) - Type "Radio"
     const roleFilters = document.querySelectorAll('.filter-square-horizontal[data-filter-value]');
-    
     roleFilters.forEach(filter => {
         filter.addEventListener('click', function() {
             const filterValue = this.getAttribute('data-filter-value');
@@ -279,57 +289,36 @@ document.addEventListener('DOMContentLoaded', function() {
             updateGrid();
         });
     });
-
-    // 2. GESTION DES FILTRES VERTICAUX (Stats) - Type "Checkbox"
-    const statFilters = document.querySelectorAll('.filter-square-vertical');
     
+    const statFilters = document.querySelectorAll('.filter-square-vertical');
     statFilters.forEach(filter => {
         filter.addEventListener('click', function() {
-            // Cas spécial pour le bouton "Croix" (Clear all)
             if (this.id === 'filter-clear') {
                 statFilters.forEach(f => f.classList.remove('selected-filter'));
                 roleFilters.forEach(f => f.classList.remove('selected-filter'));
                 document.querySelector('.filter-square-horizontal[data-filter-value="all"]').classList.add('selected-filter');
             } else {
-                // Comportement normal : on active/désactive simplement (pas d'exclusion mutuelle)
                 this.classList.toggle('selected-filter');
             }
-            updateGrid(); // On lance le tri
+            updateGrid();
         });
     });
-
+    
     // Initialize with "all" selected
     document.querySelector('.filter-square-horizontal[data-filter-value="all"]').classList.add('selected-filter');
-
-    // 3. LA FONCTION DE TRI (Le Cerveau)
+    
     function updateGrid() {
-        // A. Récupérer le rôle actif (s'il y en a un)
         const activeRoleBtn = document.querySelector('.filter-square-horizontal.selected-filter[data-filter-value]');
         const activeRole = activeRoleBtn ? activeRoleBtn.getAttribute('data-filter-value') : null;
-
-        // B. Récupérer toutes les stats actives
         const activeStatBtns = document.querySelectorAll('.filter-square-vertical.selected-filter[data-filter-value]');
         const activeStats = Array.from(activeStatBtns).map(btn => btn.getAttribute('data-filter-value'));
-
-        // C. Parcourir tous les items
         const items = document.querySelectorAll('.items-grid .item-square[data-role]');
-        
         items.forEach(item => {
             const itemRole = item.getAttribute('data-role');
-            const itemStats = item.getAttribute('data-stats'); // ex: "ap mana magpen cdr"
-
-            // Condition 1 : Est-ce que le rôle correspond ? (ou aucun rôle sélectionné)
+            const itemStats = item.getAttribute('data-stats');
             const roleMatch = !activeRole || activeRole === 'all' || itemRole === activeRole;
-
-            // Condition 2 : Est-ce que l'item possède TOUTES les stats cochées ?
             const statsMatch = activeStats.every(stat => itemStats.includes(stat));
-
-            // Résultat
-            if (roleMatch && statsMatch) {
-                item.style.display = 'block'; // Affiche
-            } else {
-                item.style.display = 'none';  // Cache
-            }
+            item.style.display = (roleMatch && statsMatch) ? 'block' : 'none';
         });
     }
 });

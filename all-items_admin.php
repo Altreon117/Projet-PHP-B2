@@ -107,15 +107,18 @@
                     <a>900</a>
                 </div>
             </div>
+            <div class="sidebar-block-admin">
+                <a href="gestion_user.php">Gestion utilisateur</a>
+            </div>
         </div>
 
         <!-- SECTION PRINCIPALE AVEC LES OBJETS -->
         <main class="shop-main-content">
             <!-- NAVIGATION -->
             <div class="shop-tabs">
-                <a href="index.php" >ACCUEIL</a>
-                <a href="all-items.php" id="active">TOUS LES OBJETS</a>
-                <a href="panier.php">PANIER</a>
+                <a href="index_admin.php" >ACCUEIL</a>
+                <a href="all-items_admin.php" id="active">TOUS LES OBJETS</a>
+                <a href="panier_admin.php">PANIER</a>
             </div>
             <!-- BARRE DE RECHERCHE ET FILTRE HORIZONTALE -->
             <div class="search-filters">
@@ -136,6 +139,12 @@
                     <img class="filter-square-horizontal" data-filter-value="mage" src="assets/img/logos/Legendary_Mage_Item_item.png" alt="Mage">
                     <img class="filter-square-horizontal" data-filter-value="tank" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank">
                     <img class="filter-square-horizontal" data-filter-value="support" src="assets/img/logos/Legendary_Support_Item_item.png" alt="Support">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
+                    <img class="filter-square-horizontal" src="assets/img/logos/Legendary_Tank_Item_item.png" alt="Tank" style="visibility: hidden;">
+                    <a href="all-items_admin_new.php" class="filter-square-no-hover">
+                        <img src="assets/img/logos/rp-top-up-nav-resting.svg" alt="New Item">
+                    </a>
                 </div>
             </div>
 
@@ -198,7 +207,14 @@
         <!-- SECTION DE DROITE AVEC LES DÉTAILS DE L'OBJET -->
         <div class="shop-details-panel">
             <div class="builds-into">
-                <h4>DÉBLOQUE</h4>
+                <div class="title-builds-into" >
+                    <h4>DÉBLOQUE</h4>
+                    <p></p>
+                    <a href="all-items_admin_modif.php" class="edit-link">
+                        <img src="assets/img/logos/pen.png" alt="Edit-Icon" >
+                    </a>
+                    <img src="assets/img/logos/trash.svg" alt="Trash-Icon" class="trash-icon">
+                </div>
                 <div class="builds-into-grid">
                     <div class="item-square"></div>
                     <div class="item-square"></div>

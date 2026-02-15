@@ -107,15 +107,18 @@
                     <a>900</a>
                 </div>
             </div>
+            <div class="sidebar-block-admin">
+                <a href="gestion_user.php">Gestion utilisateur</a>
+            </div>
         </div>
 
         <!-- SECTION PRINCIPALE AVEC LES OBJETS -->
         <main class="shop-main-content">
             <!-- NAVIGATION -->
             <div class="shop-tabs">
-                <a href="index.php" id="active">ACCUEIL</a>
-                <a href="all-items.php" >TOUS LES OBJETS</a>
-                <a href="panier.php">Panier</a>
+                <a href="index_admin.php" id="active">ACCUEIL</a>
+                <a href="all-items_admin.php" >TOUS LES OBJETS</a>
+                <a href="panier_admin.php">PANIER</a>
             </div>
             <!-- BARRE DE RECHERCHE ET FILTRE HORIZONTALE -->
             <div class="search-filters">
