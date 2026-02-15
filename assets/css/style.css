@@ -1011,6 +1011,7 @@ body>footer {
 
 .hextech-input-quantity[type=number] {
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 .big-description {
@@ -1502,7 +1503,6 @@ body>footer {
     display: block;
     position: relative;
     text-align: center;
-    vertical-align: top;
 }
 
 .mini-icon .item-square {
@@ -1530,4 +1530,212 @@ body>footer {
     display: block;
     width: 100%;
     line-height: normal;
+}
+
+@media (max-width: 1366px) {
+    .lol-shop-window {
+        width: 98%;
+        height: 98vh;
+        grid-template-columns: 200px 1fr 280px;
+    }
+
+    .shop-sidebar-left {
+        padding: 5px;
+    }
+
+    .items-grid {
+        grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+    }
+}
+
+@media (max-width: 1200px) {
+    .lol-shop-window {
+        grid-template-columns: 180px 1fr 250px;
+    }
+
+    .profile-icon {
+        width: 150px;
+        height: 150px;
+    }
+
+    .profile-icon img {
+        width: 100px;
+    }
+}
+
+@media (max-width: 992px) {
+    .lol-shop-window {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        border: none;
+        overflow-y: auto;
+    }
+
+    .shop-sidebar-left {
+        width: 100%;
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 2px solid #785A28;
+        padding: 10px;
+        overflow-x: auto;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+
+    .profile-section {
+        display: none;
+    }
+
+    .sidebar-block-consumables,
+    .sidebar-block-boots {
+        display: flex;
+        flex-direction: row;
+        /* Passer en ligne */
+        overflow-x: auto;
+        width: auto;
+        border: none;
+        background: none;
+        padding: 0;
+    }
+
+    .sidebar-block-admin {
+        display: none;
+    }
+
+    .shop-main-content {
+        height: auto;
+        overflow: visible;
+        flex-grow: 1;
+    }
+
+    .shop-details-panel {
+        display: none;
+        border-left: none;
+        border-top: 2px solid #785A28;
+        height: auto;
+        padding: 10px;
+    }
+
+    .shop-details-panel {
+        display: flex;
+        flex-direction: column;
+        order: 3;
+    }
+}
+
+@media (max-width: 768px) {
+    .lol-shop-window {
+        width: 100%;
+        height: 100vh;
+        border: none;
+        border-radius: 0;
+    }
+
+    .shop-tabs {
+        grid-template-columns: 1fr;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .shop-tabs a {
+        font-size: 14px;
+        margin: 0 5px;
+    }
+
+    .horizontal-filter-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .filter-square-horizontal {
+        width: 35px;
+        height: 35px;
+    }
+
+    .items-grid {
+        grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+        gap: 5px;
+    }
+
+    .item-square {
+        width: 40px;
+        height: 40px;
+    }
+
+    .shop-sidebar-left {
+        padding: 5px;
+        gap: 5px;
+    }
+
+    .mini-icon {
+        max-width: 50px;
+    }
+
+    .mini-icon .item-square {
+        width: 30px;
+        height: 30px;
+    }
+
+    .mini-icon a {
+        font-size: 10px;
+    }
+
+    .shop-details-panel {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50vh;
+        z-index: 1000;
+        border-top: 4px solid #785A28;
+        background-color: #010a13;
+        display: none;
+    }
+
+    .shop-details-panel {
+        position: static;
+        height: auto;
+        border-left: none;
+        width: 100%;
+    }
+
+    .main-content-page header {
+        font-size: 24px;
+        padding: 10px;
+    }
+
+    .recommended-items-section {
+        grid-template-columns: 1fr;
+    }
+
+    .news-article {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-item-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .cart-item-info {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .cart-item-actions {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+
+    .panier-summary {
+        width: 100%;
+    }
 }
