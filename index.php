@@ -1,3 +1,4 @@
+<?php require_once 'core/db.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -20,92 +21,39 @@
             </div>
             <!-- CONSOMMABLES -->
             <div class="sidebar-block-consumables">
-
-                <div class="mini-icon">
+                <?php
+$stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'consumable'");
+while ($item = $stmt->fetch()) {
+    echo '<div class="mini-icon" onclick="selectItem(this)"
+            data-id="' . htmlspecialchars($item['id']) . '"
+            data-name="' . htmlspecialchars($item['nom']) . '"
+            data-price="' . (int)$item['prix'] . '"
+            data-stats="' . htmlspecialchars($item['description']) . '">
+            <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
+            <a>' . (int)$item['prix'] . '</a>
+          </div>';
+}
+?>
+                 <div class="mini-icon">
                     <div class="item-square" style="visibility: hidden;"></div>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/40px-Refillable_Potion_item.png" alt="Refillable Potion">
-                    <a>150</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Health_Potion_item.png" alt="Health Potion">
-                    <a>50</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Farsight_Alteration_item.png" alt="Farsight Alteration">
-                    <a>Gratuit</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Oracle_Lens_item.png" alt="Oracle Lens">
-                    <a>Gratuit</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Stealth_Ward_item.png" alt="Stealth Ward">
-                    <a>Gratuit</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Elixir_of_Iron_item.png" alt="Elixir of Iron">
-                    <a>500</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Elixir_of_Wrath_item.png" alt="Elixir of Wrath">
-                    <a>500</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Elixir_of_Sorcery_item.png" alt="Elixir of Sorcery">
-                    <a>500</a>
-                </div>
-                <div class="mini-icon">
-                    <div class="item-square" style="visibility: hidden;"></div>
-                </div>
-                <div class="mini-icon">
-                    <div class="item-square" style="visibility: hidden;"></div>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Control_Ward_item.png" alt="Control Ward">
-                    <a>75</a>
                 </div>
             </div>
             
             <!-- BOTTES -->
             <div class="sidebar-block-boots">
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Boots_of_Swiftness_item.png" alt="Boots of Swiftness">
-                    <a>1000</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Berserker_s_Greaves_item.png" alt="Berserker's Greaves">
-                    <a>1100</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Boots_item.png" alt="Boots">
-                    <a>300</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Mercury_s_Treads_item.png" alt="Mercury's Treads">
-                    <a>1250</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Chainlaced_Crushers_item.png" alt="Chainlaced Crushers">
-                    <a>1250</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Sorcerer_s_Shoes_item.png" alt="Sorcerer's Shoes">
-                    <a>1100</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Plated_Steelcaps_item.png" alt="Plated Steelcaps">
-                    <a>1200</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Armored_Advance_item.png" alt="Armored Advance">
-                    <a>1200</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Ionian_Boots_of_Lucidity_item.png" alt="Ionian Boots of Lucidity">
-                    <a>900</a>
-                </div>
+                <?php
+$stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'boots'");
+while ($item = $stmt->fetch()) {
+    echo '<div class="mini-icon" onclick="selectItem(this)"
+            data-id="' . htmlspecialchars($item['id']) . '"
+            data-name="' . htmlspecialchars($item['nom']) . '"
+            data-price="' . (int)$item['prix'] . '"
+            data-stats="' . htmlspecialchars($item['description']) . '">
+            <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
+            <a>' . (int)$item['prix'] . '</a>
+          </div>';
+}
+?>
             </div>
         </div>
 
@@ -132,8 +80,6 @@
                 <h2> OBJETS LES PLUS ACHETÉS</h2>
                 <div class="recommended-items-section">
                     <?php
-require_once 'core/db.php';
-// Récupérer 3 items aléatoires pour l'exemple, ou les top ventes si on avait des stats réelles
 $stmt = $pdo->query("SELECT * FROM items ORDER BY RAND() LIMIT 3");
 $topItems = $stmt->fetchAll();
 $ranks = [['icon' => 'ktranscendent.svg', 'label' => 'N°1'], ['icon' => 'kexalted.svg', 'label' => 'N°2'], ['icon' => 'kultimate.svg', 'label' => 'N°3']];
@@ -264,4 +210,6 @@ foreach ($topItems as $index => $item) {
         <p>© 2026 Antre du Poro. Tous droits réservés.</p> 
     </footer>
 
+<script src="/Projet-PHP-B2/assets/js/cart.js" defer></script>
+<script src="/Projet-PHP-B2/assets/js/shop.js" defer></script>
 </body>

@@ -30,20 +30,38 @@ if (!empty($panier)) {
                 </a>
             </div>
             <div class="sidebar-block-consumables">
+                <?php
+$stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'consumable'");
+while ($item = $stmt->fetch()) {
+    echo '<div class="mini-icon" onclick="selectItem(this)"
+                            data-id="' . htmlspecialchars($item['id']) . '"
+                            data-name="' . htmlspecialchars($item['nom']) . '"
+                            data-price="' . (int)$item['prix'] . '"
+                            data-stats="' . htmlspecialchars($item['description']) . '">
+                            <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
+                            <a>' . (int)$item['prix'] . '</a>
+                          </div>';
+}
+?>
                  <div class="mini-icon">
                     <div class="item-square" style="visibility: hidden;"></div>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/40px-Refillable_Potion_item.png" alt="Refillable Potion">
-                    <a>150</a>
                 </div>
             </div>
             
             <div class="sidebar-block-boots">
-                  <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Boots_of_Swiftness_item.png" alt="Boots of Swiftness">
-                    <a>1000</a>
-                </div>
+                <?php
+$stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'boots'");
+while ($item = $stmt->fetch()) {
+    echo '<div class="mini-icon" onclick="selectItem(this)"
+                            data-id="' . htmlspecialchars($item['id']) . '"
+                            data-name="' . htmlspecialchars($item['nom']) . '"
+                            data-price="' . (int)$item['prix'] . '"
+                            data-stats="' . htmlspecialchars($item['description']) . '">
+                            <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
+                            <a>' . (int)$item['prix'] . '</a>
+                          </div>';
+}
+?>
             </div>
         </div>
 
@@ -83,22 +101,26 @@ else {
         $total += $subtotal;
         $id_counter++;
 
-        echo '<div class="cart-item-row" data-id="' . $item['id'] . '">
+        echo '<div class="cart-item-row" onclick="selectItem(this)"
+                data-id="' . htmlspecialchars($item['id']) . '"
+                data-name="' . htmlspecialchars($item['nom']) . '"
+                data-price="' . (int)$item['prix'] . '"
+                data-stats="' . htmlspecialchars($item['description']) . '">
                                 <div class="cart-item-info">
                                     <div class="cart-item-img-container">
                                         <img src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '" class="cart-item-img">
                                     </div>
                                     <div class="cart-item-details">
                                         <span class="cart-item-name">' . htmlspecialchars($item['nom']) . '</span>
-                                        <span class="cart-item-unit-price">' . $item['prix'] . ' PO</span>
+                                        <span class="cart-item-unit-price">' . (int)$item['prix'] . ' PO</span>
                                     </div>
                                 </div>
                                 <div class="cart-item-actions">
-                                    <button class="qty-btn minus" onclick="updateQty(' . $item['id'] . ', ' . ($qty - 1) . ')">-</button>
-                                    <input type="number" class="qty-input" value="' . $qty . '" readonly>
-                                    <button class="qty-btn plus" onclick="updateQty(' . $item['id'] . ', ' . ($qty + 1) . ')">+</button>
-                                    <span class="cart-item-total-price">' . $subtotal . ' PO</span>
-                                    <button class="remove-btn" onclick="removeFromCart(' . $item['id'] . ')">X</button>
+                                    <button class="qty-btn minus" onclick="event.stopPropagation(); updateQty(' . $item['id'] . ', ' . ($qty - 1) . ')">-</button>
+                                    <input type="number" class="qty-input" value="' . $qty . '" readonly onclick="event.stopPropagation()">
+                                    <button class="qty-btn plus" onclick="event.stopPropagation(); updateQty(' . $item['id'] . ', ' . ($qty + 1) . ')">+</button>
+                                    <span class="cart-item-total-price">' . (int)$subtotal . ' PO</span>
+                                    <button class="remove-btn" onclick="event.stopPropagation(); removeFromCart(' . $item['id'] . ')">X</button>
                                 </div>
                             </div>';
     }
@@ -114,7 +136,7 @@ else {
                         <span class="summary-label">Total</span>
                         <span class="summary-value">
                             <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Poro Gold Icon">
-                            <span id="cart-total-price"><?php echo $total; ?></span>
+                            <span id="cart-total-price"><?php echo (int)$total; ?></span>
                         </span>
                     </div>
                     <?php if (!empty($panier)): ?>
@@ -135,12 +157,41 @@ endif; ?>
         </main>
 
         <div class="shop-details-panel">
-             <div class="builds-into">
+            <div class="builds-into">
                 <h4>DÉBLOQUE</h4>
                 <div class="builds-into-grid">
                     <div class="item-square"></div>
+                    <div class="item-square"></div>
+                    <div class="item-square"></div>
+                    <div class="item-square"></div>
+                    <div class="item-square"></div>
+                    <div class="item-square"></div>
+                    <div class="item-square"></div>
                 </div>
             </div>
+
+            <div class="big-item-display">
+                <div class="item-square-big-item"></div>
+            </div>
+
+            <div class="selected-item-info">
+                <div class="item-info-header">
+                    <div class="item-square-little-item"></div>
+                    <div class ="item-header-text">
+                        <h2 id="details-name">Sélectionnez un objet</h2>
+                        <div class="price">
+                            <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Poro Gold Icon">
+                            <p class="gold-cost" id="details-price">-</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="description">
+                    <p class="stats" id="details-stats">Stats...</p>
+                    <p class="passive">Passive: ...</p>
+                </div>
+            </div>
+
+            <button class="btn-purchase">ACHETER</button>
         </div>
 
     </div>
@@ -148,6 +199,8 @@ endif; ?>
         <p>© 2026 Antre du Poro. Tous droits réservés.</p> 
     </footer>
 
+    <script src="/Projet-PHP-B2/assets/js/cart.js" defer></script>
+    <script src="/Projet-PHP-B2/assets/js/shop.js" defer></script>
     <script>
     function updateQty(id, qty) {
         fetch('/Projet-PHP-B2/core/cart_actions.php', {
