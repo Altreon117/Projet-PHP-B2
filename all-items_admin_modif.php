@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="price">
                             <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Gold">
                             <label for="prix">Prix</label>
-                            <input type="number" name="prix" class="hextech-input-gold" value="<?php echo htmlspecialchars($item['prix']); ?>" required>
+                            <input type="number" name="prix" class="hextech-input-gold" value="<?php echo (int)$item['prix']; ?>" min="0" step="1" required>
                         </div>
                     </div>
                 </div>

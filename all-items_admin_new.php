@@ -11,20 +11,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $_POST['nom'] ?? '';
     $prix = $_POST['prix'] ?? 0;
     $image = $_POST['image_path'] ?? '';
-    $stats = $_POST['stats'] ?? '';
-    $description = $_POST['description'] ?? '';
+    $description_stat = $_POST['description_stat'] ?? '';
+    $description_passive = $_POST['description_passive'] ?? '';
     $quantite = $_POST['quantite'] ?? 0;
 
-    $categorie = 'fighter';
-    if (stripos($stats, 'ap') !== false || stripos($stats, 'mana') !== false)
-        $categorie = 'mage';
-    elseif (stripos($stats, 'crit') !== false || stripos($stats, 'speed') !== false)
-        $categorie = 'marksman';
-    elseif (stripos($stats, 'health') !== false || stripos($stats, 'armor') !== false)
-        $categorie = 'tank';
+    $stats = [
+        'ad' => 0, 'ap' => 0, 'health' => 0, 'armor' => 0, 'magic_resistance' => 0,
+        'attack_speed' => 0, 'ability_haste' => 0, 'crit_rate' => 0, 'mana' => 0,
+        'magic_penetration' => 0, 'armor_penetration' => 0, 'omnivamp' => 0,
+        'physical_vamp' => 0, 'health_regeneration' => 0, 'tenacity' => 0
+    ];
 
-    $stmt = $pdo->prepare("INSERT INTO items (nom, prix, image, description, categorie, stock) VALUES (?, ?, ?, ?, ?, ?)");
-    if ($stmt->execute([$nom, $prix, $image, $stats . "\n" . $description, $categorie, $quantite])) {
+    $patterns = [
+        'ad' => '/(\d+)\s*(?:Force d\'attaque|AD|Dégâts d\'attaque)/i',
+        'ap' => '/(\d+)\s*(?:Puissance|AP)/i',
+        'health' => '/(\d+)\s*(?:PV|Santé|Points de vie)/i',
+        'armor' => '/(\d+)\s*(?:Armure)/i',
+        'magic_resistance' => '/(\d+)\s*(?:Résistance magique|RM|MR)/i',
+        'attack_speed' => '/(\d+)\s*%\s*(?:Vitesse d\'attaque|AS)/i',
+        'ability_haste' => '/(\d+)\s*(?:Accélération de compétence|Haste|AH)/i',
+        'crit_rate' => '/(\d+)\s*%\s*(?:Chance de coup critique|Crit)/i',
+        'mana' => '/(\d+)\s*(?:Mana)/i',
+        'magic_penetration' => '/(\d+)\s*(?:Pénétration magique)/i',
+        'armor_penetration' => '/(\d+)\s*(?:Létalité|Pénétration d\'armure)/i',
+        'omnivamp' => '/(\d+)\s*%\s*(?:Omnivampirisme|Omnivamp)/i',
+        'physical_vamp' => '/(\d+)\s*%\s*(?:Vampirisme physique)/i',
+        'health_regeneration' => '/(\d+)\s*%\s*(?:Régénération de base des PV)/i',
+        'tenacity' => '/(\d+)\s*%\s*(?:Ténacité)/i'
+    ];
+
+    foreach ($patterns as $key => $pattern) {
+        if (preg_match($pattern, $description_stat, $matches)) {
+            $stats[$key] = (int)$matches[1];
+        }
+    }
+
+    $categorie = 'fighter';
+    $descLower = strtolower($description_stat . ' ' . $nom);
+
+    if (strpos($descLower, 'vitesse de déplacement') !== false || strpos($descLower, 'bottes') !== false) {
+        $categorie = 'boots';
+    }
+    elseif ($stats['ap'] > 0 || $stats['mana'] > 0 || $stats['magic_penetration'] > 0) {
+        $categorie = 'mage';
+    }
+    elseif ($stats['crit_rate'] > 0 || $stats['attack_speed'] > 0) {
+        $categorie = 'marksman';
+    }
+    elseif ($stats['armor'] > 0 || $stats['magic_resistance'] > 0 || $stats['health'] > 300) {
+        $categorie = 'tank';
+    }
+    elseif ($stats['armor_penetration'] > 0) {
+        $categorie = 'assassin';
+    }
+    elseif ($stats['ability_haste'] > 0 && $stats['health'] > 0) {
+        $categorie = 'support';
+    }
+
+    $stmt = $pdo->prepare("INSERT INTO items (
+        nom, prix, image, description_stat, description_passive, categorie, stock,
+        ad, ap, health, armor, magic_resistance, attack_speed, ability_haste,
+        crit_rate, mana, magic_penetration, armor_penetration, omnivamp,
+        physical_vamp, health_regeneration, tenacity
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    $params = [
+        $nom, $prix, $image, $description_stat, $description_passive, $categorie, $quantite,
+        $stats['ad'], $stats['ap'], $stats['health'], $stats['armor'], $stats['magic_resistance'],
+        $stats['attack_speed'], $stats['ability_haste'], $stats['crit_rate'], $stats['mana'],
+        $stats['magic_penetration'], $stats['armor_penetration'], $stats['omnivamp'],
+        $stats['physical_vamp'], $stats['health_regeneration'], $stats['tenacity']
+    ];
+
+    if ($stmt->execute($params)) {
         header("Location: all-items_admin.php");
         exit;
     }
@@ -58,46 +117,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              <div class="shop-title">NOUVEL OBJET</div>
         </main>
 
-        <form class="shop-details-panel" action="" method="POST">
-            <div class="builds-into">
-                <h4>NOUVEL OBJET</h4>
-                <div class="builds-into-grid">
-                    <div class="item-square"></div>
+        <form class="shop-main-content-form" action="" method="POST">
+            <div class="shop-details-panel-form">
+                <div class="builds-into">
+                    <h4>NOUVEL OBJET</h4>
+                    <div class="builds-into-grid">
+                        <div class="item-square"></div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="big-item-display">
-                <input type="text" name="image_path" class="hextech-input-image" placeholder="Chemin (ex: assets/img/boots.png)" required>
-            </div>
+                <div class="big-item-display">
+                    <input type="text" name="image_path" class="hextech-input-image" placeholder="Chemin (ex: assets/img/boots.png)" required>
+                </div>
 
-            <div class="selected-item-info">
-                <div class="item-info-header">
-                    <div class="item-square-little-item"></div>
-            
-                    <div class="item-header-text">
-                        <input type="text" name="nom" class="hextech-input-title" placeholder="Nom de l'objet" required>
+                <div class="selected-item-info">
+                    <div class="item-info-header">
+                        <div class="item-square-little-item"></div>
                 
-                        <div class="price">
-                            <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Gold">
-                            <input type="number" name="prix" class="hextech-input-gold" placeholder="Prix" required>
+                        <div class="item-header-text">
+                            <label for="nom">Nom</label>
+                            <input type="text" name="nom" class="hextech-input-title" placeholder="Nom de l'objet" required>
+                    
+                            <div class="price">
+                                <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Gold">
+                                <label for="prix">Prix</label>
+                                <input type="number" name="prix" class="hextech-input-gold" placeholder="Prix" min="0" step="1" required>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="big-description">
-                    <div class="description">
-                        <textarea name="stats" class="hextech-textarea" placeholder="Stats (ex: +30 AD)" required></textarea>
+                    <div class="big-description">
+                        <div class="description">
+                             <label for="description_stat">Stats (ex: +40 AD)</label>
+                            <textarea name="description_stat" class="hextech-textarea" placeholder="Stats (ex: +30 AD, +300 PV)" style="height:100px;" required></textarea>
+                            
+                            <label for="description_passive">Passif</label>
+                            <textarea name="description_passive" class="hextech-textarea" placeholder="Passif (Unique - ...)" style="height:100px;" required></textarea>
+                        </div>
                     </div>
-                    <div class="description">
-                        <textarea name="description" class="hextech-textarea" placeholder="Description/Passif" required></textarea>
+                    <div class="quantity-container">
+                        <label for="quantite">Stock</label>
+                        <input type="number" name="quantite" class="hextech-input-quantity" placeholder="Quantité" min="1" required>
                     </div>
                 </div>
-                <div class="quantity-container">
-                    <label for="quantite">Stock</label>
-                    <input type="number" name="quantite" class="hextech-input-quantity" placeholder="Quantité" min="1" required>
-                </div>
-            </div>
 
-            <button type="submit" class="btn-purchase btn-create">CRÉER L'OBJET</button>
+                <button type="submit" class="btn-purchase btn-create">CRÉER L'OBJET</button>
+            </div>
+        </form>
         </form>
     </div>
 </body>

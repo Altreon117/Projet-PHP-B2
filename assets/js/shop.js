@@ -43,6 +43,11 @@ function selectItem(element) {
         littleDisplay.innerHTML = imgSrc ? `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;">` : '';
     }
 
+    const bigDisplay = document.querySelector('.big-item-display .item-square-big-item');
+    if (bigDisplay) {
+        bigDisplay.innerHTML = imgSrc ? `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:contain;">` : '';
+    }
+
     const btn = document.querySelector('.btn-purchase');
     if (btn) {
         btn.dataset.id = id;
