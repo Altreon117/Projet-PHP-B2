@@ -1,4 +1,10 @@
 <?php
+/**
+ * Page panier (panier.php).
+ *
+ * Gère l'affichage des articles ajoutés au panier par l'utilisateur.
+ * Permet de visualiser le total, de vider le panier ou de passer commande.
+ */
 require_once 'core/db.php';
 
 $panier = $_SESSION['panier'] ?? [];

@@ -1,3 +1,9 @@
+/**
+ * Validation de formulaires (validation.js).
+ *
+ * Ajoute une validation client simple pour les formulaires.
+ * Affiche des messages d'erreur si les champs sont vides ou invalides.
+ */
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('form');
     if (!form) return;

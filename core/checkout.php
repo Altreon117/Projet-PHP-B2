@@ -1,4 +1,10 @@
 <?php
+/**
+ * Traitement de la commande (checkout.php).
+ *
+ * Valide le panier, crée la facture et les lignes de commande en base.
+ * Met à jour les stocks et vide le panier après succès.
+ */
 require_once 'db.php';
 
 if (!isset($_SESSION['user_id'])) {

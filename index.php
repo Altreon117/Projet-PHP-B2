@@ -1,4 +1,11 @@
-<?php require_once 'core/db.php'; ?>
+<?php
+/**
+ * Page d'accueil publique (index.php).
+ *
+ * Affiche les produits phares, les dernières actualités et permet la navigation vers la boutique.
+ * Intègre le système de filtres et d'ajout au panier.
+ */
+require_once 'core/db.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,15 +18,12 @@
 <body>
 
     <div class="lol-shop-window">
-        <!-- SECTION DE GAUCHE AVEC LES CONSOMMABLES ET LES BOTTES -->
         <div class="shop-sidebar-left">
-            <!-- PROFIL-->
             <div class="profile-section">
                 <a href="connexion.php" class="profile-icon">
                     <img src="assets/img/logos/lol_icon.png" alt="Profil Icon">
                 </a>
             </div>
-            <!-- CONSOMMABLES -->
             <div class="sidebar-block-consumables">
                 <?php
 $stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'consumable'");
@@ -39,7 +43,6 @@ while ($item = $stmt->fetch()) {
                 </div>
             </div>
             
-            <!-- BOTTES -->
             <div class="sidebar-block-boots">
                 <?php
 $stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'boots'");
@@ -57,20 +60,16 @@ while ($item = $stmt->fetch()) {
             </div>
         </div>
 
-        <!-- SECTION PRINCIPALE AVEC LES OBJETS -->
         <main class="shop-main-content">
-            <!-- NAVIGATION -->
             <div class="shop-tabs">
                 <a href="index.php" id="active">ACCUEIL</a>
                 <a href="all-items.php" >TOUS LES OBJETS</a>
                 <a href="panier.php">Panier</a>
             </div>
-            <!-- BARRE DE RECHERCHE ET FILTRE HORIZONTALE -->
             <div class="search-filters">
                 <input type="text" placeholder="Recherchez des objets, des stats ou des mots-clés...">
             </div>
 
-            <!-- Page d'accueil -->
             <div class="main-content-page">
                 <header>ANTRE DU PORO</header>
                 <h1>Bienvenue Dans L'Antre Du Poro</h1>
@@ -162,7 +161,6 @@ foreach ($topItems as $index => $item) {
             </div>
         </main>
 
-        <!-- SECTION DE DROITE AVEC LES DÉTAILS DE L'OBJET -->
         <div class="shop-details-panel">
             <div class="builds-into">
                 <h4>DÉBLOQUE</h4>
@@ -209,3 +207,4 @@ foreach ($topItems as $index => $item) {
 <script src="/Projet-PHP-B2/assets/js/cart.js" defer></script>
 <script src="/Projet-PHP-B2/assets/js/shop.js" defer></script>
 </body>
+</html>

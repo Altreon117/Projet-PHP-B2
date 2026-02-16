@@ -1,4 +1,10 @@
 <?php
+/**
+ * Page de connexion (connexion.php).
+ *
+ * Gère l'authentification des utilisateurs et des administrateurs.
+ * Vérifie les identifiants et initialise la session.
+ */
 require_once 'core/db.php';
 
 $error = '';

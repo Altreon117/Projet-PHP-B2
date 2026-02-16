@@ -1,7 +1,6 @@
 * {
     box-sizing: border-box;
     scrollbar-color: #785A28 #352a16;
-    /* Couleur de la scrollbar et de son arrière-plan */
 }
 
 body {
@@ -30,7 +29,6 @@ body {
     overflow: hidden;
 }
 
-/* Footer principal (hors de la fenêtre de shop) */
 body>footer {
     position: fixed;
     bottom: 0;
@@ -45,7 +43,6 @@ body>footer {
     font-size: 18px;
 }
 
-/* Footer interne (dans la page d'accueil) */
 .main-content-page>footer {
     background-color: #1E2328;
     border-top: 1px solid #785A28;
@@ -66,7 +63,6 @@ body>footer {
     gap: 20px;
 }
 
-/* --- PROFIL --- */
 .profile-section {
     border: 2px solid #785A28;
     padding: 10px;
@@ -98,8 +94,6 @@ body>footer {
     padding-top: 8px;
 }
 
-
-/* --- BLOCS DE LA SIDEBAR --- */
 .sidebar-block-consumables {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -176,7 +170,6 @@ body>footer {
     text-align: center;
 }
 
-/* BARRE DE RECHERCHE ET FILTRE HORIZONTALE */
 .search-filters {
     border-bottom: 2px solid #785A28;
     padding-bottom: 10px;
@@ -288,7 +281,6 @@ body>footer {
     font-size: 18px;
 }
 
-/* --- NEWS/ARTICLES SECTION --- */
 .news-section {
     grid-column: 1 / -1;
     width: 100%;
@@ -313,7 +305,6 @@ body>footer {
     gap: 30px;
 }
 
-/* --- ARTICLE CARD --- */
 .news-article {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -332,12 +323,10 @@ body>footer {
     background-color: rgba(10, 203, 230, 0.05);
 }
 
-/* --- VIDEO CONTAINER --- */
 .article-video-container {
     position: relative;
     width: 100%;
     padding-bottom: 56.25%;
-    /* 16:9 aspect ratio */
     height: 0;
     overflow: hidden;
     border: 2px solid #785A28;
@@ -352,7 +341,6 @@ body>footer {
     height: 100%;
 }
 
-/* --- ARTICLE CONTENT --- */
 .article-content {
     display: flex;
     flex-direction: column;
@@ -379,7 +367,6 @@ body>footer {
     flex-grow: 1;
 }
 
-/* --- RESPONSIVE DESIGN --- */
 @media (max-width: 1200px) {
     .news-article {
         grid-template-columns: 1fr;
@@ -413,7 +400,6 @@ body>footer {
     box-shadow: 0 10px 10px #ffee56;
 }
 
-/* Style quand un filtre est ACTIF */
 .filter-square-horizontal.selected-filter,
 .filter-square-vertical.selected-filter {
     border-color: #ffee56;
@@ -421,7 +407,6 @@ body>footer {
     opacity: 1;
 }
 
-/* Réduire l'opacité des filtres non sélectionnés pour faire ressortir les actifs */
 .filter-square-horizontal,
 .filter-square-vertical {
     opacity: 0.7;
@@ -432,7 +417,6 @@ body>footer {
     opacity: 1;
 }
 
-/* Bouton nouveau item sans hover */
 .filter-square-no-hover {
     width: 40px;
     height: 40px;
@@ -461,18 +445,15 @@ body>footer {
     background-color: #ffffff;
 }
 
-/* FILTRE VERTICAL ET GRILLE D'OBJETS */
 .filter-objects-container {
     display: grid;
     grid-template-columns: 0.8fr 9.2fr;
     height: 100%;
     overflow: hidden;
-    /* Coupe ce qui dépasse */
     min-height: 0;
 }
 
 
-/* FILTRE VERTICAL */
 .vertical-filter-section {
     display: grid;
     grid-template-rows: repeat(5, auto);
@@ -481,7 +462,6 @@ body>footer {
     padding-top: 10px;
     align-items: center;
     overflow-y: auto;
-    /* Scrollbar si trop d'objets */
     margin-right: 15px;
 
 }
@@ -533,7 +513,6 @@ body>footer {
     flex-direction: column;
 }
 
-/* LA GRILLE D'OBJETS INTERNE */
 .items-grid {
     padding-top: 10px;
     display: grid;
@@ -541,7 +520,6 @@ body>footer {
     gap: 8px;
 
     overflow-y: auto;
-    /* Scrollbar si trop d'objets */
     padding-right: 5px;
 }
 
@@ -556,7 +534,6 @@ body>footer {
 
 .item-square:hover {
     border-color: #0ACBE6;
-    /* Bordure bleue au survol */
     box-shadow: 0 0 10px #0ACBE6;
 }
 
@@ -571,7 +548,6 @@ body>footer {
     height: 100%;
     min-height: 0;
     overflow: hidden;
-    /* Coupe tout ce qui dépasse */
     gap: 15px;
 }
 
@@ -614,7 +590,6 @@ body>footer {
 
 .selected-item-info {
     overflow: hidden;
-    /* Coupe le texte s'il est trop long */
     display: grid;
     grid-template-rows: 2fr 6fr 2fr;
 }
@@ -671,7 +646,6 @@ body>footer {
     font-size: 14px;
     margin-top: 10px;
     overflow: auto;
-    /* Scrollbar si la description est trop longue */
 }
 
 
@@ -805,7 +779,6 @@ body>footer {
     gap: 8px;
 }
 
-/* INDISPENSABLE : Empêche les items de s'écraser pour tenir dans la boîte */
 .others-items-spot .item-square {
     flex-shrink: 0;
 }
@@ -842,7 +815,6 @@ body>footer {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 0;
-    /* Assure que l'image de fond est derrière le formulaire */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -859,7 +831,6 @@ body>footer {
     justify-content: center;
     gap: 15px;
     z-index: 1;
-    /* Assure que le formulaire est au-dessus de l'image de fond */
     border-radius: 20px;
 }
 
@@ -929,12 +900,6 @@ body>footer {
     margin-top: 30px;
 }
 
-/* --- STYLE ADMIN - INPUTS IN-GAME --- */
-
-
-/* Création*/
-
-/* L'input Image (Case centrale) */
 .hextech-input-image {
     width: 100%;
     max-width: 200px;
@@ -942,14 +907,12 @@ body>footer {
     max-height: 200px;
     background-color: #000;
     border: 1px dashed #C8AA6E;
-    /* Bordure dorée pointillée */
     color: #C8AA6E;
     text-align: center;
     font-family: sans-serif;
     margin: 15px;
 }
 
-/* L'input Titre (Remplace le H2) */
 .hextech-input-title {
     background: transparent;
     border: none;
@@ -961,7 +924,6 @@ body>footer {
     outline: none;
 }
 
-/* L'input Prix */
 .hextech-input-gold {
     background: transparent;
     border: none;
@@ -973,7 +935,6 @@ body>footer {
     outline: none;
 }
 
-/* Conteneur Quantité */
 .quantity-container {
     width: 100%;
     display: flex;
@@ -990,7 +951,6 @@ body>footer {
     font-size: 14px;
 }
 
-/* L'input Quantité */
 .hextech-input-quantity {
     background: transparent;
     border: none;
@@ -1024,7 +984,6 @@ body>footer {
     overflow: hidden;
 }
 
-/* La zone de texte Description */
 .hextech-textarea {
     width: 100%;
     height: 100%;
@@ -1035,14 +994,11 @@ body>footer {
     font-family: sans-serif;
     font-size: 13px;
     resize: none;
-    /* Empêche de déformer le layout */
     outline: none;
 }
 
-/* Style spécifique pour le bouton "Créer" */
 .btn-create {
     color: #0ACBE6;
-    /* Texte Bleu néon */
     border-color: #0ACBE6;
 }
 
@@ -1052,7 +1008,6 @@ body>footer {
 }
 
 
-/*suppression*/
 .title-builds-into {
     display: grid;
     grid-template-columns: 1fr 4fr 1fr 1fr;
@@ -1249,18 +1204,13 @@ body>footer {
     filter: none;
 }
 
-
-
-/* Style quand un filtre est ACTIF */
 .filter-square-horizontal.selected-filter,
 .filter-square-vertical.selected-filter {
     border-color: #ffee56;
     box-shadow: 0 0 10px #ffee56;
-    /* J'ai harmonisé l'ombre */
     opacity: 1;
 }
 
-/* Optionnel : réduire un peu l'opacité des filtres non sélectionnés pour faire ressortir les actifs */
 .filter-square-horizontal,
 .filter-square-vertical {
     opacity: 0.7;
@@ -1271,7 +1221,6 @@ body>footer {
     opacity: 1;
 }
 
-/* --- STYLE DU PANIER (CART ITEMS) --- */
 .cart-item-row {
     display: flex;
     justify-content: space-between;
@@ -1382,7 +1331,7 @@ body>footer {
     text-shadow: 0 0 5px #ff0000;
 }
 
-/* --- STYLE DU PANIER (CART ITEMS) --- */
+
 .cart-item-row {
     display: flex;
     justify-content: space-between;

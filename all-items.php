@@ -1,4 +1,11 @@
-<?php require_once 'core/db.php'; ?>
+<?php
+/**
+ * Page catalogue publique (all-items.php).
+ *
+ * Affiche la liste complète des objets avec des filtres par rôle et par statistiques.
+ * Permet de consulter les détails survolés et d'ajouter au panier.
+ */
+require_once 'core/db.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,15 +18,12 @@
 <body>
 
     <div class="lol-shop-window">
-        <!-- SECTION DE GAUCHE AVEC LES CONSOMMABLES ET LES BOTTES -->
         <div class="shop-sidebar-left">
-            <!-- PROFIL-->
             <div class="profile-section">
                 <a href="connexion.php" class="profile-icon">
                     <img src="assets/img/logos/lol_icon.png" alt="Profil Icon">
                 </a>
             </div>
-            <!-- CONSOMMABLES -->
             <div class="sidebar-block-consumables">
                 <?php
 $stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'consumable'");
@@ -39,7 +43,6 @@ while ($item = $stmt->fetch()) {
                 </div>
             </div>
             
-            <!-- BOTTES -->
             <div class="sidebar-block-boots">
                 <?php
 $stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'boots'");
@@ -57,20 +60,16 @@ while ($item = $stmt->fetch()) {
             </div>
         </div>
 
-        <!-- SECTION PRINCIPALE AVEC LES OBJETS -->
         <main class="shop-main-content">
-            <!-- NAVIGATION -->
             <div class="shop-tabs">
                 <a href="index.php" >ACCUEIL</a>
                 <a href="all-items.php" id="active">TOUS LES OBJETS</a>
                 <a href="panier.php">PANIER</a>
             </div>
-            <!-- BARRE DE RECHERCHE ET FILTRE HORIZONTALE -->
             <div class="search-filters">
                 <input type="text" placeholder="Recherchez des objets, des stats ou des mots-clés...">
                 <div class="horizontal-filter-section">
                     <div class="filter-square-horizontal" id="filter-all-logo" data-filter-value="all">
-                        <!-- 9carré pour formler un logo cube -->
                         <?php
 for ($i = 0; $i < 9; $i++) {
     echo '<div class="filter-square-horizontal-all-logo"></div>';
@@ -87,7 +86,6 @@ for ($i = 0; $i < 9; $i++) {
                 </div>
             </div>
 
-            <!-- FILTRE VERTICAL ET GRILLE D'OBJETS -->
             <div class="filter-objects-container">
                 <div class="vertical-filter-section">
                     <img class="filter-square-vertical" id="filter-clear" src="assets/img/logos/cancel.png" alt="Clear Filter">
@@ -136,7 +134,6 @@ while ($item = $stmt->fetch()) {
             </div>
         </main>
 
-        <!-- SECTION DE DROITE AVEC LES DÉTAILS DE L'OBJET -->
         <div class="shop-details-panel">
             <div class="builds-into">
                 <h4>DÉBLOQUE</h4>
@@ -186,7 +183,6 @@ while ($item = $stmt->fetch()) {
 document.addEventListener('DOMContentLoaded', function() {
 
 
-    // 1. GESTION DES FILTRES HORIZONTAUX (Rôles) - Type "Radio"
     const roleFilters = document.querySelectorAll('.filter-square-horizontal[data-filter-value]');
     
     roleFilters.forEach(filter => {
@@ -195,7 +191,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const allFilter = document.querySelector('.filter-square-horizontal[data-filter-value="all"]');
             
             if (filterValue === 'all') {
-                // Click on "all" - toggle it
                 if (this.classList.contains('selected-filter')) {
                     this.classList.remove('selected-filter');
                 } else {
@@ -203,15 +198,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     this.classList.add('selected-filter');
                 }
             } else {
-                // Click on a specific role
                 const currentSelected = document.querySelector('.filter-square-horizontal.selected-filter[data-filter-value]');
                 
                 if (currentSelected && currentSelected.getAttribute('data-filter-value') === filterValue) {
-                    // Same role clicked - switch to "all"
                     roleFilters.forEach(f => f.classList.remove('selected-filter'));
                     allFilter.classList.add('selected-filter');
                 } else {
-                    // Different role - select it, deselect "all"
                     roleFilters.forEach(f => f.classList.remove('selected-filter'));
                     this.classList.add('selected-filter');
                 }
@@ -220,55 +212,44 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 2. GESTION DES FILTRES VERTICAUX (Stats) - Type "Checkbox"
     const statFilters = document.querySelectorAll('.filter-square-vertical');
     
     statFilters.forEach(filter => {
         filter.addEventListener('click', function() {
-            // Cas spécial pour le bouton "Croix" (Clear all)
             if (this.id === 'filter-clear') {
                 statFilters.forEach(f => f.classList.remove('selected-filter'));
                 roleFilters.forEach(f => f.classList.remove('selected-filter'));
                 document.querySelector('.filter-square-horizontal[data-filter-value="all"]').classList.add('selected-filter');
             } else {
-                // Comportement normal : on active/désactive simplement (pas d'exclusion mutuelle)
                 this.classList.toggle('selected-filter');
             }
-            updateGrid(); // On lance le tri
+            updateGrid();
         });
     });
 
-    // Initialize with "all" selected
     document.querySelector('.filter-square-horizontal[data-filter-value="all"]').classList.add('selected-filter');
 
-    // 3. LA FONCTION DE TRI (Le Cerveau)
     function updateGrid() {
-        // A. Récupérer le rôle actif (s'il y en a un)
         const activeRoleBtn = document.querySelector('.filter-square-horizontal.selected-filter[data-filter-value]');
         const activeRole = activeRoleBtn ? activeRoleBtn.getAttribute('data-filter-value') : null;
 
-        // B. Récupérer toutes les stats actives
         const activeStatBtns = document.querySelectorAll('.filter-square-vertical.selected-filter[data-filter-value]');
         const activeStats = Array.from(activeStatBtns).map(btn => btn.getAttribute('data-filter-value'));
 
-        // C. Parcourir tous les items
         const items = document.querySelectorAll('.items-grid .item-square[data-role]');
         
         items.forEach(item => {
             const itemRole = item.getAttribute('data-role');
-            const itemStats = item.getAttribute('data-stats'); // ex: "ap mana magpen cdr"
+            const itemStats = item.getAttribute('data-stats');
 
-            // Condition 1 : Est-ce que le rôle correspond ? (ou aucun rôle sélectionné)
             const roleMatch = !activeRole || activeRole === 'all' || itemRole === activeRole;
 
-            // Condition 2 : Est-ce que l'item possède TOUTES les stats cochées ?
             const statsMatch = activeStats.every(stat => itemStats.includes(stat));
 
-            // Résultat
             if (roleMatch && statsMatch) {
-                item.style.display = 'block'; // Affiche
+                item.style.display = 'block';
             } else {
-                item.style.display = 'none';  // Cache
+                item.style.display = 'none';
             }
         });
     }

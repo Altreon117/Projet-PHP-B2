@@ -1,4 +1,10 @@
 <?php
+/**
+ * Script d'initialisation des consommables et bottes (setup_consumables.php).
+ *
+ * Peuple la base de données avec une liste prédéfinie d'objets (consommables, bottes).
+ * Vérifie l'existence avant insertion pour éviter les doublons.
+ */
 require_once 'core/db.php';
 
 $consumables = [

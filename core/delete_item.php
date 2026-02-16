@@ -1,4 +1,10 @@
 <?php
+/**
+ * Script de suppression d'item (delete_item.php).
+ *
+ * Supprime un item de la base de données sur demande de l'administrateur.
+ * Redirige vers la liste des objets avec un message de confirmation.
+ */
 require_once 'db.php';
 
 if (isset($_GET['id'])) {

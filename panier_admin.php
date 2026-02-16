@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<?php
+/**
+ * Page panier administration (panier_admin.php).
+ *
+ * Vue du panier adaptée pour l'interface d'administration.
+ * Garde la cohérence visuelle avec le reste du back-office.
+ */
+?>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -10,15 +18,12 @@
 <body>
 
     <div class="lol-shop-window">
-        <!-- SECTION DE GAUCHE AVEC LES CONSOMMABLES ET LES BOTTES -->
         <div class="shop-sidebar-left">
-            <!-- PROFIL-->
             <div class="profile-section">
                 <a href="connexion.php" class="profile-icon">
                     <img src="assets/img/logos/lol_icon.png" alt="Profil Icon">
                 </a>
             </div>
-            <!-- CONSOMMABLES -->
             <div class="sidebar-block-consumables">
                 <?php
 require_once 'core/db.php';
@@ -43,7 +48,6 @@ catch (PDOException $e) {
 ?>
             </div>
             
-            <!-- BOTTES -->
             <div class="sidebar-block-boots">
                 <?php
 try {
@@ -70,19 +74,15 @@ catch (PDOException $e) {
             </div>
         </div>
 
-        <!-- SECTION PRINCIPALE AVEC LES OBJETS -->
         <main class="shop-main-content">
-            <!-- NAVIGATION -->
             <div class="shop-tabs">
                 <a href="index_admin.php" >ACCUEIL</a>
                 <a href="all-items_admin.php" >TOUS LES OBJETS</a>
                 <a href="panier_admin.php" id="active">PANIER</a>
             </div>
-            <!-- BARRE DE RECHERCHE ET FILTRE HORIZONTALE -->
             <div class="search-filters">
                 <input type="text" placeholder="Recherchez des objets, des stats ou des mots-clés...">
             </div>
-            <!-- PANNIER -->
             <div class="panier-section">
                 <div class="item-spot-section">
                     <div class="item6-spot">
@@ -99,7 +99,6 @@ catch (PDOException $e) {
                 </div>
                 <div class="others-items-spot">
                     <?php
-// Petite boucle PHP pour simuler plein d'objets et voir le scroll
 for ($i = 0; $i < 20; $i++) {
     echo '<div class="item-square"></div>';
 }
@@ -126,10 +125,16 @@ for ($i = 0; $i < 20; $i++) {
             </div>            
         </main>
 
-        <!-- SECTION DE DROITE AVEC LES DÉTAILS DE L'OBJET -->
         <div class="shop-details-panel">
             <div class="builds-into">
-                <h4>DÉBLOQUE</h4>
+                <div class="title-builds-into">
+                    <h4>DÉBLOQUE</h4>
+                    <p></p>
+                    <a href="#" class="edit-link">
+                        <img src="assets/img/logos/pen.png" alt="Edit-Icon">
+                    </a>
+                    <img src="assets/img/logos/trash.svg" alt="Trash-Icon" class="trash-icon btn-delete-confirm" id="admin-delete-item-btn" style="cursor: pointer;">
+                </div>
                 <div class="builds-into-grid">
                     <div class="item-square"></div>
                     <div class="item-square"></div>
@@ -157,12 +162,12 @@ for ($i = 0; $i < 20; $i++) {
                     </div>
                 </div>
                 <div class="description">
-                    <p class="stats" id="details-desc">Cliquez sur un item à gauche pour voir ses détails.</p>
+                    <p class="stats" id="details-desc">Cliquez sur un item pour voir ses détails.</p>
                     <p class="passive" id="details-id" style="display:none;">ID: -</p>
                 </div>
             </div>
 
-            <button class="btn-purchase" style="visibility:hidden">ACHETER</button>
+            <button class="btn-purchase">ACHETER</button>
         </div>
 
     </div>

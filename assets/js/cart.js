@@ -1,3 +1,9 @@
+/**
+ * Gestion de l'ajout au panier (cart.js).
+ *
+ * Gère le clic sur le bouton "ACHETER".
+ * Envoie une requête AJAX pour ajouter l'item sélectionné au panier.
+ */
 document.addEventListener('DOMContentLoaded', () => {
     const buyButton = document.querySelector('.btn-purchase');
 
@@ -27,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.success) {
                     alert("Article ajouté au panier !");
-                    location.reload(); // Pour mettre à jour le panier si on est sur la page panier
+                    location.reload();
                 } else {
                     alert("Erreur : " + data.message);
                 }

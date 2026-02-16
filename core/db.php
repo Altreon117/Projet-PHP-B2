@@ -1,4 +1,10 @@
 <?php
+/**
+ * Configuration de la base de données (db.php).
+ *
+ * Établit la connexion PDO à la base de données MySQL.
+ * Configure les modes d'erreur et le jeu de caractères.
+ */
 session_start();
 $host = 'localhost';
 $dbname = 'ecommerce_php';

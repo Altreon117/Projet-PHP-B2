@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<?php
+/**
+ * Page de gestion des utilisateurs (gestion_user.php).
+ *
+ * Réservée aux administrateurs.
+ * Permet de visualiser, modifier ou supprimer les comptes utilisateurs.
+ */
+?>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">

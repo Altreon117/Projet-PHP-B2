@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
+<?php
+/**
+ * Page d'accueil de l'administration (index_admin.php).
+ *
+ * Similaire à la page publique mais avec des fonctionnalités d'édition pour les administrateurs.
+ * Permet de modifier ou supprimer des articles directement depuis l'interface.
+ */
+require_once 'core/db.php'; ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,18 +18,15 @@
 <body>
 
     <div class="lol-shop-window">
-        <!-- SECTION DE GAUCHE AVEC LES CONSOMMABLES ET LES BOTTES -->
         <div class="shop-sidebar-left">
-            <!-- PROFIL-->
             <div class="profile-section">
                 <a href="connexion.php" class="profile-icon">
                     <img src="assets/img/logos/lol_icon.png" alt="Profil Icon">
                 </a>
             </div>
-            <!-- CONSOMMABLES -->
             <div class="sidebar-block-consumables">
                 <?php
-require_once 'core/db.php'; // Sécurité si non inclus plus haut
+require_once 'core/db.php';
 try {
     $stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'consumable'");
     while ($item = $stmt->fetch()) {
@@ -43,7 +48,6 @@ catch (PDOException $e) {
 ?>
             </div>
             
-            <!-- BOTTES -->
             <div class="sidebar-block-boots">
                 <?php
 try {
@@ -70,20 +74,16 @@ catch (PDOException $e) {
             </div>
         </div>
 
-        <!-- SECTION PRINCIPALE AVEC LES OBJETS -->
         <main class="shop-main-content">
-            <!-- NAVIGATION -->
             <div class="shop-tabs">
                 <a href="index_admin.php" id="active">ACCUEIL</a>
                 <a href="all-items_admin.php" >TOUS LES OBJETS</a>
                 <a href="panier_admin.php">PANIER</a>
             </div>
-            <!-- BARRE DE RECHERCHE ET FILTRE HORIZONTALE -->
             <div class="search-filters">
                 <input type="text" placeholder="Recherchez des objets, des stats ou des mots-clés...">
             </div>
 
-            <!-- Page d'accueil -->
             <div class="main-content-page">
                 <header>ANTRE DU PORO</header>
                 <h1>Bienvenue Dans L'Antre Du Poro</h1>
@@ -92,7 +92,6 @@ catch (PDOException $e) {
                 </p>
                 <h2> OBJETS LES PLUS ACHETÉS</h2>
                 <div class="recommended-items-section">
-                    <!--<h2>OBJETS LES PLUS ACHETÉS</h2>-->
                     <div class="recommended-item">
                         <div class="rank">
                             <img class="ranked-item-icon" src="assets/img/logos/kexalted.svg" alt="Exalted rank">
@@ -183,10 +182,16 @@ catch (PDOException $e) {
             </div>
         </main>
 
-        <!-- SECTION DE DROITE AVEC LES DÉTAILS DE L'OBJET -->
         <div class="shop-details-panel">
             <div class="builds-into">
-                <h4>DÉBLOQUE</h4>
+                <div class="title-builds-into">
+                    <h4>DÉBLOQUE</h4>
+                    <p></p>
+                    <a href="#" class="edit-link">
+                        <img src="assets/img/logos/pen.png" alt="Edit-Icon">
+                    </a>
+                    <img src="assets/img/logos/trash.svg" alt="Trash-Icon" class="trash-icon btn-delete-confirm" id="admin-delete-item-btn" style="cursor: pointer;">
+                </div>
                 <div class="builds-into-grid">
                     <div class="item-square"></div>
                     <div class="item-square"></div>
@@ -228,3 +233,4 @@ catch (PDOException $e) {
     </footer>
 <script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>
 </body>
+</html>

@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<?php
+/**
+ * Page de crédits (credit.php).
+ *
+ * Affiche les informations sur l'équipe de développement et le projet.
+ */
+?>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">

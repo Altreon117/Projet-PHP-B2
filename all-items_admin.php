@@ -1,4 +1,11 @@
-<?php require_once 'core/db.php'; ?>
+<?php
+/**
+ * Page catalogue administration (all-items_admin.php).
+ *
+ * Affiche la liste des objets pour les administrateurs.
+ * Inclut les fonctionnalités de modification et de suppression d'objets.
+ */
+require_once 'core/db.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,18 +18,14 @@
 <body>
 
     <div class="lol-shop-window">
-        <!-- SECTION DE GAUCHE AVEC LES CONSOMMABLES ET LES BOTTES -->
         <div class="shop-sidebar-left">
-            <!-- PROFIL-->
             <div class="profile-section">
                 <a href="connexion.php" class="profile-icon">
                     <img src="assets/img/logos/lol_icon.png" alt="Profil Icon">
                 </a>
             </div>
-            <!-- CONSOMMABLES -->
             <div class="sidebar-block-consumables">
                 <?php
-// Récupération dynamique des consommables
 try {
     $stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'consumable'");
     while ($item = $stmt->fetch()) {
@@ -36,7 +39,6 @@ try {
                                 <a>' . (int)$item['prix'] . '</a>
                               </div>';
     }
-    // Remplissage pour garder la grille propre si besoin
     echo '<div class="mini-icon"><div class="item-square" style="visibility: hidden;"></div></div>';
 }
 catch (PDOException $e) {
@@ -45,7 +47,6 @@ catch (PDOException $e) {
 ?>
             </div>
             
-            <!-- BOTTES -->
             <div class="sidebar-block-boots">
                 <?php
 try {
@@ -73,20 +74,16 @@ catch (PDOException $e) {
             </div>
         </div>
 
-        <!-- SECTION PRINCIPALE AVEC LES OBJETS -->
         <main class="shop-main-content">
-            <!-- NAVIGATION -->
             <div class="shop-tabs">
                 <a href="index_admin.php" >ACCUEIL</a>
                 <a href="all-items_admin.php" id="active">TOUS LES OBJETS</a>
                 <a href="panier_admin.php">PANIER</a>
             </div>
-            <!-- BARRE DE RECHERCHE ET FILTRE HORIZONTALE -->
             <div class="search-filters">
                 <input type="text" placeholder="Recherchez des objets, des stats ou des mots-clés...">
                 <div class="horizontal-filter-section">
                     <div class="filter-square-horizontal" id="filter-all-logo" data-filter-value="all">
-                        <!-- 9carré pour formler un logo cube -->
                         <?php
 for ($i = 0; $i < 9; $i++) {
     echo '<div class="filter-square-horizontal-all-logo"></div>';
@@ -109,7 +106,6 @@ for ($i = 0; $i < 9; $i++) {
                 </div>
             </div>
 
-            <!-- FILTRE VERTICAL ET GRILLE D'OBJETS -->
             <div class="filter-objects-container">
                 <div class="vertical-filter-section">
                     <img class="filter-square-vertical" id="filter-clear" src="assets/img/logos/cancel.png" alt="Clear Filter">
@@ -158,7 +154,6 @@ foreach ($items as $item) {
     $name = htmlspecialchars($item['nom']);
     $price = htmlspecialchars($item['prix']);
     $desc = htmlspecialchars($item['description']);
-    // Image par défaut si vide
     $img = !empty($item['image']) ? $item['image'] : 'assets/img/logos/lol_icon.png';
 
     echo '<div class="item-square" 
@@ -178,7 +173,6 @@ foreach ($items as $item) {
             </div>
         </main>
 
-        <!-- SECTION DE DROITE AVEC LES DÉTAILS DE L'OBJET -->
         <div class="shop-details-panel">
             <div class="builds-into">
                 <div class="title-builds-into" >

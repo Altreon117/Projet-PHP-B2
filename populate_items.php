@@ -1,4 +1,10 @@
 <?php
+/**
+ * Script de population d'items de test (populate_items.php).
+ *
+ * Vide la table items et génère des objets aléatoires pour le développement et les tests.
+ * Assigne des stats et rôles cohérents de manière procédurale.
+ */
 require_once 'core/db.php';
 
 try {

@@ -1,4 +1,10 @@
 <?php
+/**
+ * API de gestion du panier (cart_actions.php).
+ *
+ * Reçoit les requêtes AJAX (JSON/POST) pour ajouter, mettre à jour ou supprimer des articles du panier.
+ * Retourne une réponse JSON.
+ */
 require_once 'db.php';
 
 header('Content-Type: application/json');

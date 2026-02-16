@@ -1,4 +1,10 @@
 <?php
+/**
+ * Page d'inscription (inscription.php).
+ *
+ * Permet aux nouveaux utilisateurs de créer un compte.
+ * Enregistre les informations dans la base de données après validation.
+ */
 require_once 'core/db.php';
 
 $error = '';

@@ -1,3 +1,12 @@
+/**
+ * Interactions du panier (cart-interactions.js).
+ *
+ * Gère les actions dans la page panier :
+ * - Modification des quantités (+/-).
+ * - Suppression d'un article.
+ * - Vider le panier.
+ * - Calcul dynamique du total.
+ */
 document.addEventListener('DOMContentLoaded', () => {
     const updateCartTotal = () => {
         let total = 0;

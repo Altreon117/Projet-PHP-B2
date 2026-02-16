@@ -1,4 +1,10 @@
 <?php
+/**
+ * Script de modification d'objet (all-items_admin_modif.php).
+ *
+ * Traite le formulaire de modification d'un item existant.
+ * Met à jour les informations en base de données.
+ */
 require_once 'core/db.php';
 require_once 'core/admin_auth.php';
 

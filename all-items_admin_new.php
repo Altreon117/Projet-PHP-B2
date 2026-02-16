@@ -1,4 +1,9 @@
 <?php
+/**
+ * Page de création d'objet (all-items_admin_new.php).
+ *
+ * Affiche le formulaire de création et traite l'insertion d'un nouvel item en base.
+ */
 require_once 'core/db.php';
 require_once 'core/admin_auth.php';
 
