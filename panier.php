@@ -79,16 +79,63 @@ while ($item = $stmt->fetch()) {
             </div>
             <div class="panier-section">
                 <div class="item-spot-section">
+                    <?php
+$inventorySlots = array_fill(0, 6, null);
+$trinketSlot = null;
+$trinketNames = ['farsight alteration', 'oracle lens', 'stealth ward'];
+
+$orderedItems = [];
+if (!empty($panier)) {
+    foreach ($panier as $pId => $pQty) {
+        foreach ($items as $dbItem) {
+            if ($dbItem['id'] == $pId) {
+                $itemNameLower = strtolower($dbItem['nom']);
+                $isTrinket = in_array($itemNameLower, $trinketNames);
+
+                if ($isTrinket) {
+                    if ($trinketSlot === null) {
+                        $trinketSlot = $dbItem;
+                    }
+                }
+                else {
+                    $orderedItems[] = $dbItem;
+                }
+                break;
+            }
+        }
+    }
+}
+
+$slotIndex = 0;
+foreach ($orderedItems as $item) {
+    if ($slotIndex < 6) {
+        $inventorySlots[$slotIndex] = $item;
+        $slotIndex++;
+    }
+}
+?>
                     <div class="item6-spot">
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
+                        <?php for ($i = 0; $i < 6; $i++): ?>
+                            <div class="item-spot">
+                                <?php if (!empty($inventorySlots[$i]) && is_array($inventorySlots[$i])): ?>
+                                    <img src="<?php echo htmlspecialchars($inventorySlots[$i]['image']); ?>" 
+                                         alt="<?php echo htmlspecialchars($inventorySlots[$i]['nom']); ?>"
+                                         style="width:100%; height:100%; object-fit:contain;">
+                                <?php
+    endif; ?>
+                            </div>
+                        <?php
+endfor; ?>
                     </div>
-                    <div class="item7-adc-spot-section">
-                        <div class="item-spot" ></div>
+                    <div class="item7-trinket-spot">
+                        <div class="item-spot">
+                             <?php if (!empty($trinketSlot) && is_array($trinketSlot)): ?>
+                                <img src="<?php echo htmlspecialchars($trinketSlot['image']); ?>" 
+                                     alt="<?php echo htmlspecialchars($trinketSlot['nom']); ?>"
+                                     style="width:100%; height:100%; object-fit:contain;">
+                            <?php
+endif; ?>
+                        </div>
                     </div>
                 </div>
                 <div class="others-items-spot">
@@ -98,7 +145,17 @@ if (empty($items)) {
     echo '<p style="color:white; padding:20px;">Votre panier est vide.</p>';
 }
 else {
-    foreach ($items as $item) {
+    $sortedItems = [];
+    foreach ($panier as $pId => $qty) {
+        foreach ($items as $item) {
+            if ($item['id'] == $pId) {
+                $sortedItems[] = $item;
+                break;
+            }
+        }
+    }
+
+    foreach ($sortedItems as $item) {
         $qty = $panier[$item['id']];
         $subtotal = $item['prix'] * $qty;
         $total += $subtotal;

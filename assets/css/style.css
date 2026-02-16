@@ -1726,3 +1726,155 @@ body>footer {
         width: 100%;
     }
 }
+
+@media (max-width: 768px) {
+    .lol-con-insc-window {
+        height: auto;
+        min-height: 90vh;
+        padding: 20px 0;
+        overflow-y: auto;
+        display: block;
+    }
+
+    .form-container {
+        width: 90%;
+        max-width: 450px;
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .button-con-insc,
+    .button-con-insc img {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+    }
+
+    .credits-box {
+        width: 95%;
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        overflow-y: auto;
+        max-height: 80vh;
+    }
+
+    .pp-container {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .user-table-wrap {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 1024px) {
+    .lol-shop-window {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        overflow-y: visible;
+    }
+
+    .shop-sidebar-left {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #785A28;
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 10px;
+        order: 1;
+    }
+
+    .sidebar-block-consumables,
+    .sidebar-block-boots {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 10px;
+        background: none;
+        border: none;
+    }
+
+    .shop-main-content {
+        width: 100%;
+        height: auto;
+        order: 2;
+        overflow: visible;
+    }
+
+    .items-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 10px;
+        max-height: 50vh;
+    }
+
+    .shop-details-panel {
+        width: 100%;
+        height: auto;
+        border-left: none;
+        border-top: 4px solid #785A28;
+        order: 3;
+        position: relative;
+    }
+
+    .builds-into-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .horizontal-filter-section {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    .items-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .item-spot-section {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .item6-spot {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .item7-trinket-spot {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding-top: 5px;
+        border-top: 2px solid #785A28;
+    }
+
+    .cart-item-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .cart-item-info {
+        width: 100%;
+    }
+
+    .cart-item-actions {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+}

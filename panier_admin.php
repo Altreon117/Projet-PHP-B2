@@ -7,7 +7,7 @@
  * tout en gardant l'accès aux outils d'administration (édition/suppression items via sidebar/panel).
  */
 require_once 'core/db.php';
-require_once 'core/admin_auth.php'; // Sécurité admin
+require_once 'core/admin_auth.php';
 
 $panier = $_SESSION['panier'] ?? [];
 $items = [];
@@ -96,16 +96,61 @@ catch (PDOException $e) {
             </div>
             <div class="panier-section">
                 <div class="item-spot-section">
+                    <?php
+$inventorySlots = array_fill(0, 6, null);
+$trinketSlot = null;
+$trinketNames = ['farsight alteration', 'oracle lens', 'stealth ward'];
+
+$orderedItems = [];
+if (!empty($panier)) {
+    foreach ($panier as $pId => $pQty) {
+        foreach ($items as $dbItem) {
+            if ($dbItem['id'] == $pId) {
+                $itemNameLower = strtolower($dbItem['nom']);
+                $isTrinket = in_array($itemNameLower, $trinketNames);
+
+                if ($isTrinket) {
+                    if ($trinketSlot === null) {
+                        $trinketSlot = $dbItem;
+                    }
+                }
+                else {
+                    $orderedItems[] = $dbItem;
+                }
+                break;
+            }
+        }
+    }
+}
+
+$slotIndex = 0;
+foreach ($orderedItems as $item) {
+    if ($slotIndex < 6) {
+        $inventorySlots[$slotIndex] = $item;
+        $slotIndex++;
+    }
+}
+?>
                     <div class="item6-spot">
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
-                        <div class="item-spot"></div>
+                        <?php for ($i = 0; $i < 6; $i++): ?>
+                            <div class="item-spot">
+                                <?php if (!empty($inventorySlots[$i]) && is_array($inventorySlots[$i])): ?>
+                                    <img src="<?php echo htmlspecialchars($inventorySlots[$i]['image']); ?>" 
+                                         style="width:100%; height:100%; object-fit:contain;">
+                                <?php
+    endif; ?>
+                            </div>
+                        <?php
+endfor; ?>
                     </div>
-                    <div class="item7-adc-spot-section">
-                        <div class="item-spot" ></div>
+                    <div class="item7-trinket-spot">
+                        <div class="item-spot" >
+                            <?php if (!empty($trinketSlot) && is_array($trinketSlot)): ?>
+                                <img src="<?php echo htmlspecialchars($trinketSlot['image']); ?>" 
+                                     style="width:100%; height:100%; object-fit:contain;">
+                            <?php
+endif; ?>
+                        </div>
                     </div>
                 </div>
                 <div class="others-items-spot">
@@ -115,13 +160,22 @@ if (empty($items)) {
     echo '<p style="color:white; padding:20px;">Votre panier admin est vide.</p>';
 }
 else {
-    foreach ($items as $item) {
+    $sortedItems = [];
+    foreach ($panier as $pId => $qty) {
+        foreach ($items as $item) {
+            if ($item['id'] == $pId) {
+                $sortedItems[] = $item;
+                break;
+            }
+        }
+    }
+
+    foreach ($sortedItems as $item) {
         $qty = $panier[$item['id']];
         $subtotal = $item['prix'] * $qty;
         $total += $subtotal;
         $id_counter++;
 
-        // Note: onclick calls adminSelectItem to populate the right panel for admin actions
         echo '<div class="cart-item-row" onclick="adminSelectItem(this)"
                                     data-id="' . htmlspecialchars($item['id']) . '"
                                     data-name="' . htmlspecialchars($item['nom']) . '"
@@ -231,7 +285,6 @@ endif; ?>
 <script src="/Projet-PHP-B2/assets/js/cart.js" defer></script>
 <script src="/Projet-PHP-B2/assets/js/search.js" defer></script>
     <script>
-    // Functions for cart interactions (duplicated/adapted from cart.js for admin context)
     function updateQty(id, qty) {
         fetch('/Projet-PHP-B2/core/cart_actions.php', {
             method: 'POST',
