@@ -229,6 +229,7 @@ endif; ?>
     </footer>
     <script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>
 <script src="/Projet-PHP-B2/assets/js/cart.js" defer></script>
+<script src="/Projet-PHP-B2/assets/js/search.js" defer></script>
     <script>
     // Functions for cart interactions (duplicated/adapted from cart.js for admin context)
     function updateQty(id, qty) {

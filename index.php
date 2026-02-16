@@ -203,5 +203,6 @@ foreach ($topItems as $index => $item) {
 
 <script src="/Projet-PHP-B2/assets/js/cart.js" defer></script>
 <script src="/Projet-PHP-B2/assets/js/shop.js" defer></script>
+<script src="/Projet-PHP-B2/assets/js/search.js" defer></script>
 </body>
 </html>

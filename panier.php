@@ -204,6 +204,7 @@ endif; ?>
 
     <script src="/Projet-PHP-B2/assets/js/cart.js" defer></script>
     <script src="/Projet-PHP-B2/assets/js/shop.js" defer></script>
+    <script src="/Projet-PHP-B2/assets/js/search.js" defer></script>
     <script>
     function updateQty(id, qty) {
         fetch('/Projet-PHP-B2/core/cart_actions.php', {

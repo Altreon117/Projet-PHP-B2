@@ -253,5 +253,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<script src="/Projet-PHP-B2/assets/js/search.js" defer></script>
 </body>
 </html>
