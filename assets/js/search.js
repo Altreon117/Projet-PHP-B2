@@ -49,16 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
         filter.addEventListener('click', () => {
             const val = filter.getAttribute('data-filter-value');
             if (val === 'all') {
-                currentCategory = 'all';
                 categoryFilters.forEach(f => f.classList.remove('selected-filter'));
                 document.getElementById('filter-all-logo').classList.add('selected-filter');
             } else {
-                if (currentCategory === val) {
-                   currentCategory = 'all';
+                if (filter.classList.contains('selected-filter')) {
                    filter.classList.remove('selected-filter');
                    document.getElementById('filter-all-logo').classList.add('selected-filter');
                 } else {
-                   currentCategory = val;
                    categoryFilters.forEach(f => f.classList.remove('selected-filter'));
                    filter.classList.add('selected-filter');
                 }
@@ -70,14 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const statFilters = document.querySelectorAll('.filter-square-vertical[data-filter-value]');
     statFilters.forEach(filter => {
         filter.addEventListener('click', () => {
-            const val = filter.getAttribute('data-filter-value');
-            if (activeStatFilters.includes(val)) {
-                activeStatFilters = activeStatFilters.filter(s => s !== val);
-                filter.classList.remove('selected-filter');
-            } else {
-                activeStatFilters.push(val);
-                filter.classList.add('selected-filter');
-            }
+            filter.classList.toggle('selected-filter');
             if(isCatalogPage) applyFilters();
         });
     });
@@ -85,9 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearFilterBtn = document.getElementById('filter-clear');
     if (clearFilterBtn) {
         clearFilterBtn.addEventListener('click', () => {
-            activeStatFilters = [];
             statFilters.forEach(f => f.classList.remove('selected-filter'));
-            currentCategory = 'all';
             categoryFilters.forEach(f => f.classList.remove('selected-filter'));
             document.getElementById('filter-all-logo').classList.add('selected-filter');
             if(searchInput) searchInput.value = '';
@@ -95,31 +83,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    if (isCatalogPage && !document.querySelector('.filter-square-horizontal.selected-filter')) {
+        const allLogo = document.getElementById('filter-all-logo');
+        if(allLogo) allLogo.classList.add('selected-filter');
+    }
+
     function applyFilters() {
         const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
         const items = document.querySelectorAll('.items-grid .item-square');
         
+        const activeCategoryBtn = document.querySelector('.filter-square-horizontal.selected-filter[data-filter-value]');
+        const currentCategory = activeCategoryBtn ? activeCategoryBtn.getAttribute('data-filter-value') : 'all';
+
+        const activeStatBtns = document.querySelectorAll('.filter-square-vertical.selected-filter[data-filter-value]');
+        const activeStats = Array.from(activeStatBtns).map(btn => btn.getAttribute('data-filter-value'));
+
         items.forEach(item => {
+            if(!item.dataset.role) return;
+
             const name = (item.dataset.name || '').toLowerCase();
             const role = (item.dataset.role || '').toLowerCase();
-            const desc = (item.dataset.desc || '').toLowerCase();
+            const desc = (item.dataset.stats || '').toLowerCase();
             const isFav = item.dataset.fav === 'true';
-            
+            const itemStatsStr = item.getAttribute('data-filter-stats') || '';
+            const itemStatsList = itemStatsStr.split(' ');
+
             let matchesSearch = !query || name.includes(query) || role.includes(query) || desc.includes(query);
             
             let matchesCategory = true;
             if (currentCategory === 'favorite') {
                 matchesCategory = isFav;
-            } else if (currentCategory !== 'all') {
+            } else if (currentCategory && currentCategory !== 'all') {
                 matchesCategory = role === currentCategory;
             }
 
             let matchesStats = true;
-            if (activeStatFilters.length > 0) {
-                matchesStats = activeStatFilters.every(stat => {
-                    const statVal = parseInt(item.dataset[stat] || '0');
-                    return statVal > 0;
-                });
+            if (activeStats.length > 0) {
+                matchesStats = activeStats.every(stat => itemStatsList.includes(stat));
             }
 
             if (matchesSearch && matchesCategory && matchesStats) {

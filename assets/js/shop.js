@@ -100,7 +100,6 @@ function toggleFavorite(itemId, btnIcon, itemElement) {
                 el.dataset.fav = isFav ? 'true' : 'false';
             });
 
-            // Update grid if we are on all-items page and filter might be affected
             if (typeof window.updateGrid === 'function') {
                 window.updateGrid();
             }

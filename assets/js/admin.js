@@ -81,7 +81,7 @@ window.updateDetailsPanel = function(id, name, price, desc, img, element) {
     const detailsImgContainer = document.getElementById('details-img-container');
     const bigDisplay = document.querySelector('.big-item-display .item-square-big-item');
 
-    // ID display removed as requested
+    if (detailsId) detailsId.dataset.currentId = id;
     
     if (detailsName) detailsName.textContent = name;
     if (detailsPrice) detailsPrice.textContent = price;
@@ -166,7 +166,6 @@ function toggleFavorite(itemId, btnIcon, itemElement) {
                 el.dataset.fav = isFav ? 'true' : 'false';
             });
 
-            // Update grid
             if (typeof window.updateGrid === 'function') {
                 window.updateGrid();
             }

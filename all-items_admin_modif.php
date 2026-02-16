@@ -27,12 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $_POST['nom'] ?? '';
     $prix = $_POST['prix'] ?? 0;
     $image = $_POST['image_path'] ?? '';
-    $description = $_POST['description'] ?? '';
-    $full_desc = $description;
+    $description_stat = $_POST['description_stat'] ?? '';
+    $description_passive = $_POST['description_passive'] ?? '';
     $quantite = $_POST['quantite'] ?? 0;
 
-    $stmt = $pdo->prepare("UPDATE items SET nom=?, prix=?, image=?, description=?, stock=? WHERE id=?");
-    if ($stmt->execute([$nom, $prix, $image, $full_desc, $quantite, $id])) {
+    $stmt = $pdo->prepare("UPDATE items SET nom=?, prix=?, image=?, description_stat=?, description_passive=?, stock=? WHERE id=?");
+    if ($stmt->execute([$nom, $prix, $image, $description_stat, $description_passive, $quantite, $id])) {
         header("Location: all-items_admin.php");
         exit;
     }
@@ -63,34 +63,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              <div class="shop-title">MODIFIER OBJET</div>
         </main>
 
-        <form class="shop-details-panel" action="" method="POST">
-            <div class="builds-into">
-                <h4>MODIFICATION</h4>
-                <div class="builds-into-grid">
-                     <img src="<?php echo htmlspecialchars($item['image']); ?>" style="width:50px;height:50px;border:1px solid #c8aa6e;">
+        <form method="POST" class="shop-main-content-form">
+            <div class="shop-details-panel-form">
+                <div class="builds-into">
+                    <h4>MODIFICATION</h4>
+                    <div class="builds-into-grid">
+                         <img src="<?php echo htmlspecialchars($item['image']); ?>" style="width:50px;height:50px;border:1px solid #c8aa6e;">
+                    </div>
                 </div>
-            </div>
 
-            <div class="big-item-display">
-                <input type="text" name="image_path" class="hextech-input-image" value="<?php echo htmlspecialchars($item['image']); ?>" required>
-            </div>
+                <div class="big-item-display">
+                    <input type="text" name="image_path" class="hextech-input-image" value="<?php echo htmlspecialchars($item['image']); ?>" required>
+                </div>
 
-            <div class="selected-item-info">
-                <div class="item-info-header">
-                    <div class="item-square-little-item"></div>
-            
+                <div class="selected-item-info">
                     <div class="item-header-text">
+                        <label for="nom">Nom</label>
                         <input type="text" name="nom" class="hextech-input-title" value="<?php echo htmlspecialchars($item['nom']); ?>" required>
                 
                         <div class="price">
                             <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Gold">
+                            <label for="prix">Prix</label>
                             <input type="number" name="prix" class="hextech-input-gold" value="<?php echo htmlspecialchars($item['prix']); ?>" required>
                         </div>
                     </div>
                 </div>
                 <div class="big-description">
                     <div class="description">
-                        <textarea name="description" class="hextech-textarea" style="height:150px;" required><?php echo htmlspecialchars($item['description']); ?></textarea>
+                         <label for="description_stat">Stats (ex: +40 AD)</label>
+                        <textarea name="description_stat" class="hextech-textarea" style="height:100px;" required><?php echo htmlspecialchars($item['description_stat']); ?></textarea>
+                        
+                        <label for="description_passive">Passif (ex: Unique - Couperet...)</label>
+                        <textarea name="description_passive" class="hextech-textarea" style="height:100px;" required><?php echo htmlspecialchars($item['description_passive']); ?></textarea>
                     </div>
                 </div>
                 <div class="quantity-container">

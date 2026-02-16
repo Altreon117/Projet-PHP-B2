@@ -113,32 +113,31 @@ for ($i = 0; $i < 9; $i++) {
                     <img class="filter-square-vertical" id="filter-clear" src="assets/img/logos/cancel.png" alt="Clear Filter">
                     <div class="AD">
                         <img class="filter-square-vertical" data-filter-value="ad" src="assets/img/logos/Attack_damage_icon.png" alt="Attack Damage">
-                        <img class="filter-square-vertical" data-filter-value="crit" src="assets/img/logos/Critical_strike_chance_icon.png" alt="Critical Strike Chance">
-                        <img class="filter-square-vertical" data-filter-value="attackspeed" src="assets/img/logos/Attack_speed_icon.png" alt="Attack Speed">
-                        <img class="filter-square-vertical" data-filter-value="lifesteal" src="assets/img/logos/Life_steal_icon.png" alt="Life Steal">
-                        <img class="filter-square-vertical" data-filter-value="arpenpen" src="assets/img/logos/Armor_penetration_icon.png" alt="Armor Penetration">
+                        <img class="filter-square-vertical" data-filter-value="crit_rate" src="assets/img/logos/Critical_strike_chance_icon.png" alt="Critical Strike Chance">
+                        <img class="filter-square-vertical" data-filter-value="attack_speed" src="assets/img/logos/Attack_speed_icon.png" alt="Attack Speed">
+                        <img class="filter-square-vertical" data-filter-value="physical_vamp" src="assets/img/logos/Life_steal_icon.png" alt="Life Steal">
+                        <img class="filter-square-vertical" data-filter-value="armor_penetration" src="assets/img/logos/Armor_penetration_icon.png" alt="Armor Penetration">
                     </div>
                     <div class="AP">
                         <img class="filter-square-vertical" data-filter-value="ap" src="assets/img/logos/Ability_power_icon.png" alt="Ability Power">
                         <img class="filter-square-vertical" data-filter-value="mana" src="assets/img/logos/Mana_icon.png" alt="Mana">
-                        <img class="filter-square-vertical" data-filter-value="magpen" src="assets/img/logos/Magic_penetration_icon.png" alt="Magic Penetration">
+                        <img class="filter-square-vertical" data-filter-value="magic_penetration" src="assets/img/logos/Magic_penetration_icon.png" alt="Magic Penetration">
                     </div>
                     <div class="Resistances">
                         <img class="filter-square-vertical" data-filter-value="health" src="assets/img/logos/Health_icon.png" alt="Health">
-                        <img class="filter-square-vertical" data-filter-value="healthregen" src="assets/img/logos/Health_regeneration_icon.png" alt="Health Regeneration">
+                        <img class="filter-square-vertical" data-filter-value="health_regeneration" src="assets/img/logos/Health_regeneration_icon.png" alt="Health Regeneration">
                         <img class="filter-square-vertical" data-filter-value="armor" src="assets/img/logos/Armor_icon.png" alt="Armor">
-                        <img class="filter-square-vertical" data-filter-value="magres" src="assets/img/logos/Magic_resistance_icon.png" alt="Magic Resistance">
+                        <img class="filter-square-vertical" data-filter-value="magic_resistance" src="assets/img/logos/Magic_resistance_icon.png" alt="Magic Resistance">
                         <img class="filter-square-vertical" data-filter-value="tenacity" src="assets/img/logos/Tenacity_icon.png" alt="Tenacity">
                     </div>
                     <div class="Effects">
-                        <img class="filter-square-vertical" data-filter-value="cdr" src="assets/img/logos/Cooldown_reduction_icon.png" alt="Cooldown Reduction">
+                        <img class="filter-square-vertical" data-filter-value="ability_haste" src="assets/img/logos/Cooldown_reduction_icon.png" alt="Cooldown Reduction">
                         <img class="filter-square-vertical" data-filter-value="movespeed" src="assets/img/logos/Movement_speed_icon.png" alt="Movement Speed">
                         <img class="filter-square-vertical" data-filter-value="omnivamp" src="assets/img/logos/Omnivamp_icon.png" alt="Omnivamp">
                     </div>
                 </div>
                 <div class="items-grid">
                     <?php
-$userFavorites = [];
 $userFavorites = [];
 if (isset($_SESSION['user_id'])) {
     $stmtFav = $pdo->prepare("SELECT id_item FROM user_favorites WHERE id_user = ?");
@@ -170,25 +169,25 @@ foreach ($items as $item) {
 
     $statMapping = [
         'ad' => 'ad',
-        'crit_rate' => 'crit',
-        'attack_speed' => 'attackspeed',
-        'physical_vamp' => 'lifesteal',
-        'armor_penetration' => 'arpenpen',
+        'crit_rate' => 'crit_rate',
+        'attack_speed' => 'attack_speed',
+        'physical_vamp' => 'physical_vamp',
+        'armor_penetration' => 'armor_penetration',
         'ap' => 'ap',
         'mana' => 'mana',
-        'magic_penetration' => 'magpen',
+        'magic_penetration' => 'magic_penetration',
         'health' => 'health',
-        'health_regeneration' => 'healthregen',
+        'health_regeneration' => 'health_regeneration',
         'armor' => 'armor',
-        'magic_resistance' => 'magres',
+        'magic_resistance' => 'magic_resistance',
         'tenacity' => 'tenacity',
-        'ability_haste' => 'cdr',
+        'ability_haste' => 'ability_haste',
         'omnivamp' => 'omnivamp'
     ];
 
     $statsArray = [];
-    foreach ($statMapping as $col => $filterVal) {
-        if (isset($item[$col]) && $item[$col] > 0) {
+    foreach ($statMapping as $dbCol => $filterVal) {
+        if (!empty($item[$dbCol]) && $item[$dbCol] > 0) {
             $statsArray[] = $filterVal;
         }
     }
@@ -270,7 +269,7 @@ foreach ($items as $item) {
                 </div>
 
                 <div class="description">
-                    <p class="stats" id="details-desc">Cliquez sur un item pour voir ses détails.</p>
+                    <p class="stats" id="details-desc">Stats...</p>
                     <p class="passive" id="details-id" style="display:none;">ID: -</p>
                 </div>
             </div>
@@ -282,91 +281,6 @@ foreach ($items as $item) {
     <footer>
         <p>© 2026 Antre du Poro. Tous droits réservés.</p> 
     </footer>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-
-    const roleFilters = document.querySelectorAll('.filter-square-horizontal[data-filter-value]');
-    
-    roleFilters.forEach(filter => {
-        filter.addEventListener('click', function() {
-            const filterValue = this.getAttribute('data-filter-value');
-            const allFilter = document.querySelector('.filter-square-horizontal[data-filter-value="all"]');
-            
-            if (filterValue === 'all') {
-                if (this.classList.contains('selected-filter')) {
-                    this.classList.remove('selected-filter');
-                } else {
-                    roleFilters.forEach(f => f.classList.remove('selected-filter'));
-                    this.classList.add('selected-filter');
-                }
-            } else {
-                const currentSelected = document.querySelector('.filter-square-horizontal.selected-filter[data-filter-value]');
-                
-                if (currentSelected && currentSelected.getAttribute('data-filter-value') === filterValue) {
-                    roleFilters.forEach(f => f.classList.remove('selected-filter'));
-                    allFilter.classList.add('selected-filter');
-                } else {
-                    roleFilters.forEach(f => f.classList.remove('selected-filter'));
-                    this.classList.add('selected-filter');
-                }
-            }
-            updateGrid();
-        });
-    });
-
-    const statFilters = document.querySelectorAll('.filter-square-vertical');
-    
-    statFilters.forEach(filter => {
-        filter.addEventListener('click', function() {
-            if (this.id === 'filter-clear') {
-                statFilters.forEach(f => f.classList.remove('selected-filter'));
-                roleFilters.forEach(f => f.classList.remove('selected-filter'));
-                document.querySelector('.filter-square-horizontal[data-filter-value="all"]').classList.add('selected-filter');
-            } else {
-                this.classList.toggle('selected-filter');
-            }
-            updateGrid();
-        });
-    });
-
-    document.querySelector('.filter-square-horizontal[data-filter-value="all"]').classList.add('selected-filter');
-
-    window.updateGrid = function() {
-        const activeRoleBtn = document.querySelector('.filter-square-horizontal.selected-filter[data-filter-value]');
-        const activeRole = activeRoleBtn ? activeRoleBtn.getAttribute('data-filter-value') : null;
-
-        const activeStatBtns = document.querySelectorAll('.filter-square-vertical.selected-filter[data-filter-value]');
-        const activeStats = Array.from(activeStatBtns).map(btn => btn.getAttribute('data-filter-value'));
-
-        const items = document.querySelectorAll('.items-grid .item-square[data-role]');
-        
-        items.forEach(item => {
-            const itemRole = item.getAttribute('data-role');
-            const itemStats = item.getAttribute('data-filter-stats');
-            const isFav = item.getAttribute('data-fav') === 'true';
-
-            let roleMatch = false;
-            if (!activeRole || activeRole === 'all') {
-                roleMatch = true;
-            } else if (activeRole === 'favorite') {
-                roleMatch = isFav;
-            } else {
-                roleMatch = itemRole === activeRole;
-            }
-
-            const statsMatch = activeStats.every(stat => itemStats.includes(stat));
-
-            if (roleMatch && statsMatch) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    }
-
-});
-</script>
     <script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>
     <script src="/Projet-PHP-B2/assets/js/cart.js" defer></script>
     <script src="/Projet-PHP-B2/assets/js/search.js" defer></script>
