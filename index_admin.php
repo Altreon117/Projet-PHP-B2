@@ -223,13 +223,14 @@ catch (PDOException $e) {
                 </div>
             </div>
 
-            <button class="btn-purchase" style="visibility:hidden">ACHETER</button>
+            <button class="btn-purchase">ACHETER</button>
         </div>
 
     </div>
     <footer>
         <p>© 2026 Antre du Poro. Tous droits réservés.</p> 
     </footer>
-<script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>
+    <script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>
+    <script src="/Projet-PHP-B2/assets/js/cart.js" defer></script>
 </body>
 </html>

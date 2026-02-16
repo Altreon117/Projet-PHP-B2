@@ -1,17 +1,30 @@
-<!DOCTYPE html>
 <?php
 /**
  * Page panier administration (panier_admin.php).
  *
- * Vue du panier adaptée pour l'interface d'administration.
- * Garde la cohérence visuelle avec le reste du back-office.
+ * Gère l'affichage des articles ajoutés au panier par l'administrateur (simulation user).
+ * Permet de visualiser le total, de vider le panier ou de passer commande, 
+ * tout en gardant l'accès aux outils d'administration (édition/suppression items via sidebar/panel).
  */
+require_once 'core/db.php';
+require_once 'core/admin_auth.php'; // Sécurité admin
+
+$panier = $_SESSION['panier'] ?? [];
+$items = [];
+$total = 0;
+
+if (!empty($panier)) {
+    $ids = implode(',', array_map('intval', array_keys($panier)));
+    $stmt = $pdo->query("SELECT * FROM items WHERE id IN ($ids)");
+    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antre du Poro</title>
+    <title>Antre du Poro - Admin Cart</title>
     <link rel="stylesheet" href="/Projet-PHP-B2/assets/css/style.css">
 </head>
 
@@ -26,19 +39,18 @@
             </div>
             <div class="sidebar-block-consumables">
                 <?php
-require_once 'core/db.php';
 try {
     $stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'consumable'");
     while ($item = $stmt->fetch()) {
         echo '<div class="mini-icon" onclick="adminSelectItem(this)"
-                                data-id="' . htmlspecialchars($item['id']) . '"
-                                data-name="' . htmlspecialchars($item['nom']) . '"
-                                data-price="' . (int)$item['prix'] . '"
-                                data-desc="' . htmlspecialchars($item['description']) . '"
-                                data-img="' . htmlspecialchars($item['image']) . '">
-                                <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
-                                <a>' . (int)$item['prix'] . '</a>
-                              </div>';
+                                            data-id="' . htmlspecialchars($item['id']) . '"
+                                            data-name="' . htmlspecialchars($item['nom']) . '"
+                                            data-price="' . (int)$item['prix'] . '"
+                                            data-desc="' . htmlspecialchars($item['description']) . '"
+                                            data-img="' . htmlspecialchars($item['image']) . '">
+                                            <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
+                                            <a>' . (int)$item['prix'] . '</a>
+                                          </div>';
     }
 }
 catch (PDOException $e) {
@@ -53,14 +65,14 @@ try {
     $stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'boots'");
     while ($item = $stmt->fetch()) {
         echo '<div class="mini-icon" onclick="adminSelectItem(this)"
-                                data-id="' . htmlspecialchars($item['id']) . '"
-                                data-name="' . htmlspecialchars($item['nom']) . '"
-                                data-price="' . (int)$item['prix'] . '"
-                                data-desc="' . htmlspecialchars($item['description']) . '"
-                                data-img="' . htmlspecialchars($item['image']) . '">
-                                <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
-                                <a>' . (int)$item['prix'] . '</a>
-                              </div>';
+                                            data-id="' . htmlspecialchars($item['id']) . '"
+                                            data-name="' . htmlspecialchars($item['nom']) . '"
+                                            data-price="' . (int)$item['prix'] . '"
+                                            data-desc="' . htmlspecialchars($item['description']) . '"
+                                            data-img="' . htmlspecialchars($item['image']) . '">
+                                            <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
+                                            <a>' . (int)$item['prix'] . '</a>
+                                          </div>';
     }
 }
 catch (PDOException $e) {
@@ -98,29 +110,71 @@ catch (PDOException $e) {
                 </div>
                 <div class="others-items-spot">
                     <?php
-for ($i = 0; $i < 20; $i++) {
-    echo '<div class="item-square"></div>';
+$id_counter = 0;
+if (empty($items)) {
+    echo '<p style="color:white; padding:20px;">Votre panier admin est vide.</p>';
+}
+else {
+    foreach ($items as $item) {
+        $qty = $panier[$item['id']];
+        $subtotal = $item['prix'] * $qty;
+        $total += $subtotal;
+        $id_counter++;
+
+        // Note: onclick calls adminSelectItem to populate the right panel for admin actions
+        echo '<div class="cart-item-row" onclick="adminSelectItem(this)"
+                                    data-id="' . htmlspecialchars($item['id']) . '"
+                                    data-name="' . htmlspecialchars($item['nom']) . '"
+                                    data-price="' . (int)$item['prix'] . '"
+                                    data-desc="' . htmlspecialchars($item['description']) . '"
+                                    data-img="' . htmlspecialchars($item['image']) . '">
+                                            <div class="cart-item-info">
+                                                <div class="cart-item-img-container">
+                                                    <img src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '" class="cart-item-img">
+                                                </div>
+                                                <div class="cart-item-details">
+                                                    <span class="cart-item-name">' . htmlspecialchars($item['nom']) . '</span>
+                                                    <span class="cart-item-unit-price">' . (int)$item['prix'] . ' PO</span>
+                                                </div>
+                                            </div>
+                                            <div class="cart-item-actions">
+                                                <button class="qty-btn minus" onclick="event.stopPropagation(); updateQty(' . $item['id'] . ', ' . ($qty - 1) . ')">-</button>
+                                                <input type="number" class="qty-input" value="' . $qty . '" readonly onclick="event.stopPropagation()">
+                                                <button class="qty-btn plus" onclick="event.stopPropagation(); updateQty(' . $item['id'] . ', ' . ($qty + 1) . ')">+</button>
+                                                <span class="cart-item-total-price">' . (int)$subtotal . ' PO</span>
+                                                <button class="remove-btn" onclick="event.stopPropagation(); removeFromCart(' . $item['id'] . ')">X</button>
+                                            </div>
+                                        </div>';
+    }
 }
 ?>
                 </div>
                 <div class="panier-summary">
                     <div class="summary-row">
                         <span class="summary-label">Articles</span>
-                        <span class="summary-value">0</span>
+                        <span class="summary-value" id="cart-total-count"><?php echo array_sum($panier); ?></span>
                     </div>
                     <div class="summary-row">
                         <span class="summary-label">Total</span>
                         <span class="summary-value">
                             <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Poro Gold Icon">
-                            0
+                            <span id="cart-total-price"><?php echo (int)$total; ?></span>
                         </span>
                     </div>
-                    <button type="button" class="clear-cart-btn">Vider le panier</button>
+                    <?php if (!empty($panier)): ?>
+                    <button type="button" class="clear-cart-btn" onclick="clearCart()">Vider le panier</button>
+                    <?php
+endif; ?>
                 </div>
-                <div class="button-con-insc">
+                
+                <?php if (!empty($panier)): ?>
+                <div class="button-con-insc" onclick="document.getElementById('checkout-form').submit();">
                     <img type="submit" src="/Projet-PHP-B2/assets/img/logos/find_match_default.png" alt="Acheter" >
-                    <a class="texte-con-insc" >Commander</a>
+                    <a class="texte-con-insc" >Commander (Test)</a>
                 </div>
+                <form id="checkout-form" action="core/checkout.php" method="post" style="display:none;"></form>
+                <?php
+endif; ?>
             </div>            
         </main>
 
@@ -173,6 +227,35 @@ for ($i = 0; $i < 20; $i++) {
     <footer>
         <p>© 2026 Antre du Poro. Tous droits réservés.</p> 
     </footer>
-<script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>
+    <script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>
+<script src="/Projet-PHP-B2/assets/js/cart.js" defer></script>
+    <script>
+    // Functions for cart interactions (duplicated/adapted from cart.js for admin context)
+    function updateQty(id, qty) {
+        fetch('/Projet-PHP-B2/core/cart_actions.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({action: 'update', id: id, quantity: qty})
+        }).then(() => location.reload());
+    }
+    
+    function removeFromCart(id) {
+        fetch('/Projet-PHP-B2/core/cart_actions.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({action: 'remove', id: id})
+        }).then(() => location.reload());
+    }
+
+    function clearCart() {
+        if(confirm('Vider le panier ?')) {
+            fetch('/Projet-PHP-B2/core/cart_actions.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({action: 'clear'})
+            }).then(() => location.reload());
+        }
+    }
+    </script>
 </body>
 </html>

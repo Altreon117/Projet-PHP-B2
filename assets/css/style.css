@@ -61,6 +61,10 @@ body>footer {
     flex-direction: column;
     padding: 10px;
     gap: 20px;
+    gap: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
 }
 
 .profile-section {
@@ -80,18 +84,21 @@ body>footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 200px;
-    height: 200px;
+    justify-content: center;
+    width: 100%;
+    max-width: 200px;
+    aspect-ratio: 1/1;
     background-color: #092b42;
     border-radius: 100%;
     text-decoration: none;
+    margin: 0 auto;
 }
 
 .profile-icon img {
-    width: 140px;
+    width: 70%;
     height: auto;
     margin: auto;
-    padding-top: 8px;
+    padding-top: 5%;
 }
 
 .sidebar-block-consumables {
@@ -112,13 +119,13 @@ body>footer {
     grid-column: 5 / span 2;
 }
 
-.sidebar-block-consumables>*:nth-child(n+3):nth-child(-n+8) {
+.sidebar-block-consumables>*:nth-child(n+3) {
     grid-column: span 2;
 }
 
-.sidebar-block-consumables>*:nth-child(9) {
-    grid-column: span 6;
-    margin: 0 0 0 auto;
+.sidebar-block-consumables>*:last-child {
+    grid-column: 5 / span 2;
+    margin: 0;
 }
 
 .sidebar-block-boots {
@@ -157,7 +164,6 @@ body>footer {
     padding: 15px;
     display: grid;
     grid-template-rows: auto auto 1fr;
-    overflow: hidden;
     min-height: 0;
 }
 
@@ -320,8 +326,10 @@ body>footer {
 
 .news-articles {
     display: flex;
-    flex-direction: column;
-    gap: 30px;
+    flex-direction: row;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .news-article {
@@ -358,6 +366,14 @@ body>footer {
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+.others-items-spot {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    padding-right: 5px;
 }
 
 .article-content {
@@ -481,6 +497,7 @@ body>footer {
     padding-top: 10px;
     align-items: center;
     overflow-y: auto;
+    overflow-x: hidden;
     margin-right: 15px;
 
 }
@@ -535,20 +552,24 @@ body>footer {
 .items-grid {
     padding-top: 10px;
     display: grid;
-    grid-template-columns: repeat(11, 1fr);
+    grid-template-columns: repeat(auto-fill, 45px);
     gap: 8px;
 
+
     overflow-y: auto;
+    overflow-x: hidden;
     padding-right: 5px;
 }
 
 .item-square {
-    width: 45px;
-    height: 45px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
     background-color: #111;
     border: 1px solid #785A28;
     cursor: pointer;
     transition: 0.2s;
+    object-fit: contain;
 }
 
 .item-square:hover {
@@ -694,10 +715,13 @@ body>footer {
 .panier-section {
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
     padding: 20px;
     align-items: center;
-    justify-content: center;
-    margin-top: 100px;
+    justify-content: flex-start;
+    margin-top: 10px;
     margin-bottom: 30px;
     gap: 20px;
     width: 100%;
@@ -1462,7 +1486,6 @@ body>footer {
     text-shadow: 0 0 5px #ff0000;
 }
 
-/* --- MINI ICONES (SIDEBAR) --- */
 .mini-icon {
     width: 100%;
     max-width: 60px;
@@ -1504,7 +1527,6 @@ body>footer {
     .lol-shop-window {
         width: 98%;
         height: 98vh;
-        grid-template-columns: 200px 1fr 280px;
     }
 
     .shop-sidebar-left {
@@ -1517,17 +1539,8 @@ body>footer {
 }
 
 @media (max-width: 1200px) {
-    .lol-shop-window {
-        grid-template-columns: 180px 1fr 250px;
-    }
-
     .profile-icon {
-        width: 150px;
-        height: 150px;
-    }
-
-    .profile-icon img {
-        width: 100px;
+        max-width: 150px;
     }
 }
 
@@ -1560,12 +1573,18 @@ body>footer {
     .sidebar-block-boots {
         display: flex;
         flex-direction: row;
-        /* Passer en ligne */
         overflow-x: auto;
         width: auto;
         border: none;
         background: none;
         padding: 0;
+    }
+
+    .sidebar-block-consumables>*,
+    .sidebar-block-boots>* {
+        grid-column: auto !important;
+        margin: 0 !important;
+        flex-shrink: 0;
     }
 
     .sidebar-block-admin {

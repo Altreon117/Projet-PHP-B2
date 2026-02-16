@@ -156,6 +156,7 @@ foreach ($items as $item) {
     $img = !empty($item['image']) ? $item['image'] : 'assets/img/logos/lol_icon.png';
 
     echo '<div class="item-square" 
+                                onclick="adminSelectItem(this)"
                                 data-role="' . $role . '" 
                                 data-stats="' . $stats . '"
                                 data-id="' . $id . '"
@@ -296,43 +297,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    window.selectItemAdmin = function(element) {
-        const id = element.getAttribute('data-id');
-        const name = element.getAttribute('data-name');
-        const price = element.getAttribute('data-price');
-        const img = element.querySelector('img') ? element.querySelector('img').src : '';
-        const desc = element.getAttribute('data-stats');
-
-        document.querySelector('.selected-item-info h2').textContent = name;
-        document.querySelector('.gold-cost').textContent = price;
-        document.querySelector('.description .stats').textContent = desc;
-        
-        const bigDisplay = document.querySelector('.big-item-display .item-square-big-item');
-        bigDisplay.innerHTML = img ? `<img src="${img}" style="width:100%;height:100%;object-fit:contain;">` : '';
-
-        const editLink = document.querySelector('.edit-link');
-        if(editLink) editLink.href = 'all-items_admin_modif.php?id=' + id;
-
-        const deleteBtn = document.querySelector('.btn-delete-confirm');
-        if(deleteBtn) {
-            deleteBtn.onclick = function() {
-                if(confirm('Supprimer cet objet ?')) {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = 'all-items_admin.php';
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'delete_id';
-                    input.value = id;
-                    form.appendChild(input);
-                    document.body.appendChild(form);
-                    form.submit();
-                }
-            };
-        }
-    };
+    // Suppression de la redéfinition de selectItemAdmin pour utiliser celle de admin.js
 });
 </script>
-<script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>
+    <script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>
+    <script src="/Projet-PHP-B2/assets/js/cart.js" defer></script>
 </body>
 </html>
