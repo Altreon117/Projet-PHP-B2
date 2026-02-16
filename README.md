@@ -75,12 +75,11 @@ Une boutique e-commerce dynamique et moderne thématisée sur l'univers League o
 
 ### Backend
 - **PHP 7.4+** - Langage serveur
-- **MySQL/MariaDB** - Base de données relationnelle
-- **PDO** - Abstraction base de données
+- **MySQL** - Base de données relationnelle
 
 ### Frontend
-- **HTML5** - Structure
-- **CSS3** - Styling avec design thématique LoL
+- **HTML** - Structure
+- **CSS** - Styling avec design thématique LoL
 - **JavaScript Vanilla** - Interactions dynamiques
 
 ### Outils
@@ -97,36 +96,33 @@ Une boutique e-commerce dynamique et moderne thématisée sur l'univers League o
 
 ### Étapes
 
-1. **Cloner le projet**
+1. **Cloner le projet via VSCode**
+   - Dans C:\xampp\htdocs (le dossier xampp se trouve a la racine de votre disque dur)
+
    ```bash
    git clone <repo-url>
    cd Projet-PHP-B2
    ```
+2. **Créer db.php**
+   - Dans le dossier /core créez un fichier db.php et collez-y le contenu de db.exemple.php 
 
-2. **Configurer la base de données**
-   - Ouvrir phpMyAdmin (http://localhost/phpmyadmin)
-   - Créer une nouvelle base de données : `projet_php_b2`
-   - Renommer `core/db.example.php` en `core/db.php`
-   - Configurer les identifiants MySQL dans `core/db.php`
+3. **Configurer la base de données**
+   - Ouvrez Xampp et demarrer Apache et MySQL (ils doivent devenir vert) puis cliquez sur le bouton 'Admin' de la ligne de 'MySQL'.
+   - Rendez vous sur la page phpMyAdmin (http://localhost/phpmyadmin) qui s'est ouverte,
+   - Créez une nouvelle base de données : `ecommerce_php`
 
-3. **Importer le schéma**
+5. **Importer le schéma**
    ```sql
-   -- Dans phpMyAdmin, charger le fichier :
+   -- Dans phpMyAdmin, copiez dans l'onglet SQL le fichier :
    database/schema.sql
    ```
 
-4. **Charger les données (optionnel)**
+6. **Charger les données**
    ```sql
-   -- Charger les fixtures :
+   -- Recommencez l'operation pour charger les fixtures :
    database/fixtures.sql
    ```
-
-5. **Placer le dossier dans XAMPP**
-   ```
-   C:\xampp\htdocs\Projet-PHP-B2
-   ```
-
-6. **Accéder au site**
+8. **Accéder au site**
    - Frontend : http://localhost/Projet-PHP-B2
    - Admin : http://localhost/Projet-PHP-B2/index_admin.php
 
@@ -240,9 +236,12 @@ Projet-PHP-B2/
 
 ### Comme administrateur
 
-1. Créer un compte avec le rôle `admin` en base de données
-2. Se connecter
-3. Accéder au [tableau de bord admin](http://localhost/Projet-PHP-B2/index_admin.php)
+1. Créer un compte avec le rôle `admin` en base de données :
+  - Retournez dans phpMyAdmin, ouvreez la table dess utilisateurs puis trouvez votrre profil
+  - Double-cliquez sur votre rôle (client) et sélectionnez 'admin'
+  - Cliquez hors des cases pour enregistrer la modification, vous devriez avoir un message tel que '1 ligne affectée'.
+2. Retourner se connecter sur le site
+3. Vous voilà administrateur du site !
 4. Gérer :
    - ✏️ Produits (créer, modifier, supprimer)
    - 👥 Utilisateurs
@@ -277,13 +276,5 @@ Le site utilise un design thématisé **League of Legends** avec :
 - 🎯 Filtres de recherche avancés
 - 📱 Responsive design optimisé
 - 🔐 Authentification 2FA
-
----
-
-## 📧 Support
-
-Pour toute question ou problème concernant le projet, consultez la documentation ou contactez l'équipe de développement.
-
----
 
 **Créé pour le projet B2 - Développement e-commerce en PHP**
