@@ -49,9 +49,6 @@ while ($item = $stmt->fetch()) {
                           </div>';
 }
 ?>
-                 <div class="mini-icon">
-                    <div class="item-square" style="visibility: hidden;"></div>
-                </div>
             </div>
             
             <div class="sidebar-block-boots">

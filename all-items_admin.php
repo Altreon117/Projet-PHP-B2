@@ -39,7 +39,6 @@ try {
                                 <a>' . (int)$item['prix'] . '</a>
                               </div>';
     }
-    echo '<div class="mini-icon"><div class="item-square" style="visibility: hidden;"></div></div>';
 }
 catch (PDOException $e) {
     echo "Erreur chargement consommables";
