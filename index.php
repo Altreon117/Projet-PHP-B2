@@ -185,20 +185,16 @@ foreach ($topItems as $index => $item) {
                 <div class="item-info-header">
                     <div class="item-square-little-item"></div>
                     <div class ="item-header-text">
-                        <h2>Coiffe de Rabadon</h2>
+                        <h2 id="details-name">Sélectionnez un item</h2>
                         <div class="price">
                             <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Poro Gold Icon">
-                            <p class="gold-cost">3600</p>
+                            <p class="gold-cost" id="details-price">-</p>
                         </div>
                     </div>
                 </div>
                 <div class="description">
-                    <p class="stats">+ 120 Ability Power</p>
-                    <p class="passive">Passive: Increases AP by 35%    
-                        fezfezzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-                        eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                        eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                    </p>
+                    <p class="stats" id="details-desc">Cliquez sur un item...</p>
+                    <p class="passive" style="display:none;">Passive: ...</p>
                 </div>
             </div>
 

@@ -20,92 +20,50 @@
             </div>
             <!-- CONSOMMABLES -->
             <div class="sidebar-block-consumables">
-
-                <div class="mini-icon">
-                    <div class="item-square" style="visibility: hidden;"></div>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/40px-Refillable_Potion_item.png" alt="Refillable Potion">
-                    <a>150</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Health_Potion_item.png" alt="Health Potion">
-                    <a>50</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Farsight_Alteration_item.png" alt="Farsight Alteration">
-                    <a>Gratuit</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Oracle_Lens_item.png" alt="Oracle Lens">
-                    <a>Gratuit</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Stealth_Ward_item.png" alt="Stealth Ward">
-                    <a>Gratuit</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Elixir_of_Iron_item.png" alt="Elixir of Iron">
-                    <a>500</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Elixir_of_Wrath_item.png" alt="Elixir of Wrath">
-                    <a>500</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Elixir_of_Sorcery_item.png" alt="Elixir of Sorcery">
-                    <a>500</a>
-                </div>
-                <div class="mini-icon">
-                    <div class="item-square" style="visibility: hidden;"></div>
-                </div>
-                <div class="mini-icon">
-                    <div class="item-square" style="visibility: hidden;"></div>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/consumables/Control_Ward_item.png" alt="Control Ward">
-                    <a>75</a>
-                </div>
+                <?php
+require_once 'core/db.php'; // Sécurité si non inclus plus haut
+try {
+    $stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'consumable'");
+    while ($item = $stmt->fetch()) {
+        echo '<div class="mini-icon" onclick="adminSelectItem(this)"
+                                data-id="' . htmlspecialchars($item['id']) . '"
+                                data-name="' . htmlspecialchars($item['nom']) . '"
+                                data-price="' . (int)$item['prix'] . '"
+                                data-desc="' . htmlspecialchars($item['description']) . '"
+                                data-img="' . htmlspecialchars($item['image']) . '">
+                                <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
+                                <a>' . (int)$item['prix'] . '</a>
+                              </div>';
+    }
+    echo '<div class="mini-icon"><div class="item-square" style="visibility: hidden;"></div></div>';
+}
+catch (PDOException $e) {
+    echo "Erreur";
+}
+?>
             </div>
             
             <!-- BOTTES -->
             <div class="sidebar-block-boots">
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Boots_of_Swiftness_item.png" alt="Boots of Swiftness">
-                    <a>1000</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Berserker_s_Greaves_item.png" alt="Berserker's Greaves">
-                    <a>1100</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Boots_item.png" alt="Boots">
-                    <a>300</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Mercury_s_Treads_item.png" alt="Mercury's Treads">
-                    <a>1250</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Chainlaced_Crushers_item.png" alt="Chainlaced Crushers">
-                    <a>1250</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Sorcerer_s_Shoes_item.png" alt="Sorcerer's Shoes">
-                    <a>1100</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Plated_Steelcaps_item.png" alt="Plated Steelcaps">
-                    <a>1200</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Armored_Advance_item.png" alt="Armored Advance">
-                    <a>1200</a>
-                </div>
-                <div class="mini-icon">
-                    <img class="item-square" src="assets/img/boots/Ionian_Boots_of_Lucidity_item.png" alt="Ionian Boots of Lucidity">
-                    <a>900</a>
-                </div>
+                <?php
+try {
+    $stmt = $pdo->query("SELECT * FROM items WHERE categorie = 'boots'");
+    while ($item = $stmt->fetch()) {
+        echo '<div class="mini-icon" onclick="adminSelectItem(this)"
+                                data-id="' . htmlspecialchars($item['id']) . '"
+                                data-name="' . htmlspecialchars($item['nom']) . '"
+                                data-price="' . (int)$item['prix'] . '"
+                                data-desc="' . htmlspecialchars($item['description']) . '"
+                                data-img="' . htmlspecialchars($item['image']) . '">
+                                <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
+                                <a>' . (int)$item['prix'] . '</a>
+                              </div>';
+    }
+}
+catch (PDOException $e) {
+    echo "Erreur";
+}
+?>
             </div>
             <div class="sidebar-block-admin">
                 <a href="gestion_user.php">Gestion utilisateur</a>
@@ -246,31 +204,27 @@
 
             <div class="selected-item-info">
                 <div class="item-info-header">
-                    <div class="item-square-little-item"></div>
+                    <div class="item-square-little-item" id="details-img-container"></div>
                     <div class ="item-header-text">
-                        <h2>Coiffe de Rabadon</h2>
+                        <h2 id="details-name">Sélectionnez un item</h2>
                         <div class="price">
                             <img class="poro-gold-icon" src="assets/img/logos/currency.png" alt="Poro Gold Icon">
-                            <p class="gold-cost">3600</p>
+                            <p class="gold-cost" id="details-price">-</p>
                         </div>
                     </div>
                 </div>
                 <div class="description">
-                    <p class="stats">+ 120 Ability Power</p>
-                    <p class="passive">Passive: Increases AP by 35%    
-                        fezfezzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-                        eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                        eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                    </p>
+                    <p class="stats" id="details-desc">Cliquez sur un item à gauche pour voir ses détails.</p>
+                    <p class="passive" id="details-id" style="display:none;">ID: -</p>
                 </div>
             </div>
 
-            <button class="btn-purchase">ACHETER</button>
+            <button class="btn-purchase" style="visibility:hidden">ACHETER</button>
         </div>
 
     </div>
     <footer>
         <p>© 2026 Antre du Poro. Tous droits réservés.</p> 
     </footer>
-
+<script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>
 </body>
