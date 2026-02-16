@@ -7,6 +7,13 @@
  */
 require_once 'core/db.php';
 
+$userFavorites = [];
+if (isset($_SESSION['user_id'])) {
+    $stmtFav = $pdo->prepare("SELECT id_item FROM user_favorites WHERE id_user = ?");
+    $stmtFav->execute([$_SESSION['user_id']]);
+    $userFavorites = $stmtFav->fetchAll(PDO::FETCH_COLUMN);
+}
+
 $panier = $_SESSION['panier'] ?? [];
 $items = [];
 $total = 0;
@@ -15,6 +22,13 @@ if (!empty($panier)) {
     $ids = implode(',', array_map('intval', array_keys($panier)));
     $stmt = $pdo->query("SELECT * FROM items WHERE id IN ($ids)");
     $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+$userFavorites = [];
+if (isset($_SESSION['user_id'])) {
+    $stmt = $pdo->prepare("SELECT id_item FROM user_favorites WHERE id_user = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $userFavorites = $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 ?>
 <!DOCTYPE html>
@@ -43,7 +57,7 @@ while ($item = $stmt->fetch()) {
                             data-id="' . htmlspecialchars($item['id']) . '"
                             data-name="' . htmlspecialchars($item['nom']) . '"
                             data-price="' . (int)$item['prix'] . '"
-                            data-stats="' . htmlspecialchars($item['description']) . '">
+                            data-stats="' . htmlspecialchars($item['description_stat'] . ' ' . $item['description_passive']) . '">
                             <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
                             <a>' . (int)$item['prix'] . '</a>
                           </div>';
@@ -59,7 +73,7 @@ while ($item = $stmt->fetch()) {
                             data-id="' . htmlspecialchars($item['id']) . '"
                             data-name="' . htmlspecialchars($item['nom']) . '"
                             data-price="' . (int)$item['prix'] . '"
-                            data-stats="' . htmlspecialchars($item['description']) . '">
+                            data-stats="' . htmlspecialchars($item['description_stat'] . ' ' . $item['description_passive']) . '">
                             <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
                             <a>' . (int)$item['prix'] . '</a>
                           </div>';
@@ -89,8 +103,7 @@ if (!empty($panier)) {
     foreach ($panier as $pId => $pQty) {
         foreach ($items as $dbItem) {
             if ($dbItem['id'] == $pId) {
-                $itemNameLower = strtolower($dbItem['nom']);
-                $isTrinket = in_array($itemNameLower, $trinketNames);
+                $isTrinket = ($dbItem['role'] === 'Balise');
 
                 if ($isTrinket) {
                     if ($trinketSlot === null) {
@@ -165,7 +178,8 @@ else {
                 data-id="' . htmlspecialchars($item['id']) . '"
                 data-name="' . htmlspecialchars($item['nom']) . '"
                 data-price="' . (int)$item['prix'] . '"
-                data-stats="' . htmlspecialchars($item['description']) . '">
+                data-stats="' . str_replace(["\r\n", "\r", "\n"], '<br>', htmlspecialchars($item['description_stat'])) . '<br><br>' . str_replace(["\r\n", "\r", "\n"], '<br>', htmlspecialchars($item['description_passive'])) . '"
+                data-fav="' . (in_array($item['id'], $userFavorites ?? []) ? 'true' : 'false') . '">
                                 <div class="cart-item-info">
                                     <div class="cart-item-img-container">
                                         <img src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '" class="cart-item-img">
@@ -218,7 +232,10 @@ endif; ?>
 
         <div class="shop-details-panel">
             <div class="builds-into">
-                <h4>DÉBLOQUE</h4>
+                <div class="title-builds-into">
+                     <h4>DÉBLOQUE</h4>
+                     <img id="fav-btn" class="fav-icon-btn" src="assets/img/logos/favorite.png" alt="Favori">
+                </div>
                 <div class="builds-into-grid">
                     <div class="item-square"></div>
                     <div class="item-square"></div>
@@ -245,6 +262,7 @@ endif; ?>
                         </div>
                     </div>
                 </div>
+
                 <div class="description">
                     <p class="stats" id="details-stats">Stats...</p>
                     <p class="passive">Passive: ...</p>

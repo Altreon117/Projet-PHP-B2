@@ -5,7 +5,15 @@
  * Affiche la liste complète des objets avec des filtres par rôle et par statistiques.
  * Permet de consulter les détails survolés et d'ajouter au panier.
  */
-require_once 'core/db.php'; ?>
+require_once 'core/db.php';
+
+$userFavorites = [];
+if (isset($_SESSION['user_id'])) {
+    $stmtFav = $pdo->prepare("SELECT id_item FROM user_favorites WHERE id_user = ?");
+    $stmtFav->execute([$_SESSION['user_id']]);
+    $userFavorites = $stmtFav->fetchAll(PDO::FETCH_COLUMN);
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -32,7 +40,8 @@ while ($item = $stmt->fetch()) {
             data-id="' . htmlspecialchars($item['id']) . '"
             data-name="' . htmlspecialchars($item['nom']) . '"
             data-price="' . (int)$item['prix'] . '"
-            data-stats="' . htmlspecialchars($item['description']) . '">
+            data-stats="' . htmlspecialchars($item['description_stat'] . "\n" . $item['description_passive']) . '"
+            data-fav="' . (in_array($item['id'], $userFavorites ?? []) ? 'true' : 'false') . '">
             <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
             <a>' . (int)$item['prix'] . '</a>
           </div>';
@@ -48,7 +57,8 @@ while ($item = $stmt->fetch()) {
             data-id="' . htmlspecialchars($item['id']) . '"
             data-name="' . htmlspecialchars($item['nom']) . '"
             data-price="' . (int)$item['prix'] . '"
-            data-stats="' . htmlspecialchars($item['description']) . '">
+            data-stats="' . htmlspecialchars($item['description_stat'] . "\n" . $item['description_passive']) . '"
+            data-fav="' . (in_array($item['id'], $userFavorites ?? []) ? 'true' : 'false') . '">
             <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
             <a>' . (int)$item['prix'] . '</a>
           </div>';
@@ -115,16 +125,67 @@ for ($i = 0; $i < 9; $i++) {
                     <?php
 $stmt = $pdo->query("SELECT * FROM items");
 while ($item = $stmt->fetch()) {
-    $role = strtolower($item['categorie']);
-    $stats = strtolower($item['description']);
 
-    echo '<div class="item-square" onclick="selectItem(this)"
-            data-role="' . htmlspecialchars($role) . '" 
-            data-stats="' . htmlspecialchars($stats) . '"
-            data-id="' . htmlspecialchars($item['id']) . '"
-            data-name="' . htmlspecialchars($item['nom']) . '"
-            data-price="' . (int)$item['prix'] . '"
-          >' . ($item['image'] ? '<img src="' . htmlspecialchars($item['image']) . '" style="width:100%;height:100%;object-fit:contain;">' : '') . '</div>';
+    $roleMapping = [
+        'Combattant' => 'fighter',
+        'Tireur' => 'marksman',
+        'Assassin' => 'assassin',
+        'Mage' => 'mage',
+        'Tank' => 'tank',
+        'Support' => 'support',
+        'Objet' => 'consumable',
+        'Bottes' => 'boots'
+    ];
+    $dbRole = $item['role'] ?? 'Objet';
+    $role = $roleMapping[$dbRole] ?? strtolower($dbRole);
+
+    $statMapping = [
+        'ad' => 'ad',
+        'crit_rate' => 'crit',
+        'attack_speed' => 'attackspeed',
+        'physical_vamp' => 'lifesteal',
+        'armor_penetration' => 'arpenpen',
+        'ap' => 'ap',
+        'mana' => 'mana',
+        'magic_penetration' => 'magpen',
+        'health' => 'health',
+        'health_regeneration' => 'healthregen',
+        'armor' => 'armor',
+        'magic_resistance' => 'magres',
+        'tenacity' => 'tenacity',
+        'ability_haste' => 'cdr',
+        'omnivamp' => 'omnivamp'
+    ];
+
+    $statsArray = [];
+    foreach ($statMapping as $col => $filterVal) {
+        if (isset($item[$col]) && $item[$col] > 0) {
+            $statsArray[] = $filterVal;
+        }
+    }
+
+    if ($item['categorie'] === 'boots') {
+        $statsArray[] = 'movespeed';
+    }
+
+    $isFav = in_array($item['id'], $userFavorites);
+    $dataFilterStats = implode(' ', $statsArray);
+    $formattedStats = str_replace(["\r\n", "\r", "\n"], '<br>', htmlspecialchars($item['description_stat']));
+    $formattedPassive = str_replace(["\r\n", "\r", "\n"], '<br>', htmlspecialchars($item['description_passive']));
+    $description = $formattedStats . '<br><br>' . $formattedPassive;
+?>
+    <div class="item-square" onclick="selectItem(this)"
+         data-id="<?php echo $item['id']; ?>" 
+         data-name="<?php echo htmlspecialchars($item['nom']); ?>" 
+         data-price="<?php echo $item['prix']; ?>" 
+         data-stats="<?php echo $description; ?>" 
+         data-role="<?php echo $role; ?>"
+         data-filter-stats="<?php echo $dataFilterStats; ?>"
+         data-fav="<?php echo $isFav ? 'true' : 'false'; ?>"
+         title="<?php echo htmlspecialchars($item['nom']); ?>">
+        <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['nom']); ?>" style="width:100%; height:100%;object-fit:contain;">
+    </div>
+    <?php
 }
 ?>
                 </div>
@@ -133,7 +194,10 @@ while ($item = $stmt->fetch()) {
 
         <div class="shop-details-panel">
             <div class="builds-into">
-                <h4>DÉBLOQUE</h4>
+                <div class="title-builds-into">
+                     <h4>DÉBLOQUE</h4>
+                     <img id="fav-btn" class="fav-icon-btn" src="assets/img/logos/favorite.png" alt="Favori">
+                </div>
                 <div class="builds-into-grid">
                     <div class="item-square"></div>
                     <div class="item-square"></div>
@@ -160,6 +224,7 @@ while ($item = $stmt->fetch()) {
                         </div>
                     </div>
                 </div>
+
                 <div class="description">
                     <p class="stats" id="details-stats">Stats...</p>
                     <p class="passive">Passive: ...</p>
@@ -226,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelector('.filter-square-horizontal[data-filter-value="all"]').classList.add('selected-filter');
 
-    function updateGrid() {
+    window.updateGrid = function() {
         const activeRoleBtn = document.querySelector('.filter-square-horizontal.selected-filter[data-filter-value]');
         const activeRole = activeRoleBtn ? activeRoleBtn.getAttribute('data-filter-value') : null;
 
@@ -237,9 +302,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         items.forEach(item => {
             const itemRole = item.getAttribute('data-role');
-            const itemStats = item.getAttribute('data-stats');
+            const itemStats = item.getAttribute('data-filter-stats');
+            const isFav = item.getAttribute('data-fav') === 'true';
 
-            const roleMatch = !activeRole || activeRole === 'all' || itemRole === activeRole;
+            let roleMatch = false;
+            if (!activeRole || activeRole === 'all') {
+                roleMatch = true;
+            } else if (activeRole === 'favorite') {
+                roleMatch = isFav;
+            } else {
+                roleMatch = itemRole === activeRole;
+            }
 
             const statsMatch = activeStats.every(stat => itemStats.includes(stat));
 

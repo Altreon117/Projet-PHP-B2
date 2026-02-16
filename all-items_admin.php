@@ -5,7 +5,8 @@
  * Affiche la liste des objets pour les administrateurs.
  * Inclut les fonctionnalités de modification et de suppression d'objets.
  */
-require_once 'core/db.php'; ?>
+require_once 'core/db.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -33,8 +34,9 @@ try {
                                 data-id="' . htmlspecialchars($item['id']) . '"
                                 data-name="' . htmlspecialchars($item['nom']) . '"
                                 data-price="' . (int)$item['prix'] . '"
-                                data-desc="' . htmlspecialchars($item['description']) . '"
-                                data-img="' . htmlspecialchars($item['image']) . '">
+                                data-desc="' . htmlspecialchars($item['description_stat'] . "\n" . $item['description_passive']) . '"
+                                data-img="' . htmlspecialchars($item['image']) . '"
+                                data-fav="' . (in_array($item['id'], $userFavorites ?? []) ? 'true' : 'false') . '">
                                 <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
                                 <a>' . (int)$item['prix'] . '</a>
                               </div>';
@@ -55,8 +57,9 @@ try {
                                 data-id="' . htmlspecialchars($item['id']) . '"
                                 data-name="' . htmlspecialchars($item['nom']) . '"
                                 data-price="' . (int)$item['prix'] . '"
-                                data-desc="' . htmlspecialchars($item['description']) . '"
-                                data-img="' . htmlspecialchars($item['image']) . '">
+                                data-desc="' . htmlspecialchars($item['description_stat'] . "\n" . $item['description_passive']) . '"
+                                data-img="' . htmlspecialchars($item['image']) . '"
+                                data-fav="' . (in_array($item['id'], $userFavorites ?? []) ? 'true' : 'false') . '">
                                 <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
                                 <a>' . (int)$item['prix'] . '</a>
                               </div>';
@@ -135,38 +138,92 @@ for ($i = 0; $i < 9; $i++) {
                 </div>
                 <div class="items-grid">
                     <?php
+$userFavorites = [];
+$userFavorites = [];
+if (isset($_SESSION['user_id'])) {
+    $stmtFav = $pdo->prepare("SELECT id_item FROM user_favorites WHERE id_user = ?");
+    $stmtFav->execute([$_SESSION['user_id']]);
+    $userFavorites = $stmtFav->fetchAll(PDO::FETCH_COLUMN);
+}
 
 try {
     $stmt = $pdo->query("SELECT * FROM items");
     $items = $stmt->fetchAll();
 }
 catch (PDOException $e) {
-    echo "Erreur : " . $e->getMessage();
     $items = [];
 }
 
 foreach ($items as $item) {
-    $role = strtolower($item['categorie'] ?? 'autre');
-    $stats = '';
+    $roleMapping = [
+        'Combattant' => 'fighter',
+        'Tireur' => 'marksman',
+        'Assassin' => 'assassin',
+        'Mage' => 'mage',
+        'Tank' => 'tank',
+        'Support' => 'support',
+        'Objet' => 'consumable',
+        'Bottes' => 'boots'
+    ];
+    $dbRole = $item['role'] ?? 'Objet';
+    $role = $roleMapping[$dbRole] ?? strtolower($dbRole);
+
+    $statMapping = [
+        'ad' => 'ad',
+        'crit_rate' => 'crit',
+        'attack_speed' => 'attackspeed',
+        'physical_vamp' => 'lifesteal',
+        'armor_penetration' => 'arpenpen',
+        'ap' => 'ap',
+        'mana' => 'mana',
+        'magic_penetration' => 'magpen',
+        'health' => 'health',
+        'health_regeneration' => 'healthregen',
+        'armor' => 'armor',
+        'magic_resistance' => 'magres',
+        'tenacity' => 'tenacity',
+        'ability_haste' => 'cdr',
+        'omnivamp' => 'omnivamp'
+    ];
+
+    $statsArray = [];
+    foreach ($statMapping as $col => $filterVal) {
+        if (isset($item[$col]) && $item[$col] > 0) {
+            $statsArray[] = $filterVal;
+        }
+    }
+
+    if ($item['categorie'] === 'boots') {
+        $statsArray[] = 'movespeed';
+    }
+
+    $statsStr = implode(' ', $statsArray);
+    $description = $item['description_stat'] . "\n" . $item['description_passive'];
 
     $id = $item['id'];
     $name = htmlspecialchars($item['nom']);
     $price = htmlspecialchars($item['prix']);
-    $desc = htmlspecialchars($item['description']);
+    $desc = htmlspecialchars($description);
     $img = !empty($item['image']) ? $item['image'] : 'assets/img/logos/lol_icon.png';
-
-    echo '<div class="item-square" 
-                                onclick="adminSelectItem(this)"
-                                data-role="' . $role . '" 
-                                data-stats="' . $stats . '"
-                                data-id="' . $id . '"
-                                data-name="' . $name . '"
-                                data-price="' . $price . '"
-                                data-desc="' . $desc . '"
-                                data-img="' . $img . '"
-                              >
-                                <img src="' . $img . '" alt="' . $name . '" style="width:100%; height:100%; object-fit:cover;">
-                              </div>';
+    $isFav = in_array($item['id'], $userFavorites);
+    $dataFilterStats = implode(' ', $statsArray);
+    $formattedStats = str_replace(["\r\n", "\r", "\n"], '<br>', htmlspecialchars($item['description_stat']));
+    $formattedPassive = str_replace(["\r\n", "\r", "\n"], '<br>', htmlspecialchars($item['description_passive']));
+    $description = $formattedStats . '<br><br>' . $formattedPassive;
+?>
+    <div class="item-square" 
+         onclick="adminSelectItem(this)"
+         data-id="<?php echo $item['id']; ?>" 
+         data-name="<?php echo htmlspecialchars($item['nom']); ?>" 
+         data-price="<?php echo $item['prix']; ?>" 
+         data-stats="<?php echo $description; ?>" 
+         data-role="<?php echo $role; ?>"
+         data-filter-stats="<?php echo $dataFilterStats; ?>"
+         data-fav="<?php echo $isFav ? 'true' : 'false'; ?>"
+         title="<?php echo htmlspecialchars($item['nom']); ?>">
+            <img src="<?php echo $img; ?>" alt="<?php echo $name; ?>" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+<?php
 }
 ?>
                 </div>
@@ -175,13 +232,15 @@ foreach ($items as $item) {
 
         <div class="shop-details-panel">
             <div class="builds-into">
-                <div class="title-builds-into" >
+                <div class="title-builds-into">
                     <h4>DÉBLOQUE</h4>
-                    <p></p>
-                    <a href="all-items_admin_modif.php" class="edit-link">
-                        <img src="assets/img/logos/pen.png" alt="Edit-Icon" >
-                    </a>
-                    <img src="assets/img/logos/trash.svg" alt="Trash-Icon" class="trash-icon btn-delete-confirm" id="admin-delete-item-btn" style="cursor: pointer;">
+                    <div class="admin-actions-group">
+                        <a href="all-items_admin_modif.php" class="edit-link">
+                             <img src="assets/img/logos/pen.png" alt="Edit-Icon" >
+                        </a>
+                        <img src="assets/img/logos/trash.svg" alt="Trash-Icon" class="trash-icon btn-delete-confirm" id="admin-delete-item-btn" style="cursor: pointer;">
+                        <img id="fav-btn" class="fav-icon-btn" src="assets/img/logos/favorite.png" alt="Favori">
+                    </div>
                 </div>
                 <div class="builds-into-grid">
                     <div class="item-square"></div>
@@ -209,6 +268,7 @@ foreach ($items as $item) {
                         </div>
                     </div>
                 </div>
+
                 <div class="description">
                     <p class="stats" id="details-desc">Cliquez sur un item pour voir ses détails.</p>
                     <p class="passive" id="details-id" style="display:none;">ID: -</p>
@@ -272,7 +332,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelector('.filter-square-horizontal[data-filter-value="all"]').classList.add('selected-filter');
 
-    function updateGrid() {
+    window.updateGrid = function() {
         const activeRoleBtn = document.querySelector('.filter-square-horizontal.selected-filter[data-filter-value]');
         const activeRole = activeRoleBtn ? activeRoleBtn.getAttribute('data-filter-value') : null;
 
@@ -283,9 +343,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         items.forEach(item => {
             const itemRole = item.getAttribute('data-role');
-            const itemStats = item.getAttribute('data-stats');
+            const itemStats = item.getAttribute('data-filter-stats');
+            const isFav = item.getAttribute('data-fav') === 'true';
 
-            const roleMatch = !activeRole || activeRole === 'all' || itemRole === activeRole;
+            let roleMatch = false;
+            if (!activeRole || activeRole === 'all') {
+                roleMatch = true;
+            } else if (activeRole === 'favorite') {
+                roleMatch = isFav;
+            } else {
+                roleMatch = itemRole === activeRole;
+            }
 
             const statsMatch = activeStats.every(stat => itemStats.includes(stat));
 
@@ -297,7 +365,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Suppression de la redéfinition de selectItemAdmin pour utiliser celle de admin.js
 });
 </script>
     <script src="/Projet-PHP-B2/assets/js/admin.js" defer></script>

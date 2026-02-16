@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS invoice;
 DROP TABLE IF EXISTS stock;
 DROP TABLE IF EXISTS items;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user_favorites;
 
 -- Réactiver les vérifications
 SET FOREIGN_KEY_CHECKS = 1;
@@ -83,4 +84,14 @@ CREATE TABLE orders (
     FOREIGN KEY (id_invoice) REFERENCES invoice(id),
     FOREIGN KEY (id_user) REFERENCES users(id),
     FOREIGN KEY (id_item) REFERENCES items(id)
+) ENGINE=InnoDB;
+
+-- Table user_favorites
+CREATE TABLE user_favorites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_user INT NOT NULL,
+    id_item INT NOT NULL,
+    UNIQUE KEY unique_user_item (id_user, id_item),
+    FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_item) REFERENCES items(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;

@@ -1,68 +1,145 @@
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.querySelector('.search-filters input[type="text"]');
-    if (!searchInput) return;
-
     const itemsGrid = document.querySelector('.items-grid');
     const isCatalogPage = !!itemsGrid;
-
-    let resultsContainer = null;
-    if (!isCatalogPage) {
-        resultsContainer = document.createElement('div');
-        resultsContainer.className = 'search-results-dropdown';
-        resultsContainer.style.position = 'absolute';
-        resultsContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
-        resultsContainer.style.border = '1px solid #785A28';
-        resultsContainer.style.width = searchInput.offsetWidth + 'px';
-        resultsContainer.style.maxHeight = '300px';
-        resultsContainer.style.overflowY = 'auto';
-        resultsContainer.style.zIndex = '1000';
-        resultsContainer.style.display = 'none';
-        
-        searchInput.parentNode.insertBefore(resultsContainer, searchInput.nextSibling);
-
-        window.addEventListener('resize', () => {
-             resultsContainer.style.width = searchInput.offsetWidth + 'px';
-        });
-    }
-
-    searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-
-        if (isCatalogPage) {
-            filterCatalogItems(query);
-        } else {
-            fetchSearchResults(query);
-        }
-    });
-
-    function filterCatalogItems(query) {
-        const items = document.querySelectorAll('.items-grid .item-square');
-        items.forEach(item => {
-            const name = (item.dataset.name || '').toLowerCase();
-            const stats = (item.dataset.stats || item.dataset.desc || '').toLowerCase();
-            const role = (item.dataset.role || '').toLowerCase();
+    let currentCategory = 'all'; 
+    let activeStatFilters = []; 
+    
+    if (searchInput) {
+        let resultsContainer = null;
+        if (!isCatalogPage) {
+            resultsContainer = document.createElement('div');
+            resultsContainer.className = 'search-results-dropdown';
+            searchInput.parentNode.insertBefore(resultsContainer, searchInput.nextSibling);
             
-            if (name.includes(query) || stats.includes(query) || role.includes(query)) {
-                item.style.display = 'block';
-                item.classList.add('search-match');
+            Object.assign(resultsContainer.style, {
+                position: 'absolute',
+                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                border: '1px solid #785A28',
+                width: searchInput.offsetWidth + 'px',
+                maxHeight: '300px',
+                overflowY: 'auto',
+                zIndex: '1000',
+                display: 'none'
+            });
+
+            window.addEventListener('resize', () => {
+                 resultsContainer.style.width = searchInput.offsetWidth + 'px';
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (resultsContainer && !searchInput.contains(e.target) && !resultsContainer.contains(e.target)) {
+                    resultsContainer.style.display = 'none';
+                }
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (isCatalogPage) {
+                applyFilters();
             } else {
-                item.style.display = 'none';
-                item.classList.remove('search-match');
+                fetchSearchResults(query, resultsContainer);
             }
         });
     }
 
-    function fetchSearchResults(query) {
+    const categoryFilters = document.querySelectorAll('.filter-square-horizontal[data-filter-value]');
+    categoryFilters.forEach(filter => {
+        filter.addEventListener('click', () => {
+            const val = filter.getAttribute('data-filter-value');
+            if (val === 'all') {
+                currentCategory = 'all';
+                categoryFilters.forEach(f => f.classList.remove('selected-filter'));
+                document.getElementById('filter-all-logo').classList.add('selected-filter');
+            } else {
+                if (currentCategory === val) {
+                   currentCategory = 'all';
+                   filter.classList.remove('selected-filter');
+                   document.getElementById('filter-all-logo').classList.add('selected-filter');
+                } else {
+                   currentCategory = val;
+                   categoryFilters.forEach(f => f.classList.remove('selected-filter'));
+                   filter.classList.add('selected-filter');
+                }
+            }
+            if(isCatalogPage) applyFilters();
+        });
+    });
+
+    const statFilters = document.querySelectorAll('.filter-square-vertical[data-filter-value]');
+    statFilters.forEach(filter => {
+        filter.addEventListener('click', () => {
+            const val = filter.getAttribute('data-filter-value');
+            if (activeStatFilters.includes(val)) {
+                activeStatFilters = activeStatFilters.filter(s => s !== val);
+                filter.classList.remove('selected-filter');
+            } else {
+                activeStatFilters.push(val);
+                filter.classList.add('selected-filter');
+            }
+            if(isCatalogPage) applyFilters();
+        });
+    });
+
+    const clearFilterBtn = document.getElementById('filter-clear');
+    if (clearFilterBtn) {
+        clearFilterBtn.addEventListener('click', () => {
+            activeStatFilters = [];
+            statFilters.forEach(f => f.classList.remove('selected-filter'));
+            currentCategory = 'all';
+            categoryFilters.forEach(f => f.classList.remove('selected-filter'));
+            document.getElementById('filter-all-logo').classList.add('selected-filter');
+            if(searchInput) searchInput.value = '';
+            if(isCatalogPage) applyFilters();
+        });
+    }
+
+    function applyFilters() {
+        const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+        const items = document.querySelectorAll('.items-grid .item-square');
+        
+        items.forEach(item => {
+            const name = (item.dataset.name || '').toLowerCase();
+            const role = (item.dataset.role || '').toLowerCase();
+            const desc = (item.dataset.desc || '').toLowerCase();
+            const isFav = item.dataset.fav === 'true';
+            
+            let matchesSearch = !query || name.includes(query) || role.includes(query) || desc.includes(query);
+            
+            let matchesCategory = true;
+            if (currentCategory === 'favorite') {
+                matchesCategory = isFav;
+            } else if (currentCategory !== 'all') {
+                matchesCategory = role === currentCategory;
+            }
+
+            let matchesStats = true;
+            if (activeStatFilters.length > 0) {
+                matchesStats = activeStatFilters.every(stat => {
+                    const statVal = parseInt(item.dataset[stat] || '0');
+                    return statVal > 0;
+                });
+            }
+
+            if (matchesSearch && matchesCategory && matchesStats) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
+    function fetchSearchResults(query, container) {
         if (query.length < 2) {
-            resultsContainer.style.display = 'none';
-            resultsContainer.innerHTML = '';
+            container.style.display = 'none';
+            container.innerHTML = '';
             return;
         }
-
         fetch(`/Projet-PHP-B2/core/search_items.php?q=${encodeURIComponent(query)}`)
             .then(response => response.json())
             .then(items => {
-                resultsContainer.innerHTML = '';
+                container.innerHTML = '';
                 if (items.length > 0) {
                     items.forEach(item => {
                         const div = document.createElement('div');
@@ -80,36 +157,27 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <span style="color:#C8AA6E; font-size:12px;">${item.prix} PO</span>
                             </div>
                         `;
-
                         div.addEventListener('click', () => {
                              const isAdmin = window.location.href.includes('admin');
                              const targetPage = isAdmin ? 'all-items_admin.php' : 'all-items.php';
-                             window.location.href = `${targetPage}?search_id=${item.id}`; // On passera l'ID pour le sélectionner
+                             window.location.href = `${targetPage}?search_id=${item.id}`;
                         });
-
                         div.addEventListener('mouseenter', () => div.style.backgroundColor = 'rgba(50, 50, 50, 0.8)');
                         div.addEventListener('mouseleave', () => div.style.backgroundColor = 'transparent');
-
-                        resultsContainer.appendChild(div);
+                        container.appendChild(div);
                     });
-                    resultsContainer.style.display = 'block';
+                    container.style.display = 'block';
                 } else {
                     const noResult = document.createElement('div');
                     noResult.textContent = "Aucun résultat";
                     noResult.style.padding = '10px';
                     noResult.style.color = '#888';
-                    resultsContainer.appendChild(noResult);
-                    resultsContainer.style.display = 'block';
+                    container.appendChild(noResult);
+                    container.style.display = 'block';
                 }
             })
             .catch(err => console.error(err));
     }
-    
-    document.addEventListener('click', (e) => {
-        if (resultsContainer && !searchInput.contains(e.target) && !resultsContainer.contains(e.target)) {
-            resultsContainer.style.display = 'none';
-        }
-    });
 
     const urlParams = new URLSearchParams(window.location.search);
     const searchId = urlParams.get('search_id');

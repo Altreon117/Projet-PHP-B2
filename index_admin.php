@@ -7,7 +7,16 @@
  * Similaire à la page publique mais avec des fonctionnalités d'édition pour les administrateurs.
  * Permet de modifier ou supprimer des articles directement depuis l'interface.
  */
-require_once 'core/db.php'; ?>
+require_once 'core/db.php';
+
+// Récupération des favoris
+$userFavorites = [];
+if (isset($_SESSION['user_id'])) {
+    $stmt = $pdo->prepare("SELECT id_item FROM user_favorites WHERE id_user = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $userFavorites = $stmt->fetchAll(PDO::FETCH_COLUMN);
+}
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,8 +43,9 @@ try {
                                 data-id="' . htmlspecialchars($item['id']) . '"
                                 data-name="' . htmlspecialchars($item['nom']) . '"
                                 data-price="' . (int)$item['prix'] . '"
-                                data-desc="' . htmlspecialchars($item['description']) . '"
-                                data-img="' . htmlspecialchars($item['image']) . '">
+                                data-desc="' . htmlspecialchars($item['description_stat'] . ' ' . $item['description_passive']) . '"
+                                data-img="' . htmlspecialchars($item['image']) . '"
+                                data-fav="' . (in_array($item['id'], $userFavorites ?? []) ? 'true' : 'false') . '">
                                 <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
                                 <a>' . (int)$item['prix'] . '</a>
                               </div>';
@@ -56,8 +66,9 @@ try {
                                 data-id="' . htmlspecialchars($item['id']) . '"
                                 data-name="' . htmlspecialchars($item['nom']) . '"
                                 data-price="' . (int)$item['prix'] . '"
-                                data-desc="' . htmlspecialchars($item['description']) . '"
-                                data-img="' . htmlspecialchars($item['image']) . '">
+                                data-desc="' . htmlspecialchars($item['description_stat'] . ' ' . $item['description_passive']) . '"
+                                data-img="' . htmlspecialchars($item['image']) . '"
+                                data-fav="' . (in_array($item['id'], $userFavorites ?? []) ? 'true' : 'false') . '">
                                 <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
                                 <a>' . (int)$item['prix'] . '</a>
                               </div>';
@@ -185,11 +196,13 @@ catch (PDOException $e) {
             <div class="builds-into">
                 <div class="title-builds-into">
                     <h4>DÉBLOQUE</h4>
-                    <p></p>
-                    <a href="#" class="edit-link">
-                        <img src="assets/img/logos/pen.png" alt="Edit-Icon">
-                    </a>
-                    <img src="assets/img/logos/trash.svg" alt="Trash-Icon" class="trash-icon btn-delete-confirm" id="admin-delete-item-btn" style="cursor: pointer;">
+                    <div class="admin-actions-group">
+                        <a href="#" class="edit-link">
+                            <img src="assets/img/logos/pen.png" alt="Edit-Icon">
+                        </a>
+                        <img src="assets/img/logos/trash.svg" alt="Trash-Icon" class="trash-icon btn-delete-confirm" id="admin-delete-item-btn" style="cursor: pointer;">
+                        <img id="fav-btn" class="fav-icon-btn" src="assets/img/logos/favorite.png" alt="Favori">
+                    </div>
                 </div>
                 <div class="builds-into-grid">
                     <div class="item-square"></div>
@@ -217,6 +230,7 @@ catch (PDOException $e) {
                         </div>
                     </div>
                 </div>
+
                 <div class="description">
                     <p class="stats" id="details-desc">Cliquez sur un item à gauche pour voir ses détails.</p>
                     <p class="passive" id="details-id" style="display:none;">ID: -</p>

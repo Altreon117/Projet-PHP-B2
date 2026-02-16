@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
         itemsGrid.addEventListener('click', (e) => {
             const item = e.target.closest('.item-square');
             if (item) {
-                // Appel via event listener
                 adminSelectItem(item);
             }
         });
@@ -64,15 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Définition globale pour accès via onclick ET JS
 window.updateDetailsPanel = function(id, name, price, desc, img, element) {
-    console.log("updateDetailsPanel called for ID:", id); // DEBUG
+    const isFav = element && ((element.dataset.fav === 'true') || (element.getAttribute('data-fav') === 'true'));
 
     let selectedItem = document.querySelector('.item-square[style*="border"]');
     if (selectedItem) selectedItem.style.border = 'none';
     
-    let targetBorder = element.classList.contains('mini-icon') ? element.querySelector('.item-square') : element;
-    if (!targetBorder) targetBorder = element;
+    let targetBorder = element && element.classList.contains('mini-icon') ? element.querySelector('.item-square') : element;
+    if (!targetBorder && element) targetBorder = element;
 
     if(targetBorder) targetBorder.style.border = '2px solid #c8aa6e';
 
@@ -83,14 +81,11 @@ window.updateDetailsPanel = function(id, name, price, desc, img, element) {
     const detailsImgContainer = document.getElementById('details-img-container');
     const bigDisplay = document.querySelector('.big-item-display .item-square-big-item');
 
-    if (detailsId) {
-        detailsId.textContent = "ID: " + id;
-        detailsId.dataset.currentId = id;
-        detailsId.style.display = 'block';
-    }
+    // ID display removed as requested
+    
     if (detailsName) detailsName.textContent = name;
     if (detailsPrice) detailsPrice.textContent = price;
-    if (detailsDesc) detailsDesc.textContent = desc;
+    if (detailsDesc) detailsDesc.innerHTML = desc;
     if (detailsImgContainer) {
         detailsImgContainer.innerHTML = `<img src="${img}" style="width:100%; height:100%; object-fit:cover;">`;
     }
@@ -98,27 +93,39 @@ window.updateDetailsPanel = function(id, name, price, desc, img, element) {
     if (bigDisplay) {
         bigDisplay.innerHTML = `<img src="${img}" style="width:100%;height:100%;object-fit:contain;">`;
     }
-    
+
     const btn = document.querySelector('.btn-purchase');
     if (btn) {
-        console.log("Updating Purchase Button with ID:", id); // DEBUG
         btn.dataset.id = id;
         btn.dataset.name = name;
         btn.dataset.price = price;
-    } else {
-        console.error("Purchase button not found!");
+    }
+
+    const favBtn = document.getElementById('fav-btn');
+    if (favBtn && element) {
+        favBtn.src = 'assets/img/logos/favorite.png';
+        if (isFav) {
+            favBtn.classList.add('active');
+        } else {
+            favBtn.classList.remove('active');
+        }
+        const newFavBtn = favBtn.cloneNode(true);
+        favBtn.parentNode.replaceChild(newFavBtn, favBtn);
+        
+        newFavBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleFavorite(id, newFavBtn, element);
+        });
     }
 };
 
 function adminSelectItem(element) {
-    console.log("adminSelectItem clicked");
     const id = element.dataset.id || element.getAttribute('data-id');
     const name = element.dataset.name || element.getAttribute('data-name');
     const price = element.dataset.price || element.getAttribute('data-price');
     const desc = element.dataset.desc || element.getAttribute('data-desc') || element.dataset.stats || element.getAttribute('data-stats');
     const img = element.dataset.img || element.getAttribute('data-img');
     
-    // Fallback si img pas dans dataset mais dans balise img
     let finalImg = img;
     if (!finalImg) {
         const imgTag = element.querySelector('img');
@@ -126,4 +133,49 @@ function adminSelectItem(element) {
     }
 
     window.updateDetailsPanel(id, name, price, desc, finalImg, element);
+}
+
+function toggleFavorite(itemId, btnIcon, itemElement) {
+    fetch('core/toggle_favorite.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId: itemId })
+    })
+    .then(res => {
+        return res.text().then(text => {
+            try {
+                return JSON.parse(text);
+            } catch (e) {
+                alert("Erreur serveur (non-JSON): " + text.substring(0, 200));
+                throw new Error("Réponse non-JSON");
+            }
+        });
+    })
+    .then(data => {
+        if (data.success) {
+            alert(`Succès Admin! Action: ${data.debug.action}. User ID: ${data.debug.user_id}, Item ID: ${data.debug.item_id}`);
+            const isFav = data.isFavorite;
+            if (isFav) {
+                btnIcon.classList.add('active');
+            } else {
+                btnIcon.classList.remove('active');
+            }
+            if (itemElement) itemElement.dataset.fav = isFav ? 'true' : 'false';
+            
+            document.querySelectorAll(`.item-square[data-id="${itemId}"]`).forEach(el => {
+                el.dataset.fav = isFav ? 'true' : 'false';
+            });
+
+            // Update grid
+            if (typeof window.updateGrid === 'function') {
+                window.updateGrid();
+            }
+        } else {
+            alert('Erreur Admin: ' + data.message);
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('Erreur réseau ou JS Admin: ' + err);
+    });
 }

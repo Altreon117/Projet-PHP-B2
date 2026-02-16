@@ -5,7 +5,16 @@
  * Affiche les produits phares, les dernières actualités et permet la navigation vers la boutique.
  * Intègre le système de filtres et d'ajout au panier.
  */
-require_once 'core/db.php'; ?>
+require_once 'core/db.php';
+
+// Récupération des favoris si utilisateur connecté
+$userFavorites = [];
+if (isset($_SESSION['user_id'])) {
+    $stmt = $pdo->prepare("SELECT id_item FROM user_favorites WHERE id_user = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $userFavorites = $stmt->fetchAll(PDO::FETCH_COLUMN);
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -32,7 +41,8 @@ while ($item = $stmt->fetch()) {
             data-id="' . htmlspecialchars($item['id']) . '"
             data-name="' . htmlspecialchars($item['nom']) . '"
             data-price="' . (int)$item['prix'] . '"
-            data-stats="' . htmlspecialchars($item['description']) . '">
+            data-stats="' . str_replace(["\r\n", "\r", "\n"], '<br>', htmlspecialchars($item['description_stat'])) . '<br><br>' . str_replace(["\r\n", "\r", "\n"], '<br>', htmlspecialchars($item['description_passive'])) . '"
+            data-fav="' . (in_array($item['id'], $userFavorites ?? []) ? 'true' : 'false') . '">
             <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
             <a>' . (int)$item['prix'] . '</a>
           </div>';
@@ -48,7 +58,8 @@ while ($item = $stmt->fetch()) {
             data-id="' . htmlspecialchars($item['id']) . '"
             data-name="' . htmlspecialchars($item['nom']) . '"
             data-price="' . (int)$item['prix'] . '"
-            data-stats="' . htmlspecialchars($item['description']) . '">
+            data-stats="' . str_replace(["\r\n", "\r", "\n"], '<br>', htmlspecialchars($item['description_stat'])) . '<br><br>' . str_replace(["\r\n", "\r", "\n"], '<br>', htmlspecialchars($item['description_passive'])) . '"
+            data-fav="' . (in_array($item['id'], $userFavorites ?? []) ? 'true' : 'false') . '">
             <img class="item-square" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['nom']) . '">
             <a>' . (int)$item['prix'] . '</a>
           </div>';
@@ -82,17 +93,22 @@ $ranks = [['icon' => 'ktranscendent.svg', 'label' => 'N°1'], ['icon' => 'kexalt
 
 foreach ($topItems as $index => $item) {
     $rank = $ranks[$index] ?? ['icon' => 'ktranscendent.svg', 'label' => 'N°' . ($index + 1)];
-    echo '<div class="recommended-item">
-                            <div class="rank">
-                                <img class="ranked-item-icon" src="assets/img/logos/' . $rank['icon'] . '" alt="Rank">
-                                <p class="rank-number">' . $rank['label'] . '</p>
-                            </div>
-                            <div class="item-square-middle-item">
-                                ' . ($item['image'] ? '<img src="' . htmlspecialchars($item['image']) . '" style="width:100%;height:100%;object-fit:contain;">' : '') . '
-                            </div>
-                            <h1 class="item-name">' . htmlspecialchars($item['nom']) . '</h1>
-                            <h1 class="sold-number">Vendu ' . rand(100, 5000) . ' fois</h1>
-                        </div>';
+    echo '<div class="recommended-item" onclick="selectItem(this)"
+    data-id="' . htmlspecialchars($item['id']) . '"
+    data-name="' . htmlspecialchars($item['nom']) . '"
+    data-price="' . (int)$item['prix'] . '"
+    data-stats="' . htmlspecialchars($item['description_stat'] . ' ' . $item['description_passive']) . '"
+    data-fav="' . (in_array($item['id'], $userFavorites ?? []) ? 'true' : 'false') . '">
+    <div class="rank">
+        <img class="ranked-item-icon" src="assets/img/logos/' . $rank['icon'] . '" alt="Rank">
+        <p class="rank-number">' . $rank['label'] . '</p>
+    </div>
+    <div class="item-square-middle-item">
+        ' . ($item['image'] ? '<img src="' . htmlspecialchars($item['image']) . '" style="width:100%;height:100%;object-fit:contain;">' : '') . '
+    </div>
+    <h1 class="item-name">' . htmlspecialchars($item['nom']) . '</h1>
+    <h1 class="sold-number">Vendu ' . rand(100, 5000) . ' fois</h1>
+</div>';
 }
 ?>
                 </div>
@@ -160,7 +176,10 @@ foreach ($topItems as $index => $item) {
 
         <div class="shop-details-panel">
             <div class="builds-into">
-                <h4>DÉBLOQUE</h4>
+                <div class="title-builds-into">
+                     <h4>DÉBLOQUE</h4>
+                     <img id="fav-btn" class="fav-icon-btn" src="assets/img/logos/favorite.png" alt="Favori">
+                </div>
                 <div class="builds-into-grid">
                     <div class="item-square"></div>
                     <div class="item-square"></div>
@@ -186,6 +205,9 @@ foreach ($topItems as $index => $item) {
                             <p class="gold-cost" id="details-price">-</p>
                         </div>
                     </div>
+                </div>
+                <div class="favorite-section" style="margin-top: 10px; cursor: pointer;">
+                    <img id="fav-btn" src="assets/img/logos/favorite.png" alt="Favori" style="width: 30px;">
                 </div>
                 <div class="description">
                     <p class="stats" id="details-desc">Cliquez sur un item...</p>
